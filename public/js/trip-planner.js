@@ -1201,15 +1201,54 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Open the Edit Activity modal with pre-filled data
   function openEditActivityModal(item) {
-    // Fill form with activity data
+    // Reset form errors
+    document.getElementById('activity-form-error').classList.add('d-none');
+    
+    // Get the total days for the trip
+    const startDate = new Date(tripData.start_date);
+    const endDate = new Date(tripData.end_date);
+    const diffTime = Math.abs(endDate - startDate);
+    const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // Include start and end day
+
+    // Populate the days dropdown first
+    const daysSelect = document.getElementById('activity-day');
+    daysSelect.innerHTML = '';
+    for (let i = 1; i <= totalDays; i++) {
+      const date = new Date(startDate);
+      date.setDate(startDate.getDate() + i - 1);
+      const formattedDate = date.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+
+      const option = document.createElement('option');
+      option.value = i;
+      option.textContent = `Day ${i} - ${formattedDate}`;
+      daysSelect.appendChild(option);
+    }
+    
+    // Populate the places dropdown
+    const placesSelect = document.getElementById('activity-place');
+    placesSelect.innerHTML = '<option value="">Select a place or leave blank</option>';
+    placesData.forEach(place => {
+      const option = document.createElement('option');
+      option.value = place.id;
+      option.textContent = place.name;
+      placesSelect.appendChild(option);
+    });
+
+    // Now fill form with activity data after the dropdowns are populated
     document.getElementById('activity-title').value = item.title;
     document.getElementById('activity-description').value = item.description || '';
-    document.getElementById('activity-day').value = item.day_number;
-    document.getElementById('activity-order').value = item.order_index;
     document.getElementById('activity-start-time').value = formatTime24h(item.start_time);
     document.getElementById('activity-end-time').value = formatTime24h(item.end_time);
     
-    // Set place if available
+    // Set day after dropdown is populated
+    if (item.day_number) {
+      document.getElementById('activity-day').value = item.day_number;
+    }
+    
+    // Set order
+    document.getElementById('activity-order').value = item.order_index;
+
+    // Set place if available after dropdown is populated
     if (item.place_id) {
       document.getElementById('activity-place').value = item.place_id;
     } else {
@@ -1256,10 +1295,48 @@ document.addEventListener('DOMContentLoaded', function() {
         isEditMode
       });
       
+      // Log all form values for debugging
+      console.log('All form values:', {
+        title,
+        description,
+        placeId,
+        dayNumber,
+        orderIndex,
+        startTime,
+        endTime,
+        isEditMode,
+        daySelectValue: document.getElementById('activity-day').value,
+        daySelectOptions: Array.from(document.getElementById('activity-day').options).map(o => o.value)
+      });
+
       // Validate required fields
-      if (!title || !dayNumber || !orderIndex || !startTime || !endTime) {
+      if (!title) {
         const errorElement = document.getElementById('activity-form-error');
-        errorElement.textContent = 'Please fill in all required fields';
+        errorElement.textContent = 'Activity title is required';
+        errorElement.classList.remove('d-none');
+        return;
+      }
+
+      // Validate day number
+      if (!dayNumber) {
+        const errorElement = document.getElementById('activity-form-error');
+        errorElement.textContent = 'Please select a day';
+        errorElement.classList.remove('d-none');
+        return;
+      }
+
+      // Validate order index
+      if (!orderIndex) {
+        const errorElement = document.getElementById('activity-form-error');
+        errorElement.textContent = 'Please specify an order for the activity';
+        errorElement.classList.remove('d-none');
+        return;
+      }
+      
+      // Validate times
+      if (!startTime || !endTime) {
+        const errorElement = document.getElementById('activity-form-error');
+        errorElement.textContent = 'Start and end times are required';
         errorElement.classList.remove('d-none');
         return;
       }
@@ -1753,13 +1830,18 @@ document.addEventListener('DOMContentLoaded', function() {
   // Format time for 24-hour input (e.g., "2023-04-15T13:30:00" to "13:30")
   function formatTime24h(timeStr) {
     if (!timeStr) return '';
-    
+
     try {
       // If timeStr is a date string, extract time part
-      if (timeStr.includes('T')) {
+      if (typeof timeStr === 'string' && timeStr.includes('T')) {
         return timeStr.split('T')[1].substring(0, 5);
       }
-      return timeStr.substring(0, 5);
+      
+      if (typeof timeStr === 'string') {
+        return timeStr.substring(0, 5);
+      }
+      
+      return '';
     } catch (e) {
       console.error('Error formatting 24h time:', e);
       return timeStr;
