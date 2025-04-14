@@ -1,38 +1,252 @@
-<div class="row">
-  <div class="col-md-12">
-    <h1 class="mb-4">Dashboard</h1>
-    <div class="alert alert-success">
-      <h4 class="alert-heading">Welcome, <%= user.username %>!</h4>
-      <p>You have successfully logged in to your Skydea account.</p>
+<section class="py-5">
+  <div class="container">
+    <!-- Welcome Banner -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card border-0 bg-primary text-white shadow">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-center">
+              <div>
+                <h2 class="mb-1">Welcome back, <%= user.username %>!</h2>
+                <p class="mb-0 opacity-75">Here's what's happening with your account today.</p>
+              </div>
+              <div class="ms-auto d-none d-md-block">
+                <i class="fas fa-user-circle fa-4x opacity-50"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Stats Row -->
+    <div class="row mb-4">
+      <div class="col-md-4 mb-4 mb-md-0">
+        <div class="stat-card">
+          <div class="stat-value">1</div>
+          <div class="stat-label">Active Sessions</div>
+        </div>
+      </div>
+      
+      <div class="col-md-4 mb-4 mb-md-0">
+        <div class="stat-card">
+          <div class="stat-value"><%= new Date(user.created_at).toLocaleDateString() %></div>
+          <div class="stat-label">Member Since</div>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="stat-card">
+          <div class="stat-value">0</div>
+          <div class="stat-label">Projects</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="row">
+      <!-- Profile Card -->
+      <div class="col-lg-4 mb-4">
+        <div class="card border-0 shadow h-100">
+          <div class="card-header bg-white py-3">
+            <div class="d-flex align-items-center">
+              <i class="fas fa-user-circle text-primary me-2"></i>
+              <h5 class="mb-0">Profile Information</h5>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="text-center mb-4">
+              <div class="avatar-placeholder mb-3">
+                <i class="fas fa-user-circle fa-5x text-secondary"></i>
+              </div>
+              <h5 class="mb-1"><%= user.username %></h5>
+              <p class="text-muted mb-0"><%= user.email %></p>
+            </div>
+            
+            <hr>
+            
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item px-0 d-flex justify-content-between">
+                <span class="text-muted">Username</span>
+                <span class="fw-medium"><%= user.username %></span>
+              </li>
+              <li class="list-group-item px-0 d-flex justify-content-between">
+                <span class="text-muted">Email</span>
+                <span class="fw-medium"><%= user.email %></span>
+              </li>
+              <li class="list-group-item px-0 d-flex justify-content-between">
+                <span class="text-muted">Account Created</span>
+                <span class="fw-medium"><%= new Date(user.created_at).toLocaleDateString() %></span>
+              </li>
+              <li class="list-group-item px-0 d-flex justify-content-between">
+                <span class="text-muted">Last Updated</span>
+                <span class="fw-medium"><%= new Date(user.updated_at).toLocaleDateString() %></span>
+              </li>
+            </ul>
+          </div>
+          <div class="card-footer bg-white py-3">
+            <a href="#" class="btn btn-sm btn-outline-primary w-100">
+              <i class="fas fa-edit me-2"></i> Edit Profile
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Activity Card -->
+      <div class="col-lg-8 mb-4">
+        <div class="card border-0 shadow h-100">
+          <div class="card-header bg-white py-3">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <i class="fas fa-chart-line text-primary me-2"></i>
+                <h5 class="mb-0">Recent Activity</h5>
+              </div>
+              <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-item-marker">
+                  <div class="timeline-item-marker-indicator bg-primary">
+                    <i class="fas fa-sign-in-alt text-white"></i>
+                  </div>
+                </div>
+                <div class="timeline-item-content">
+                  <p class="mb-0 fw-bold">Login Successful</p>
+                  <p class="text-muted small mb-2"><%= new Date().toLocaleString() %></p>
+                  <p class="mb-0">You logged in from your current device</p>
+                </div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-item-marker">
+                  <div class="timeline-item-marker-indicator bg-success">
+                    <i class="fas fa-user-check text-white"></i>
+                  </div>
+                </div>
+                <div class="timeline-item-content">
+                  <p class="mb-0 fw-bold">Account Created</p>
+                  <p class="text-muted small mb-2"><%= new Date(user.created_at).toLocaleString() %></p>
+                  <p class="mb-0">Your account was successfully created</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Quick Actions Card -->
+      <div class="col-12">
+        <div class="card border-0 shadow">
+          <div class="card-header bg-white py-3">
+            <div class="d-flex align-items-center">
+              <i class="fas fa-bolt text-primary me-2"></i>
+              <h5 class="mb-0">Quick Actions</h5>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row g-4">
+              <div class="col-md-3 col-sm-6">
+                <a href="#" class="text-decoration-none">
+                  <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                      <div class="mb-3">
+                        <i class="fas fa-cog fa-2x text-primary"></i>
+                      </div>
+                      <h6 class="mb-0">Settings</h6>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              
+              <div class="col-md-3 col-sm-6">
+                <a href="#" class="text-decoration-none">
+                  <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                      <div class="mb-3">
+                        <i class="fas fa-bell fa-2x text-primary"></i>
+                      </div>
+                      <h6 class="mb-0">Notifications</h6>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              
+              <div class="col-md-3 col-sm-6">
+                <a href="#" class="text-decoration-none">
+                  <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                      <div class="mb-3">
+                        <i class="fas fa-folder-plus fa-2x text-primary"></i>
+                      </div>
+                      <h6 class="mb-0">New Project</h6>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              
+              <div class="col-md-3 col-sm-6">
+                <a href="#" class="text-decoration-none">
+                  <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                      <div class="mb-3">
+                        <i class="fas fa-question-circle fa-2x text-primary"></i>
+                      </div>
+                      <h6 class="mb-0">Help Center</h6>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="row mt-4">
-  <div class="col-md-4">
-    <div class="card mb-4">
-      <div class="card-header bg-primary text-white">
-        <h5 class="mb-0">Profile</h5>
-      </div>
-      <div class="card-body">
-        <p><strong>Username:</strong> <%= user.username %></p>
-        <p><strong>Email:</strong> <%= user.email %></p>
-        <p><strong>Member since:</strong> <%= new Date(user.created_at).toLocaleDateString() %></p>
-      </div>
-    </div>
-  </div>
-  
-  <div class="col-md-8">
-    <div class="card mb-4">
-      <div class="card-header bg-primary text-white">
-        <h5 class="mb-0">Activity</h5>
-      </div>
-      <div class="card-body">
-        <p>This is your dashboard. More features will be added soon!</p>
-        <ul class="list-group">
-          <li class="list-group-item">Last login: <%= new Date().toLocaleString() %></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+<style>
+.timeline {
+  position: relative;
+  padding-left: 1.75rem;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-item:before {
+  content: '';
+  position: absolute;
+  left: -0.86rem;
+  top: 0;
+  height: 100%;
+  border-left: 1px dashed #e0e0e0;
+}
+
+.timeline-item-marker {
+  position: absolute;
+  left: -1.75rem;
+  top: 0;
+}
+
+.timeline-item-marker-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 100%;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+.timeline-item-marker-indicator i {
+  font-size: 0.875rem;
+}
+</style>

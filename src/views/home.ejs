@@ -1,42 +1,142 @@
-<div class="row">
-  <div class="col-md-12 text-center">
-    <h1 class="display-4 mb-4">Welcome to Skydea</h1>
-    <p class="lead">Your platform for amazing sky experiences</p>
-    
-    <div class="mt-5">
-      <% if (!locals.isAuthenticated) { %>
-        <a href="<%= basePath %>auth/register" class="btn btn-primary btn-lg me-3">Get Started</a>
-        <a href="<%= basePath %>auth/login" class="btn btn-outline-primary btn-lg">Sign In</a>
-      <% } else { %>
-        <a href="<%= basePath %>dashboard" class="btn btn-primary btn-lg">Go to Dashboard</a>
-      <% } %>
+<!-- Hero Section -->
+<section class="hero text-center text-white">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <h1 class="display-4 mb-3 fw-bold">Welcome to Skydea</h1>
+        <p class="lead mb-4">Your premium platform for extraordinary sky experiences</p>
+        
+        <div class="mt-5">
+          <% if (!locals.isAuthenticated) { %>
+            <a href="<%= basePath %>auth/register" class="btn btn-light btn-lg me-3 shadow">
+              <i class="fas fa-rocket me-2"></i> Get Started
+            </a>
+            <a href="<%= basePath %>auth/login" class="btn btn-outline-light btn-lg">
+              <i class="fas fa-sign-in-alt me-2"></i> Sign In
+            </a>
+          <% } else { %>
+            <a href="<%= basePath %>dashboard" class="btn btn-light btn-lg shadow">
+              <i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard
+            </a>
+          <% } %>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="row mt-5">
-  <div class="col-md-4">
-    <div class="card mb-4">
-      <div class="card-body text-center">
-        <h3 class="card-title">Easy Registration</h3>
-        <p class="card-text">Create your account in seconds and start your journey with Skydea.</p>
+<!-- Features Section -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <div class="row text-center mb-5">
+      <div class="col-lg-8 mx-auto">
+        <h2 class="fw-bold">Experience The Skydea Difference</h2>
+        <p class="lead text-muted">Discover why users choose our platform</p>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="feature-card h-100">
+          <div class="feature-icon">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <h3 class="h4 mb-3">Secure & Reliable</h3>
+          <p class="text-muted mb-0">Your data is protected with advanced security measures and encryption technologies.</p>
+        </div>
+      </div>
+      
+      <div class="col-md-4 mb-4">
+        <div class="feature-card h-100">
+          <div class="feature-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h3 class="h4 mb-3">Fast & Responsive</h3>
+          <p class="text-muted mb-0">Experience lightning-fast performance with our optimized platform across all devices.</p>
+        </div>
+      </div>
+      
+      <div class="col-md-4 mb-4">
+        <div class="feature-card h-100">
+          <div class="feature-icon">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h3 class="h4 mb-3">User-Friendly</h3>
+          <p class="text-muted mb-0">Intuitive interface designed to make your experience enjoyable and stress-free.</p>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-md-4">
-    <div class="card mb-4">
-      <div class="card-body text-center">
-        <h3 class="card-title">Secure Platform</h3>
-        <p class="card-text">Your data is protected with industry-standard security measures.</p>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row text-center mb-5">
+      <div class="col-lg-8 mx-auto">
+        <h2 class="fw-bold">How It Works</h2>
+        <p class="lead text-muted">Three simple steps to get started</p>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-4 mb-4 mb-md-0">
+        <div class="card border-0 h-100">
+          <div class="card-body text-center">
+            <div class="mb-4">
+              <span class="display-4 fw-bold text-primary">01</span>
+            </div>
+            <h3 class="h4 mb-3">Create an Account</h3>
+            <p class="text-muted mb-0">Register in seconds with just a few details to join our platform.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4 mb-4 mb-md-0">
+        <div class="card border-0 h-100">
+          <div class="card-body text-center">
+            <div class="mb-4">
+              <span class="display-4 fw-bold text-primary">02</span>
+            </div>
+            <h3 class="h4 mb-3">Set Up Your Profile</h3>
+            <p class="text-muted mb-0">Customize your account settings and preferences for a personalized experience.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="card border-0 h-100">
+          <div class="card-body text-center">
+            <div class="mb-4">
+              <span class="display-4 fw-bold text-primary">03</span>
+            </div>
+            <h3 class="h4 mb-3">Enjoy The Experience</h3>
+            <p class="text-muted mb-0">Start enjoying all the premium features and benefits of the Skydea platform.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-md-4">
-    <div class="card mb-4">
-      <div class="card-body text-center">
-        <h3 class="card-title">User-Friendly</h3>
-        <p class="card-text">Intuitive interface designed to make your experience enjoyable.</p>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white text-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="fw-bold mb-4">Ready to Experience Skydea?</h2>
+        <p class="lead mb-5">Join thousands of satisfied users on our platform today.</p>
+        
+        <% if (!locals.isAuthenticated) { %>
+          <a href="<%= basePath %>auth/register" class="btn btn-light btn-lg px-5 shadow">
+            <i class="fas fa-user-plus me-2"></i> Create Free Account
+          </a>
+        <% } else { %>
+          <a href="<%= basePath %>dashboard" class="btn btn-light btn-lg px-5 shadow">
+            <i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard
+          </a>
+        <% } %>
       </div>
     </div>
   </div>
-</div>
+</section>

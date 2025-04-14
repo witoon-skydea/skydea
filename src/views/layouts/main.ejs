@@ -3,36 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="<%= basePath %>css/styles.css">
+  <title><%= title %> | Skydea</title>
+  
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="<%= basePath %>images/favicon.ico" type="image/x-icon">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="<%= basePath %>css/styles.css">
 </head>
 <body>
+  <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-      <a class="navbar-brand" href="<%= basePath %>">Skydea</a>
+      <a class="navbar-brand" href="<%= basePath %>">
+        <i class="fas fa-cloud"></i> Skydea
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="<%= basePath %>">Home</a>
+            <a class="nav-link" href="<%= basePath %>"><i class="fas fa-home"></i> Home</a>
           </li>
           <% if (locals.isAuthenticated) { %>
             <li class="nav-item">
-              <a class="nav-link" href="<%= basePath %>dashboard">Dashboard</a>
+              <a class="nav-link" href="<%= basePath %>dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<%= basePath %>auth/logout">Logout</a>
+              <a class="nav-link" href="<%= basePath %>auth/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </li>
           <% } else { %>
             <li class="nav-item">
-              <a class="nav-link" href="<%= basePath %>auth/login">Login</a>
+              <a class="nav-link" href="<%= basePath %>auth/login"><i class="fas fa-sign-in-alt"></i> Login</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<%= basePath %>auth/register">Register</a>
+              <a class="nav-link" href="<%= basePath %>auth/register"><i class="fas fa-user-plus"></i> Register</a>
             </li>
           <% } %>
         </ul>
@@ -40,30 +57,72 @@
     </div>
   </nav>
 
-  <div class="container mt-4">
-    <% if (locals.error) { %>
-      <div class="alert alert-danger">
-        <%= error %>
-      </div>
-    <% } %>
+  <!-- Flash Messages -->
+  <% if (locals.error || locals.success) { %>
+    <div class="container mt-4">
+      <% if (locals.error) { %>
+        <div class="alert alert-danger alert-dismissible fade show">
+          <i class="fas fa-exclamation-circle me-2"></i> <%= error %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      <% } %>
 
-    <% if (locals.success) { %>
-      <div class="alert alert-success">
-        <%= success %>
-      </div>
-    <% } %>
+      <% if (locals.success) { %>
+        <div class="alert alert-success alert-dismissible fade show">
+          <i class="fas fa-check-circle me-2"></i> <%= success %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      <% } %>
+    </div>
+  <% } %>
 
+  <!-- Main Content -->
+  <main>
     <%- body %>
-  </div>
+  </main>
 
-  <footer class="mt-5 py-3 bg-light text-center">
+  <!-- Footer -->
+  <footer class="bg-primary text-white mt-5 py-4">
     <div class="container">
-      <p>&copy; <%= new Date().getFullYear() %> Skydea. All rights reserved.</p>
+      <div class="row">
+        <div class="col-md-6">
+          <h4 class="mb-3"><i class="fas fa-cloud"></i> Skydea</h4>
+          <p>Your platform for amazing sky experiences</p>
+        </div>
+        <div class="col-md-3">
+          <h5 class="mb-3">Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="<%= basePath %>" class="text-white text-decoration-none">Home</a></li>
+            <% if (locals.isAuthenticated) { %>
+              <li><a href="<%= basePath %>dashboard" class="text-white text-decoration-none">Dashboard</a></li>
+            <% } else { %>
+              <li><a href="<%= basePath %>auth/login" class="text-white text-decoration-none">Login</a></li>
+              <li><a href="<%= basePath %>auth/register" class="text-white text-decoration-none">Register</a></li>
+            <% } %>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h5 class="mb-3">Connect With Us</h5>
+          <div class="d-flex gap-3">
+            <a href="#" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-twitter fa-lg"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-instagram fa-lg"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-linkedin-in fa-lg"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4 bg-light opacity-25">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <p class="mb-0">&copy; <%= new Date().getFullYear() %> Skydea. All rights reserved.</p>
+        </div>
+      </div>
     </div>
   </footer>
 
-  <!-- Bootstrap JS -->
+  <!-- Bootstrap JS Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
   <!-- App JavaScript -->
   <script src="<%= basePath %>js/app.js"></script>
 </body>
