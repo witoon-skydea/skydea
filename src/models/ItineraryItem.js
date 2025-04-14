@@ -18,12 +18,15 @@ class ItineraryItem {
       order_index 
     } = itemData;
     
+    // Ensure place_id is properly handled
+    const parsedPlaceId = place_id !== null && place_id !== "" ? parseInt(place_id) : null;
+    
     return new Promise((resolve, reject) => {
       db.run(
         `INSERT INTO itinerary_items (
           trip_id, place_id, title, description, start_time, end_time, day_number, order_index
          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [trip_id, place_id, title, description, start_time, end_time, day_number, order_index],
+        [trip_id, parsedPlaceId, title, description, start_time, end_time, day_number, order_index],
         function(err) {
           if (err) {
             console.error('Error creating itinerary item:', err);
@@ -136,13 +139,16 @@ class ItineraryItem {
       order_index 
     } = itemData;
     
+    // Ensure place_id is properly handled
+    const parsedPlaceId = place_id !== null && place_id !== "" ? parseInt(place_id) : null;
+    
     return new Promise((resolve, reject) => {
       db.run(
         `UPDATE itinerary_items 
          SET place_id = ?, title = ?, description = ?, start_time = ?, end_time = ?, 
          day_number = ?, order_index = ?, updated_at = CURRENT_TIMESTAMP
          WHERE id = ?`,
-        [place_id, title, description, start_time, end_time, day_number, order_index, id],
+        [parsedPlaceId, title, description, start_time, end_time, day_number, order_index, id],
         function(err) {
           if (err) {
             console.error('Error updating itinerary item:', err);

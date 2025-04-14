@@ -12,6 +12,12 @@ const checkTripOwnership = async (req, res, next) => {
   try {
     // Get trip_id from the request body or params
     const tripId = parseInt(req.body.trip_id || req.params.tripId);
+    
+    if (!tripId || isNaN(tripId)) {
+      console.error('Invalid trip ID:', req.body.trip_id || req.params.tripId);
+      return next(new AppError('Invalid trip ID', 400));
+    }
+    
     const userId = req.session.user.id;
     
     const belongs = await Trip.belongsToUser(tripId, userId);

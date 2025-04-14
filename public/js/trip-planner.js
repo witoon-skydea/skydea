@@ -5,6 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const tripId = tripPlannerApp?.dataset.tripId;
   const basePath = tripPlannerApp?.dataset.basePath || '/';
   
+  // Log for debugging
+  console.log('Trip Planner Initialization:', { tripId, basePath });
+  
+  if (!tripId || !tripPlannerApp) {
+    console.error('Trip ID not found in dataset or trip-planner-app element not found');
+  }
+  
   // API URLs
   const apiUrls = {
     trip: `${basePath}api/trips/${tripId}`,
@@ -66,12 +73,29 @@ document.addEventListener('DOMContentLoaded', function() {
   // Load all trip data from API
   async function loadTripData() {
     try {
+      console.log('Loading trip data from:', apiUrls.trip);
+      
+      if (!tripId) {
+        throw new Error('Trip ID is not defined');
+      }
+      
       const response = await fetch(apiUrls.trip);
+      console.log('Trip API response status:', response.status);
+      
       if (!response.ok) {
-        throw new Error('Failed to load trip data');
+        const errorText = await response.text();
+        console.error('API error response:', errorText);
+        throw new Error(`Failed to load trip data: ${response.status} ${response.statusText}`);
       }
       
       const data = await response.json();
+      console.log('Trip data loaded successfully');
+      
+      if (!data.trip) {
+        console.error('Trip data structure invalid:', data);
+        throw new Error('Invalid trip data structure received from API');
+      }
+      
       tripData = data.trip;
       placesData = data.places || [];
       itineraryData = data.itineraryItems || [];
@@ -88,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     } catch (error) {
       console.error('Error loading trip data:', error);
-      showToast('Error loading trip data', 'danger');
+      showToast('Error loading trip data: ' + error.message, 'danger');
     }
   }
   
@@ -212,14 +236,18 @@ document.addEventListener('DOMContentLoaded', function() {
       const placeCard = document.createElement('div');
       placeCard.className = 'col-md-4';
       
-      // Generate image source
-      const imageUrl = place.image_url || `https://via.placeholder.com/300x200?text=${encodeURIComponent(place.name)}`;
+      // Generate image source with proper fallback
+      const placeName = place.name || 'Unknown Place';
+      const placeholderUrl = `https://via.placeholder.com/300x200?text=${encodeURIComponent(placeName)}`;
       
+      // Ensure image_url is properly handled
+      const imageUrl = place.image_url || placeholderUrl;
+
       placeCard.innerHTML = `
         <div class="card h-100 shadow-sm">
-          <img src="${imageUrl}" class="card-img-top" alt="${place.name}" style="height: 150px; object-fit: cover;">
+          <img src="${imageUrl}" class="card-img-top" onerror="this.src='${placeholderUrl}'; this.onerror=null;" alt="${placeName}" style="height: 150px; object-fit: cover;">
           <div class="card-body">
-            <h5 class="card-title">${place.name}</h5>
+            <h5 class="card-title">${placeName}</h5>
             ${place.address ? `<p class="card-text text-muted small mb-2"><i class="fas fa-map-marker-alt me-2"></i>${place.address}</p>` : ''}
             ${place.description ? `<p class="card-text">${truncateText(place.description, 100)}</p>` : ''}
           </div>
@@ -863,6 +891,20 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeMap();
       }
       
+      // Re-enable save button for future uses
+      const addPlaceBtn = document.getElementById('add-place-btn');
+      const addPlaceBtn2 = document.getElementById('add-place-btn-2');
+      const emptyAddPlaceBtn = document.getElementById('empty-add-place-btn');
+      const tableAddPlaceBtn = document.getElementById('table-add-place-btn');
+      
+      saveBtn.disabled = false;
+      saveBtn.textContent = isEditMode ? 'Update Place' : 'Add Place';
+      
+      if (addPlaceBtn) addPlaceBtn.disabled = false;
+      if (addPlaceBtn2) addPlaceBtn2.disabled = false;
+      if (emptyAddPlaceBtn) emptyAddPlaceBtn.disabled = false;
+      if (tableAddPlaceBtn) tableAddPlaceBtn.disabled = false;
+      
       // Show success message
       showToast(isEditMode ? 'Place updated successfully' : 'Place added successfully', 'success');
     } catch (error) {
@@ -929,28 +971,34 @@ document.addEventListener('DOMContentLoaded', function() {
   async function searchGooglePlaces() {
     const searchInput = document.getElementById('google-search');
     const query = searchInput.value.trim();
-    
+
     if (!query) {
       showToast('Please enter a search query', 'warning');
       return;
     }
-    
+
     const resultsContainer = document.getElementById('google-search-results');
     const loadingElement = document.getElementById('google-search-loading');
     const errorElement = document.getElementById('google-search-error');
     const placeDetails = document.getElementById('google-place-details');
-    
+
     // Hide all initially
     resultsContainer.classList.add('d-none');
     errorElement.classList.add('d-none');
     placeDetails.classList.add('d-none');
-    
+
     // Show loading
     loadingElement.classList.remove('d-none');
-    
+
     try {
+      console.log('Searching for places with query:', query);
+      
       // Check if Google Maps Places API is available
-      if (!google || !google.maps || !google.maps.places) {
+      if (typeof google === 'undefined') {
+        throw new Error('Google Maps API not loaded. Please refresh the page and try again.');
+      }
+      
+      if (!google.maps || !google.maps.places) {
         throw new Error('Google Maps Places API not loaded. Please check your API key.');
       }
       
@@ -989,7 +1037,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           `;
           
-          listItem.addEventListener('click', (e) => {
+          listItem.addEventListener('click', function(e) {
             e.preventDefault();
             selectGooglePlace(place);
           });
@@ -1012,14 +1060,19 @@ document.addEventListener('DOMContentLoaded', function() {
   // Select a place from Google Places search results
   function selectGooglePlace(place) {
     selectedPlace = place;
-    
+
     // Show place details
     const detailsContainer = document.getElementById('google-place-details');
     detailsContainer.classList.remove('d-none');
-    
+
     document.getElementById('google-place-name').textContent = place.name;
     document.getElementById('google-place-address').textContent = place.formatted_address || 'No address available';
     document.getElementById('google-place-coords').textContent = `${place.geometry.location.lat().toFixed(6)}, ${place.geometry.location.lng().toFixed(6)}`;
+
+    // Clear previous event listeners by cloning and replacing the button
+    const selectButton = document.getElementById('google-select-place-btn');
+    const newSelectButton = selectButton.cloneNode(true);
+    selectButton.parentNode.replaceChild(newSelectButton, selectButton);
     
     // Add event listener to add button
     document.getElementById('google-select-place-btn').addEventListener('click', () => {
@@ -1128,9 +1181,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // Save or update an activity
   async function saveActivity() {
     try {
+      console.log('Saving activity...');
       const saveBtn = document.getElementById('save-activity-btn');
       const isEditMode = saveBtn.dataset.mode === 'edit';
-      
+
       // Get form values
       const title = document.getElementById('activity-title').value.trim();
       const description = document.getElementById('activity-description').value.trim();
@@ -1139,6 +1193,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const orderIndex = document.getElementById('activity-order').value;
       const startTime = document.getElementById('activity-start-time').value;
       const endTime = document.getElementById('activity-end-time').value;
+      
+      console.log('Activity form values:', {
+        title,
+        description,
+        placeId,
+        dayNumber,
+        orderIndex,
+        startTime,
+        endTime,
+        isEditMode
+      });
       
       // Validate required fields
       if (!title || !dayNumber || !orderIndex || !startTime || !endTime) {
@@ -1159,16 +1224,18 @@ document.addEventListener('DOMContentLoaded', function() {
       const activityData = {
         title,
         description: description || null,
-        place_id: placeId !== "" ? placeId : null,
+        place_id: (placeId && placeId !== "") ? parseInt(placeId) : null,
         day_number: parseInt(dayNumber),
         order_index: parseInt(orderIndex),
         start_time: startTime,
         end_time: endTime
       };
       
+      console.log('Prepared activity data:', activityData);
+      
       // API request
       let url, method;
-      
+
       if (isEditMode) {
         const itemId = saveBtn.dataset.itemId;
         url = `${basePath}api/itinerary/${itemId}`;
@@ -1177,11 +1244,14 @@ document.addEventListener('DOMContentLoaded', function() {
         activityData.trip_id = tripId;
         url = apiUrls.createItinerary;
         method = 'POST';
+        console.log('Creating new activity with URL:', url);
       }
       
       // Disable save button and show loading
       saveBtn.disabled = true;
       saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+      
+      console.log('Sending activity data to:', url);
       
       const response = await fetch(url, {
         method,
@@ -1191,12 +1261,21 @@ document.addEventListener('DOMContentLoaded', function() {
         body: JSON.stringify(activityData)
       });
       
+      console.log('API response status:', response.status);
+      
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to save activity');
+        try {
+          const errorData = await response.json();
+          throw new Error(errorData.error || `Failed to ${isEditMode ? 'update' : 'create'} activity`);
+        } catch (jsonError) {
+          const errorText = await response.text();
+          console.error('API error response:', errorText);
+          throw new Error(`Failed to ${isEditMode ? 'update' : 'create'} activity: ${response.status} ${response.statusText}`);
+        }
       }
       
       const savedActivity = await response.json();
+      console.log('Activity saved successfully:', savedActivity);
       
       // Update local data
       if (isEditMode) {
@@ -1214,6 +1293,15 @@ document.addEventListener('DOMContentLoaded', function() {
       // Update UI
       updateCounters();
       renderItinerary();
+      
+      // Re-enable save button for future uses
+      const saveActivityBtn = document.getElementById('add-activity-btn');
+      const emptyAddActivityBtn = document.getElementById('empty-add-activity-btn');
+      saveBtn.disabled = false;
+      saveBtn.textContent = isEditMode ? 'Update Activity' : 'Add Activity';
+      
+      if (saveActivityBtn) saveActivityBtn.disabled = false;
+      if (emptyAddActivityBtn) emptyAddActivityBtn.disabled = false;
       
       // Show success message
       showToast(isEditMode ? 'Activity updated successfully' : 'Activity added successfully', 'success');
