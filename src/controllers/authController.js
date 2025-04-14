@@ -45,19 +45,19 @@ exports.register = async (req, res) => {
     if (!username || !email || !password || !confirmPassword) {
       req.session.error = 'All fields are required';
       console.log('Validation error: All fields are required');
-      return res.redirect(appConfig.getPath('register'));
+      return res.redirect('/auth/register');
     }
     
     if (password !== confirmPassword) {
       req.session.error = 'Passwords do not match';
       console.log('Validation error: Passwords do not match');
-      return res.redirect(appConfig.getPath('register'));
+      return res.redirect('/auth/register');
     }
     
     if (password.length < 6) {
       req.session.error = 'Password must be at least 6 characters long';
       console.log('Validation error: Password must be at least 6 characters long');
-      return res.redirect(appConfig.getPath('register'));
+      return res.redirect('/auth/register');
     }
     
     // Create user
@@ -66,12 +66,12 @@ exports.register = async (req, res) => {
     console.log('User created successfully:', user);
     
     req.session.success = 'Registration successful! You can now log in.';
-    return res.redirect(appConfig.getPath('login'));
+    return res.redirect('/auth/login');
   } catch (error) {
     console.error('Registration error:', error);
     req.session.error = error.message || 'An error occurred during registration';
     console.log('Setting error message in session:', req.session.error);
-    return res.redirect(appConfig.getPath('register'));
+    return res.redirect('/auth/register');
   }
 };
 
@@ -85,7 +85,7 @@ exports.login = async (req, res) => {
     // Input validation
     if (!username || !password) {
       req.session.error = 'Username and password are required';
-      return res.redirect(appConfig.getPath('login'));
+      return res.redirect('/auth/login');
     }
     
     // Authenticate user
@@ -93,18 +93,18 @@ exports.login = async (req, res) => {
     
     if (!user) {
       req.session.error = 'Invalid username or password';
-      return res.redirect(appConfig.getPath('login'));
+      return res.redirect('/auth/login');
     }
     
     // Store user in session
     req.session.user = user;
     req.session.isAuthenticated = true;
     
-    return res.redirect(appConfig.getPath('dashboard'));
+    return res.redirect('/dashboard');
   } catch (error) {
     console.error('Login error:', error);
     req.session.error = 'An error occurred during login';
-    return res.redirect(appConfig.getPath('login'));
+    return res.redirect('/auth/login');
   }
 };
 
@@ -117,6 +117,6 @@ exports.logout = (req, res) => {
     if (err) {
       console.error('Logout error:', err);
     }
-    res.redirect(appConfig.getPath(''));
+    res.redirect('/');
   });
 };
