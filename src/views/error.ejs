@@ -1,0 +1,19 @@
+<div class="row justify-content-center">
+  <div class="col-md-8 text-center">
+    <h1 class="mb-4"><%= message %></h1>
+    
+    <% if (error && error.status) { %>
+      <h2><%= error.status %></h2>
+    <% } %>
+    
+    <% if (error && error.stack && locals.isAuthenticated) { %>
+      <div class="alert alert-danger mt-4">
+        <pre><%= error.stack %></pre>
+      </div>
+    <% } %>
+    
+    <div class="mt-5">
+      <a href="<%= basePath %>" class="btn btn-primary">Back to Home</a>
+    </div>
+  </div>
+</div>
