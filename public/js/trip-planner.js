@@ -832,7 +832,8 @@ document.addEventListener('DOMContentLoaded', function() {
           latitude: selectedPlace.geometry.location.lat,
           longitude: selectedPlace.geometry.location.lng,
           place_id: selectedPlace.place_id,
-          // You can add additional fields from Google Places API here
+          // Set a default image URL for places added from Google Maps
+          image_url: "https://www.prachachat.net/wp-content/uploads/2023/08/Google-Maps.png"
         };
       }
       
@@ -1121,21 +1122,71 @@ document.addEventListener('DOMContentLoaded', function() {
       placesSelect.appendChild(option);
     });
     
-    // Set default times (9:00 AM to 10:00 AM)
-    document.getElementById('activity-start-time').value = '09:00';
-    document.getElementById('activity-end-time').value = '10:00';
-    
-    // Calculate default order index (next available)
+    // Set default times based on the previous activity's end time (if it exists)
+    let defaultStartTime = '09:00';
+    let defaultEndTime = '10:00';
+
+    // Calculate default order index (next available) and get end time of previous activity
     if (dayNumber) {
-      const dayItems = itineraryData.filter(item => item.day_number === dayNumber);
+      const dayItems = itineraryData.filter(item => item.day_number === parseInt(dayNumber))
+        .sort((a, b) => a.order_index - b.order_index);
+      
       let maxOrder = 0;
       if (dayItems.length > 0) {
         maxOrder = Math.max(...dayItems.map(item => item.order_index));
+        
+        // Get the order value from the activity-order input
+        const orderValue = parseInt(document.getElementById('activity-order').value || (maxOrder + 1));
+        
+        // Find the previous activity based on the order value
+        const previousActivity = dayItems.find(item => item.order_index === orderValue - 1);
+        
+        if (previousActivity && previousActivity.end_time) {
+          // Use the previous activity's end time as the start time for the new activity
+          defaultStartTime = previousActivity.end_time;
+          
+          // Set the end time to be 1 hour after the start time
+          const [hours, minutes] = defaultStartTime.split(':').map(Number);
+          const endDate = new Date();
+          endDate.setHours(hours, minutes, 0, 0);
+          endDate.setHours(endDate.getHours() + 1);
+          
+          defaultEndTime = `${endDate.getHours().toString().padStart(2, '0')}:${endDate.getMinutes().toString().padStart(2, '0')}`;
+        }
       }
       document.getElementById('activity-order').value = maxOrder + 1;
     } else {
       document.getElementById('activity-order').value = 1;
     }
+    
+    document.getElementById('activity-start-time').value = defaultStartTime;
+    document.getElementById('activity-end-time').value = defaultEndTime;
+    
+    // When the order index changes, update the times based on the selected order
+    document.getElementById('activity-order').addEventListener('change', function() {
+      const selectedOrder = parseInt(this.value);
+      const selectedDay = parseInt(document.getElementById('activity-day').value);
+      
+      const dayItems = itineraryData.filter(item => item.day_number === selectedDay)
+        .sort((a, b) => a.order_index - b.order_index);
+      
+      // Find the previous activity based on the selected order
+      const previousActivity = dayItems.find(item => item.order_index === selectedOrder - 1);
+      
+      if (previousActivity && previousActivity.end_time) {
+        // Update times based on the previous activity
+        document.getElementById('activity-start-time').value = previousActivity.end_time;
+        
+        // Set end time to be 1 hour after start time
+        const [hours, minutes] = previousActivity.end_time.split(':').map(Number);
+        const endDate = new Date();
+        endDate.setHours(hours, minutes, 0, 0);
+        endDate.setHours(endDate.getHours() + 1);
+        
+        const newEndTime = `${endDate.getHours().toString().padStart(2, '0')}:${endDate.getMinutes().toString().padStart(2, '0')}`;
+        document.getElementById('activity-end-time').value = newEndTime;
+      }
+    });
     
     // Set save button to "Add Activity"
     const saveBtn = document.getElementById('save-activity-btn');
@@ -1429,15 +1480,127 @@ document.addEventListener('DOMContentLoaded', function() {
   // Update activity order after drag and drop
   async function updateActivityOrder(dayNumber, newOrder) {
     try {
-      // Update UI first (optimistic update)
-      newOrder.forEach(item => {
-        const index = itineraryData.findIndex(i => i.id === item.id);
+      // Get a sorted copy of the items for this day
+      const dayItems = itineraryData
+        .filter(item => item.day_number === dayNumber)
+        .sort((a, b) => a.order_index - b.order_index);
+      
+      // Create a map of original order to items for easier access
+      const originalOrderMap = new Map();
+      dayItems.forEach(item => {
+        originalOrderMap.set(item.order_index, item);
+      });
+      
+      // Create a copy of all items to modify
+      const updatedItems = JSON.parse(JSON.stringify(dayItems));
+      
+      // Update order and adjust times
+      for (let i = 0; i < newOrder.length; i++) {
+        const orderInfo = newOrder[i];
+        const itemIndex = updatedItems.findIndex(item => item.id === orderInfo.id);
+        
+        if (itemIndex !== -1) {
+          // Update the order index
+          updatedItems[itemIndex].order_index = orderInfo.order_index;
+          
+          // Adjust times based on the previous activity
+          if (i > 0) {
+            const prevItemIndex = updatedItems.findIndex(item => item.order_index === orderInfo.order_index - 1);
+            
+            if (prevItemIndex !== -1) {
+              const prevItem = updatedItems[prevItemIndex];
+              const currentItem = updatedItems[itemIndex];
+              
+              // Determine the duration of the current activity
+              const currentStartTime = currentItem.start_time.split(':').map(Number);
+              const currentEndTime = currentItem.end_time.split(':').map(Number);
+              
+              const startDate = new Date();
+              startDate.setHours(currentStartTime[0], currentStartTime[1], 0, 0);
+              
+              const endDate = new Date();
+              endDate.setHours(currentEndTime[0], currentEndTime[1], 0, 0);
+              
+              // Calculate duration in minutes
+              const durationMinutes = (endDate - startDate) / (1000 * 60);
+              
+              // Set the start time to the end time of the previous activity
+              const prevEndTime = prevItem.end_time.split(':').map(Number);
+              
+              // Create new start time
+              const newStartDate = new Date();
+              newStartDate.setHours(prevEndTime[0], prevEndTime[1], 0, 0);
+              
+              // Create new end time based on the duration
+              const newEndDate = new Date(newStartDate);
+              newEndDate.setMinutes(newEndDate.getMinutes() + durationMinutes);
+              
+              // Format the times
+              const formattedStartTime = `${newStartDate.getHours().toString().padStart(2, '0')}:${newStartDate.getMinutes().toString().padStart(2, '0')}`;
+              const formattedEndTime = `${newEndDate.getHours().toString().padStart(2, '0')}:${newEndDate.getMinutes().toString().padStart(2, '0')}`;
+              
+              // Update the times
+              updatedItems[itemIndex].start_time = formattedStartTime;
+              updatedItems[itemIndex].end_time = formattedEndTime;
+            }
+          }
+        }
+      }
+      
+      // Find indices in the original array
+      const itemsToUpdate = [];
+      updatedItems.forEach(updatedItem => {
+        const index = itineraryData.findIndex(item => item.id === updatedItem.id);
         if (index !== -1) {
-          itineraryData[index].order_index = item.order_index;
+          // Only add items whose times have changed
+          if (itineraryData[index].start_time !== updatedItem.start_time || 
+              itineraryData[index].end_time !== updatedItem.end_time ||
+              itineraryData[index].order_index !== updatedItem.order_index) {
+            
+            // Update the itineraryData for UI display
+            itineraryData[index].order_index = updatedItem.order_index;
+            itineraryData[index].start_time = updatedItem.start_time;
+            itineraryData[index].end_time = updatedItem.end_time;
+            
+            // Add to items to update in the database
+            itemsToUpdate.push({
+              id: updatedItem.id,
+              order_index: updatedItem.order_index,
+              start_time: updatedItem.start_time,
+              end_time: updatedItem.end_time
+            });
+          }
         }
       });
       
-      // Send API request
+      // Update UI immediately by re-rendering the itinerary
+      renderItinerary();
+      
+      // Send API request - Using the regular update API for each item to update times
+      for (const item of itemsToUpdate) {
+        const itemId = item.id;
+        const response = await fetch(`${basePath}api/itinerary/${itemId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            start_time: item.start_time,
+            end_time: item.end_time,
+            order_index: item.order_index,
+            // Include other required fields that stay the same
+            day_number: dayNumber,
+            // Find and include the original values for fields that don't change
+            ...itineraryData.find(i => i.id === itemId)
+          })
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Failed to update item ${itemId}: ${response.statusText}`);
+        }
+      }
+      
+      // Also handle the standard order update for compatibility
       const response = await fetch(apiUrls.reorderItinerary, {
         method: 'PUT',
         headers: {
