@@ -8,7 +8,13 @@ A modern web application with user registration and login functionality, featuri
 
 - **Secure User Registration** - Create your account with validation
 - **User Authentication** - Robust login/logout functionality
-- **Interactive Dashboard** - Modern, data-rich user dashboard  
+- **Interactive Dashboard** - Modern, data-rich user dashboard
+- **Comprehensive Trip Planner**:
+  - Create and manage trips with detailed itineraries
+  - Add locations manually or via Google Maps integration
+  - Interactive map with location markers and route visualization
+  - Drag-and-drop daily activity planning
+  - Visual timeline interface for trip organization
 - **Fully Responsive Design** - Looks great on mobile, tablet, and desktop
 - **SQLite Database** - Fast and lightweight data storage
 - **Reverse Proxy Support** - Configurable base path for flexible deployment
@@ -23,6 +29,7 @@ A modern web application with user registration and login functionality, featuri
 - **Bootstrap 5** - Frontend framework
 - **Font Awesome** - Icon library
 - **Bcrypt** - Secure password hashing
+- **Google Maps API** - Location search and mapping capabilities
 
 ## Installation
 
@@ -44,7 +51,10 @@ A modern web application with user registration and login functionality, featuri
    APP_BASE_PATH=/
    NODE_ENV=development
    DB_PATH=./database.sqlite
+   GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
    ```
+   
+   Note: To use the Google Maps features, you'll need to obtain an API key from the [Google Cloud Console](https://console.cloud.google.com/) with the Maps JavaScript API and Places API enabled.
 
 4. Start the application:
    ```
@@ -198,11 +208,52 @@ skydea/
 ### Dashboard
 ![Dashboard](https://via.placeholder.com/800x400?text=Skydea+Dashboard)
 
+## Trip Planner Features
+
+The Trip Planner provides comprehensive tools for planning and organizing your trips:
+
+### Trip Management
+- Create trips with titles, descriptions, and date ranges
+- View all your trips on the dashboard
+- Edit trip details or delete trips
+
+### Place Management
+- Add places manually with names, descriptions, and coordinates
+- Search for places using Google Maps integration
+- View places on an interactive map
+- Organize places by day and activity
+
+### Itinerary Planning
+- Create daily itineraries with timed activities
+- Associate activities with saved places
+- Drag-and-drop interface for reordering activities
+- Visual timeline view of your daily schedule
+
+### Map Visualization
+- Interactive map showing all trip locations
+- View daily routes with directional guidance
+- Click markers for detailed location information
+
+## Screenshots
+
+### Trip Planner
+![Trip Planner](https://via.placeholder.com/800x400?text=Skydea+Trip+Planner)
+
+### Interactive Map
+![Interactive Map](https://via.placeholder.com/800x400?text=Skydea+Interactive+Map)
+
+### Itinerary Timeline
+![Itinerary Timeline](https://via.placeholder.com/800x400?text=Skydea+Itinerary+Timeline)
+
 ## Roadmap
 
+- [x] Trip Planner with Google Maps integration
+- [x] Interactive itinerary management
 - [ ] User profile management
 - [ ] Password reset functionality
 - [ ] Email verification
+- [ ] Trip sharing capabilities
+- [ ] Export itineraries to PDF/print format
 - [ ] Admin dashboard
 - [ ] User roles and permissions
 

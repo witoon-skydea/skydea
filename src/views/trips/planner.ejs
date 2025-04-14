@@ -1,0 +1,510 @@
+<div id="trip-planner-app" data-trip-id="<%= trip.id %>" data-base-path="<%= basePath %>">
+  <!-- Header -->
+  <section class="py-4 bg-light border-bottom">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h2 class="mb-1 trip-title"><%= trip.title %></h2>
+          <p class="mb-0 text-muted trip-dates">
+            <i class="fas fa-calendar-alt me-2"></i>
+            <span id="trip-date-range"><%= new Date(trip.start_date).toLocaleDateString() %> - <%= new Date(trip.end_date).toLocaleDateString() %></span>
+            <span class="ms-3 badge bg-primary" id="trip-duration-badge"></span>
+          </p>
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+          <button class="btn btn-outline-secondary me-2" id="edit-trip-btn">
+            <i class="fas fa-edit me-1"></i> Edit Trip
+          </button>
+          <a href="<%= basePath %>dashboard" class="btn btn-outline-primary">
+            <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3 mb-4">
+          <div class="card border-0 shadow mb-4">
+            <div class="card-header bg-white py-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">Trip Navigation</h5>
+              </div>
+            </div>
+            <div class="list-group list-group-flush" id="trip-nav">
+              <a href="#overview" class="list-group-item list-group-item-action active" data-bs-toggle="list">
+                <i class="fas fa-info-circle me-2"></i> Overview
+              </a>
+              <a href="#places" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                <i class="fas fa-map-marker-alt me-2"></i> Places
+              </a>
+              <a href="#itinerary" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                <i class="fas fa-calendar-day me-2"></i> Itinerary
+              </a>
+              <a href="#map" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                <i class="fas fa-map me-2"></i> Map View
+              </a>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow">
+            <div class="card-header bg-white py-3">
+              <h5 class="mb-0">Trip Details</h5>
+            </div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label class="form-label text-muted">Description</label>
+                <p class="mb-0 trip-description"><%= trip.description || 'No description available' %></p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label text-muted">Created</label>
+                <p class="mb-0"><%= new Date(trip.created_at).toLocaleDateString() %></p>
+              </div>
+              <div>
+                <label class="form-label text-muted">Last Updated</label>
+                <p class="mb-0"><%= new Date(trip.updated_at).toLocaleDateString() %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="col-lg-9">
+          <div class="tab-content">
+            <!-- Overview Tab -->
+            <div class="tab-pane fade show active" id="overview">
+              <div class="card border-0 shadow mb-4">
+                <div class="card-header bg-white py-3">
+                  <h5 class="mb-0">Trip Overview</h5>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-4 mb-4">
+                      <div class="card h-100 bg-light">
+                        <div class="card-body text-center">
+                          <div class="display-4 mb-2">
+                            <span id="place-count">0</span>
+                          </div>
+                          <h6 class="mb-0">Places</h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                      <div class="card h-100 bg-light">
+                        <div class="card-body text-center">
+                          <div class="display-4 mb-2">
+                            <span id="day-count">0</span>
+                          </div>
+                          <h6 class="mb-0">Days</h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                      <div class="card h-100 bg-light">
+                        <div class="card-body text-center">
+                          <div class="display-4 mb-2">
+                            <span id="activity-count">0</span>
+                          </div>
+                          <h6 class="mb-0">Activities</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center mt-3">
+                    <div class="btn-group">
+                      <button class="btn btn-primary" id="add-place-btn">
+                        <i class="fas fa-map-marker-alt me-1"></i> Add Place
+                      </button>
+                      <button class="btn btn-primary" id="plan-itinerary-btn">
+                        <i class="fas fa-calendar-day me-1"></i> Plan Itinerary
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card border-0 shadow">
+                <div class="card-header bg-white py-3">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">Trip Highlights</h5>
+                    <button class="btn btn-sm btn-outline-primary" id="view-all-places-btn">
+                      View All Places
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div id="places-loading" class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 text-muted">Loading places...</p>
+                  </div>
+                  
+                  <div id="places-empty" class="text-center py-4 d-none">
+                    <div class="mb-3">
+                      <i class="fas fa-map-marker-alt fa-4x text-muted opacity-50"></i>
+                    </div>
+                    <h5>No Places Yet</h5>
+                    <p class="text-muted">Start by adding places to your trip.</p>
+                    <button class="btn btn-primary mt-2" id="empty-add-place-btn">
+                      <i class="fas fa-plus me-2"></i> Add Your First Place
+                    </button>
+                  </div>
+                  
+                  <div id="places-highlights" class="d-none">
+                    <div class="row g-4" id="highlights-container">
+                      <!-- Highlights will be loaded here dynamically -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Places Tab -->
+            <div class="tab-pane fade" id="places">
+              <div class="card border-0 shadow mb-4">
+                <div class="card-header bg-white py-3">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">All Places</h5>
+                    <button class="btn btn-primary" id="add-place-btn-2">
+                      <i class="fas fa-plus me-1"></i> Add Place
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div id="places-table-loading" class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 text-muted">Loading places...</p>
+                  </div>
+                  
+                  <div id="places-table-empty" class="text-center py-4 d-none">
+                    <div class="mb-3">
+                      <i class="fas fa-map-marker-alt fa-4x text-muted opacity-50"></i>
+                    </div>
+                    <h5>No Places Yet</h5>
+                    <p class="text-muted">Start by adding places to your trip.</p>
+                    <button class="btn btn-primary mt-2" id="table-add-place-btn">
+                      <i class="fas fa-plus me-2"></i> Add Your First Place
+                    </button>
+                  </div>
+                  
+                  <div id="places-table-container" class="d-none">
+                    <div class="table-responsive">
+                      <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                          <tr>
+                            <th>Place</th>
+                            <th>Address</th>
+                            <th>Coordinates</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody id="places-table-body">
+                          <!-- Places will be loaded here dynamically -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Itinerary Tab -->
+            <div class="tab-pane fade" id="itinerary">
+              <div class="card border-0 shadow mb-4">
+                <div class="card-header bg-white py-3">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">Daily Itinerary</h5>
+                    <button class="btn btn-primary" id="add-activity-btn">
+                      <i class="fas fa-plus me-1"></i> Add Activity
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div id="itinerary-loading" class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 text-muted">Loading itinerary...</p>
+                  </div>
+                  
+                  <div id="itinerary-empty" class="text-center py-4 d-none">
+                    <div class="mb-3">
+                      <i class="fas fa-calendar-day fa-4x text-muted opacity-50"></i>
+                    </div>
+                    <h5>No Activities Planned Yet</h5>
+                    <p class="text-muted">Start planning your daily activities.</p>
+                    <button class="btn btn-primary mt-2" id="empty-add-activity-btn">
+                      <i class="fas fa-plus me-2"></i> Add Your First Activity
+                    </button>
+                  </div>
+                  
+                  <div id="itinerary-container" class="d-none">
+                    <ul class="nav nav-tabs mb-4" id="day-tabs" role="tablist">
+                      <!-- Day tabs will be loaded here dynamically -->
+                    </ul>
+                    <div class="tab-content" id="day-tab-content">
+                      <!-- Day tab content will be loaded here dynamically -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Map Tab -->
+            <div class="tab-pane fade" id="map">
+              <div class="card border-0 shadow">
+                <div class="card-header bg-white py-3">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">Trip Map</h5>
+                    <div class="btn-group">
+                      <button class="btn btn-sm btn-outline-secondary" id="show-all-places-btn">
+                        <i class="fas fa-map-marker-alt me-1"></i> All Places
+                      </button>
+                      <button class="btn btn-sm btn-outline-secondary" id="show-by-day-btn">
+                        <i class="fas fa-calendar-day me-1"></i> By Day
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body p-0">
+                  <div id="map-loading" class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 text-muted">Loading map...</p>
+                  </div>
+                  
+                  <div id="map-container" class="d-none">
+                    <div id="trip-map" style="height: 600px;"></div>
+                  </div>
+                  
+                  <div id="map-empty" class="text-center py-5 d-none">
+                    <div class="mb-3">
+                      <i class="fas fa-map fa-4x text-muted opacity-50"></i>
+                    </div>
+                    <h5>No Places on Map</h5>
+                    <p class="text-muted">Add places with locations to see them on the map.</p>
+                    <button class="btn btn-primary mt-2" id="map-add-place-btn">
+                      <i class="fas fa-plus me-2"></i> Add Place with Location
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Add Place Modal -->
+<div class="modal fade" id="add-place-modal" tabindex="-1" aria-labelledby="add-place-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add-place-modal-label">Add Place to Trip</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs" id="place-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="manual-tab" data-bs-toggle="tab" data-bs-target="#manual" type="button" role="tab" aria-controls="manual" aria-selected="true">
+              <i class="fas fa-edit me-1"></i> Manual Entry
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="google-tab" data-bs-toggle="tab" data-bs-target="#google" type="button" role="tab" aria-controls="google" aria-selected="false">
+              <i class="fas fa-search me-1"></i> Google Places Search
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content mt-3" id="place-tab-content">
+          <div class="tab-pane fade show active" id="manual" role="tabpanel" aria-labelledby="manual-tab">
+            <form id="manual-place-form">
+              <div class="mb-3">
+                <label for="place-name" class="form-label">Place Name</label>
+                <input type="text" class="form-control" id="place-name" placeholder="e.g., Eiffel Tower" required>
+              </div>
+              <div class="mb-3">
+                <label for="place-description" class="form-label">Description (Optional)</label>
+                <textarea class="form-control" id="place-description" rows="3" placeholder="Brief description of this place"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="place-address" class="form-label">Address (Optional)</label>
+                <input type="text" class="form-control" id="place-address" placeholder="e.g., Champ de Mars, 5 Av. Anatole France, 75007 Paris, France">
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="place-latitude" class="form-label">Latitude (Optional)</label>
+                  <input type="number" step="any" class="form-control" id="place-latitude" placeholder="e.g., 48.8584">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="place-longitude" class="form-label">Longitude (Optional)</label>
+                  <input type="number" step="any" class="form-control" id="place-longitude" placeholder="e.g., 2.2945">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="place-image" class="form-label">Image URL (Optional)</label>
+                <input type="url" class="form-control" id="place-image" placeholder="e.g., https://example.com/eiffel-tower.jpg">
+              </div>
+              <div id="manual-place-error" class="alert alert-danger d-none" role="alert"></div>
+            </form>
+          </div>
+          <div class="tab-pane fade" id="google" role="tabpanel" aria-labelledby="google-tab">
+            <div class="mb-3">
+              <label for="google-search" class="form-label">Search for a place</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="google-search" placeholder="e.g., Eiffel Tower, Paris">
+                <button class="btn btn-primary" type="button" id="google-search-btn">
+                  <i class="fas fa-search"></i> Search
+                </button>
+              </div>
+            </div>
+            <div id="google-search-results" class="d-none">
+              <h6 class="mb-3">Search Results</h6>
+              <div class="list-group" id="google-results-list">
+                <!-- Search results will be populated here -->
+              </div>
+            </div>
+            <div id="google-search-loading" class="text-center py-4 d-none">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2 text-muted">Searching...</p>
+            </div>
+            <div id="google-search-error" class="alert alert-danger mt-3 d-none" role="alert"></div>
+            <div id="google-place-details" class="mt-4 d-none">
+              <h6 class="mb-3">Selected Place</h6>
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title" id="google-place-name"></h5>
+                  <p class="card-text" id="google-place-address"></p>
+                  <div class="d-flex justify-content-between">
+                    <span class="text-muted" id="google-place-coords"></span>
+                    <button class="btn btn-sm btn-primary" id="google-select-place-btn">
+                      <i class="fas fa-plus me-1"></i> Add This Place
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="save-place-btn">Add Place</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Activity Modal -->
+<div class="modal fade" id="add-activity-modal" tabindex="-1" aria-labelledby="add-activity-modal-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add-activity-modal-label">Add Activity to Itinerary</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="activity-form">
+          <div class="mb-3">
+            <label for="activity-title" class="form-label">Activity Title</label>
+            <input type="text" class="form-control" id="activity-title" placeholder="e.g., Visit Eiffel Tower" required>
+          </div>
+          <div class="mb-3">
+            <label for="activity-description" class="form-label">Description (Optional)</label>
+            <textarea class="form-control" id="activity-description" rows="3" placeholder="Description of this activity"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="activity-place" class="form-label">Place (Optional)</label>
+            <select class="form-select" id="activity-place">
+              <option value="">Select a place or leave blank</option>
+              <!-- Places will be loaded here dynamically -->
+            </select>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="activity-day" class="form-label">Day</label>
+              <select class="form-select" id="activity-day" required>
+                <!-- Days will be loaded here dynamically -->
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="activity-order" class="form-label">Order</label>
+              <input type="number" class="form-control" id="activity-order" min="1" value="1" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="activity-start-time" class="form-label">Start Time</label>
+              <input type="time" class="form-control" id="activity-start-time" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="activity-end-time" class="form-label">End Time</label>
+              <input type="time" class="form-control" id="activity-end-time" required>
+            </div>
+          </div>
+          <div id="activity-form-error" class="alert alert-danger d-none" role="alert"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="save-activity-btn">Add Activity</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Trip Modal -->
+<div class="modal fade" id="edit-trip-modal" tabindex="-1" aria-labelledby="edit-trip-modal-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edit-trip-modal-label">Edit Trip</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="edit-trip-form">
+          <div class="mb-3">
+            <label for="edit-trip-title" class="form-label">Trip Title</label>
+            <input type="text" class="form-control" id="edit-trip-title" required>
+          </div>
+          <div class="mb-3">
+            <label for="edit-trip-description" class="form-label">Description (Optional)</label>
+            <textarea class="form-control" id="edit-trip-description" rows="3"></textarea>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="edit-trip-start-date" class="form-label">Start Date</label>
+              <input type="date" class="form-control" id="edit-trip-start-date" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="edit-trip-end-date" class="form-label">End Date</label>
+              <input type="date" class="form-control" id="edit-trip-end-date" required>
+            </div>
+          </div>
+          <div id="edit-trip-error" class="alert alert-danger d-none" role="alert"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="update-trip-btn">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Trip Planner CSS and JavaScript -->
+<link rel="stylesheet" href="<%= basePath %>css/trip-planner.css">
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&libraries=places" defer></script>
+<script src="<%= basePath %>js/trip-planner.js" defer></script>

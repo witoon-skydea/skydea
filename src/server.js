@@ -9,9 +9,13 @@ const appConfig = require('./config/app');
 // Load routes
 const indexRoutes = require('./routes/index');
 const authRoutes = require('./routes/auth');
+const tripRoutes = require('./routes/trips');
+const placeRoutes = require('./routes/places');
+const itineraryRoutes = require('./routes/itinerary');
 
 // Load middleware
 const { setLocals } = require('./middlewares/auth');
+const { errorHandler, AppError } = require('./middlewares/errorHandler');
 
 // Initialize the Express app
 const app = express();
@@ -45,23 +49,32 @@ app.use(appConfig.appBasePath, express.static(path.join(__dirname, '../public'))
 // Set up the locals middleware
 app.use(setLocals);
 
-// Set up routes
-app.use(appConfig.appBasePath, indexRoutes);
-app.use(`${appConfig.appBasePath}auth`, authRoutes);
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).render('error', {
-    title: 'Error',
-    message: 'Something went wrong',
-    error: appConfig.nodeEnv === 'development' ? err : {},
-    basePath: appConfig.appBasePath
-  });
+// API routes middleware to identify API requests
+app.use(`${appConfig.appBasePath}api`, (req, res, next) => {
+  req.isApiRequest = true;
+  next();
 });
 
+// Set up web routes
+app.use(appConfig.appBasePath, indexRoutes);
+app.use(`${appConfig.appBasePath}auth`, authRoutes);
+app.use(`${appConfig.appBasePath}trips`, tripRoutes);
+app.use(`${appConfig.appBasePath}places`, placeRoutes);
+app.use(`${appConfig.appBasePath}itinerary`, itineraryRoutes);
+
+// Set up API routes
+app.use(`${appConfig.appBasePath}api/trips`, tripRoutes);
+app.use(`${appConfig.appBasePath}api/places`, placeRoutes);
+app.use(`${appConfig.appBasePath}api/itinerary`, itineraryRoutes);
+
 // 404 handler
-app.use((req, res) => {
+app.use((req, res, next) => {
+  // API routes
+  if (req.isApiRequest || req.path.startsWith(`${appConfig.appBasePath}api/`)) {
+    return res.status(404).json({ error: 'API endpoint not found' });
+  }
+  
+  // Web routes
   res.status(404).render('error', {
     title: 'Page Not Found',
     message: 'The page you are looking for does not exist',
@@ -69,6 +82,9 @@ app.use((req, res) => {
     basePath: appConfig.appBasePath
   });
 });
+
+// Global error handler
+app.use(errorHandler);
 
 // Start the server
 const PORT = appConfig.port;

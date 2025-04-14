@@ -1,0 +1,17 @@
+[Unit]
+Description=Skydea Web Application
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/skydea
+ExecStart=/usr/bin/npm start
+Restart=on-failure
+Environment=PORT=3001
+Environment=APP_BASE_PATH=/skydea
+Environment=NODE_ENV=production
+Environment=SESSION_SECRET=your_secure_session_secret_here
+
+[Install]
+WantedBy=multi-user.target

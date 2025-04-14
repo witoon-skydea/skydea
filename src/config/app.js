@@ -6,6 +6,12 @@ module.exports = {
   appBasePath: process.env.APP_BASE_PATH || '/',
   nodeEnv: process.env.NODE_ENV || 'development',
   
+  // Google Maps API configuration
+  googleMaps: {
+    apiKey: process.env.GOOGLE_MAPS_API_KEY || '',
+    libraries: 'places'
+  },
+  
   // Helper function to generate proper paths considering the base path
   getPath: function(relativePath) {
     // Ensure relativePath doesn't start with a slash
