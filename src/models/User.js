@@ -14,32 +14,44 @@ class User {
     const hashedPassword = await bcrypt.hash(password, 10);
     
     return new Promise((resolve, reject) => {
+      console.log(`Checking if username "${username}" or email "${email}" already exists`);
+      
       // Check if username or email already exists
       db.get(
         'SELECT * FROM users WHERE username = ? OR email = ?',
         [username, email],
         (err, user) => {
           if (err) {
+            console.error('Database error when checking existing user:', err);
             return reject(err);
           }
           
           if (user) {
+            console.log('Found existing user:', user);
             if (user.username === username) {
+              console.log('Username already exists');
               return reject(new Error('Username already exists'));
             }
             if (user.email === email) {
+              console.log('Email already exists');
               return reject(new Error('Email already exists'));
             }
           }
           
+          console.log('No existing user found, proceeding with insertion');
+          
           // Insert the new user
+          console.log('Inserting new user into database');
           db.run(
             'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
             [username, email, hashedPassword],
             function(err) {
               if (err) {
+                console.error('Error inserting new user:', err);
                 return reject(err);
               }
+              
+              console.log('User inserted successfully with ID:', this.lastID);
               
               // Get the newly created user
               db.get(
@@ -47,8 +59,10 @@ class User {
                 [this.lastID],
                 (err, user) => {
                   if (err) {
+                    console.error('Error retrieving inserted user:', err);
                     return reject(err);
                   }
+                  console.log('Retrieved user details:', user);
                   resolve(user);
                 }
               );

@@ -38,32 +38,39 @@ exports.showRegister = (req, res) => {
  */
 exports.register = async (req, res) => {
   try {
+    console.log('Register form submitted with data:', req.body);
     const { username, email, password, confirmPassword } = req.body;
     
     // Input validation
     if (!username || !email || !password || !confirmPassword) {
       req.session.error = 'All fields are required';
+      console.log('Validation error: All fields are required');
       return res.redirect(appConfig.getPath('register'));
     }
     
     if (password !== confirmPassword) {
       req.session.error = 'Passwords do not match';
+      console.log('Validation error: Passwords do not match');
       return res.redirect(appConfig.getPath('register'));
     }
     
     if (password.length < 6) {
       req.session.error = 'Password must be at least 6 characters long';
+      console.log('Validation error: Password must be at least 6 characters long');
       return res.redirect(appConfig.getPath('register'));
     }
     
     // Create user
-    await User.create({ username, email, password });
+    console.log('Attempting to create user with:', { username, email });
+    const user = await User.create({ username, email, password });
+    console.log('User created successfully:', user);
     
     req.session.success = 'Registration successful! You can now log in.';
     return res.redirect(appConfig.getPath('login'));
   } catch (error) {
     console.error('Registration error:', error);
     req.session.error = error.message || 'An error occurred during registration';
+    console.log('Setting error message in session:', req.session.error);
     return res.redirect(appConfig.getPath('register'));
   }
 };

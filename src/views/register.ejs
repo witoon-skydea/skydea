@@ -7,9 +7,17 @@
           <p class="text-muted">Join Skydea and start your journey</p>
         </div>
         
+        <!-- Debug info - Remove in production -->
+        <% if (locals.error) { %>
+        <div class="alert alert-danger alert-dismissible fade show mb-4">
+          <i class="fas fa-exclamation-circle me-2"></i> <%= error %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <% } %>
+        
         <div class="card border-0 shadow-lg">
           <div class="card-body p-4 p-lg-5">
-            <form action="<%= basePath %>auth/register" method="POST">
+            <form action="<%= basePath %>auth/register" method="POST" enctype="application/x-www-form-urlencoded">
               <div class="mb-4">
                 <label for="username" class="form-label">Username</label>
                 <div class="input-group">
