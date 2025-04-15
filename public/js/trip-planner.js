@@ -994,40 +994,37 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
       console.log('Searching for places with query:', query);
       
-      // Check if Google Maps Places API is available
-      if (typeof google === 'undefined') {
-        throw new Error('Google Maps API not loaded. Please refresh the page and try again.');
+      // Use the backend API proxy instead of direct Google Maps API
+      const searchUrl = `${basePath}api/places/search?query=${encodeURIComponent(query)}`;
+      console.log('Searching using backend proxy:', searchUrl);
+      
+      const response = await fetch(searchUrl);
+      
+      if (!response.ok) {
+        throw new Error(`Search request failed: ${response.status} ${response.statusText}`);
       }
       
-      if (!google.maps || !google.maps.places) {
-        throw new Error('Google Maps Places API not loaded. Please check your API key.');
+      const data = await response.json();
+      
+      // Hide loading
+      loadingElement.classList.add('d-none');
+      
+      if (!data || !data.results || data.results.length === 0) {
+        errorElement.textContent = 'No places found for your search.';
+        errorElement.classList.remove('d-none');
+        return;
       }
       
-      // Create PlacesService instance
-      const placesService = new google.maps.places.PlacesService(document.createElement('div'));
+      // Show results
+      resultsContainer.classList.remove('d-none');
+      const resultsList = document.getElementById('google-results-list');
+      resultsList.innerHTML = '';
       
-      // Execute search
-      placesService.textSearch({
-        query: query
-      }, (results, status) => {
-        // Hide loading
-        loadingElement.classList.add('d-none');
-        
-        if (status !== google.maps.places.PlacesServiceStatus.OK || !results) {
-          errorElement.textContent = 'No places found for your search.';
-          errorElement.classList.remove('d-none');
-          return;
-        }
-        
-        // Show results
-        resultsContainer.classList.remove('d-none');
-        const resultsList = document.getElementById('google-results-list');
-        resultsList.innerHTML = '';
-        
-        results.slice(0, 5).forEach(place => {
-          const listItem = document.createElement('a');
-          listItem.className = 'list-group-item list-group-item-action';
-          listItem.href = '#';
+      // Process up to 5 results
+      data.results.slice(0, 5).forEach(place => {
+        const listItem = document.createElement('a');
+        listItem.className = 'list-group-item list-group-item-action';
+        listItem.href = '#';
           listItem.innerHTML = `
             <div class="d-flex justify-content-between align-items-center">
               <div>
