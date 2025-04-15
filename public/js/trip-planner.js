@@ -74,41 +74,93 @@ document.addEventListener('DOMContentLoaded', function() {
   async function loadTripData() {
     try {
       console.log('Loading trip data from:', apiUrls.trip);
-      
+
       if (!tripId) {
         throw new Error('Trip ID is not defined');
       }
-      
-      const response = await fetch(apiUrls.trip);
+
+      // Add timeout to fetch to prevent hanging
+      const fetchWithTimeout = async (url, options = {}, timeout = 10000) => {
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeout);
+        
+        try {
+          const response = await fetch(url, {
+            ...options,
+            signal: controller.signal
+          });
+          clearTimeout(id);
+          return response;
+        } catch (error) {
+          clearTimeout(id);
+          throw error;
+        }
+      };
+
+      const response = await fetchWithTimeout(apiUrls.trip);
       console.log('Trip API response status:', response.status);
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error('API error response:', errorText);
         throw new Error(`Failed to load trip data: ${response.status} ${response.statusText}`);
       }
-      
+
       const data = await response.json();
-      console.log('Trip data loaded successfully');
-      
+      console.log('Trip data loaded successfully:', data);
+
       if (!data.trip) {
         console.error('Trip data structure invalid:', data);
         throw new Error('Invalid trip data structure received from API');
       }
-      
+
       tripData = data.trip;
       placesData = data.places || [];
       itineraryData = data.itineraryItems || [];
       
-      // Update UI
-      updateCounters();
-      renderPlacesHighlights();
-      renderPlacesTable();
-      renderItinerary();
+      console.log('Parsed trip data:', {
+        tripData,
+        placesCount: placesData.length,
+        itineraryCount: itineraryData.length
+      });
+
+      // Update UI safely with try-catch blocks for each operation
+      try {
+        updateCounters();
+        console.log('Counters updated');
+      } catch (err) {
+        console.error('Error updating counters:', err);
+      }
       
+      try {
+        renderPlacesHighlights();
+        console.log('Places highlights rendered');
+      } catch (err) {
+        console.error('Error rendering places highlights:', err);
+      }
+      
+      try {
+        renderPlacesTable();
+        console.log('Places table rendered');
+      } catch (err) {
+        console.error('Error rendering places table:', err);
+      }
+      
+      try {
+        renderItinerary();
+        console.log('Itinerary rendered');
+      } catch (err) {
+        console.error('Error rendering itinerary:', err);
+      }
+
       // Initialize map if on the map tab
       if (window.location.hash === '#map') {
-        initializeMap();
+        try {
+          initializeMap();
+          console.log('Map initialized');
+        } catch (err) {
+          console.error('Error initializing map:', err);
+        }
       }
     } catch (error) {
       console.error('Error loading trip data:', error);
@@ -826,11 +878,21 @@ document.addEventListener('DOMContentLoaded', function() {
           return;
         }
         
+        // Check if place.geometry.location has lat/lng as functions or properties
+        let lat, lng;
+        if (typeof selectedPlace.geometry.location.lat === 'function') {
+          lat = selectedPlace.geometry.location.lat();
+          lng = selectedPlace.geometry.location.lng();
+        } else {
+          lat = selectedPlace.geometry.location.lat;
+          lng = selectedPlace.geometry.location.lng;
+        }
+        
         placeData = {
           name: selectedPlace.name,
           address: selectedPlace.formatted_address,
-          latitude: selectedPlace.geometry.location.lat,
-          longitude: selectedPlace.geometry.location.lng,
+          latitude: lat,
+          longitude: lng,
           place_id: selectedPlace.place_id,
           // Set a default image URL for places added from Google Maps
           image_url: "https://www.prachachat.net/wp-content/uploads/2023/08/Google-Maps.png"
@@ -993,38 +1055,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
     try {
       console.log('Searching for places with query:', query);
-      
-      // Use the backend API proxy instead of direct Google Maps API
-      const searchUrl = `${basePath}api/places/search?query=${encodeURIComponent(query)}`;
-      console.log('Searching using backend proxy:', searchUrl);
-      
-      const response = await fetch(searchUrl);
-      
-      if (!response.ok) {
-        throw new Error(`Search request failed: ${response.status} ${response.statusText}`);
+
+      // Check if Google Maps Places API is available
+      if (typeof google === 'undefined') {
+        throw new Error('Google Maps API not loaded. Please refresh the page and try again.');
       }
-      
-      const data = await response.json();
-      
-      // Hide loading
-      loadingElement.classList.add('d-none');
-      
-      if (!data || !data.results || data.results.length === 0) {
-        errorElement.textContent = 'No places found for your search.';
-        errorElement.classList.remove('d-none');
-        return;
+
+      if (!google.maps || !google.maps.places) {
+        throw new Error('Google Maps Places API not loaded. Please check your API key.');
       }
-      
-      // Show results
-      resultsContainer.classList.remove('d-none');
-      const resultsList = document.getElementById('google-results-list');
-      resultsList.innerHTML = '';
-      
-      // Process up to 5 results
-      data.results.slice(0, 5).forEach(place => {
-        const listItem = document.createElement('a');
-        listItem.className = 'list-group-item list-group-item-action';
-        listItem.href = '#';
+
+      // Create PlacesService instance
+      const placesService = new google.maps.places.PlacesService(document.createElement('div'));
+
+      // Execute search
+      placesService.textSearch({
+        query: query
+      }, (results, status) => {
+        // Hide loading
+        loadingElement.classList.add('d-none');
+
+        if (status !== google.maps.places.PlacesServiceStatus.OK || !results) {
+          errorElement.textContent = 'No places found for your search.';
+          errorElement.classList.remove('d-none');
+          return;
+        }
+
+        // Show results
+        resultsContainer.classList.remove('d-none');
+        const resultsList = document.getElementById('google-results-list');
+        resultsList.innerHTML = '';
+
+        results.slice(0, 5).forEach(place => {
+          const listItem = document.createElement('a');
+          listItem.className = 'list-group-item list-group-item-action';
+          listItem.href = '#';
           listItem.innerHTML = `
             <div class="d-flex justify-content-between align-items-center">
               <div>
@@ -1057,7 +1122,11 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Select a place from Google Places search results
   function selectGooglePlace(place) {
+    console.log('Selected place:', place);
     selectedPlace = place;
+
+    // Add default image URL for Google Places
+    selectedPlace.image_url = "https://www.prachachat.net/wp-content/uploads/2023/08/Google-Maps.png";
 
     // Show place details
     const detailsContainer = document.getElementById('google-place-details');
@@ -1065,7 +1134,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('google-place-name').textContent = place.name;
     document.getElementById('google-place-address').textContent = place.formatted_address || 'No address available';
-    document.getElementById('google-place-coords').textContent = `${place.geometry.location.lat().toFixed(6)}, ${place.geometry.location.lng().toFixed(6)}`;
+    
+    // Check if place.geometry.location has lat/lng as functions or properties
+    let lat, lng;
+    if (typeof place.geometry.location.lat === 'function') {
+      lat = place.geometry.location.lat();
+      lng = place.geometry.location.lng();
+    } else {
+      lat = place.geometry.location.lat;
+      lng = place.geometry.location.lng;
+    }
+    
+    document.getElementById('google-place-coords').textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
 
     // Clear previous event listeners by cloning and replacing the button
     const selectButton = document.getElementById('google-select-place-btn');
