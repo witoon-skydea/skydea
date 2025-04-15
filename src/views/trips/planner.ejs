@@ -314,13 +314,18 @@
                 <div class="card-header bg-white py-3">
                   <div class="d-flex align-items-center justify-content-between">
                     <h5 class="mb-0">Trip Map</h5>
-                    <div class="btn-group">
-                      <button class="btn btn-sm btn-outline-secondary" id="show-all-places-btn">
-                        <i class="fas fa-map-marker-alt me-1"></i> All Places
-                      </button>
-                      <button class="btn btn-sm btn-outline-secondary" id="show-by-day-btn">
-                        <i class="fas fa-calendar-day me-1"></i> By Day
-                      </button>
+                    <div class="d-flex align-items-center gap-2">
+                      <select id="map-day-selector" class="form-select form-select-sm d-none">
+                        <!-- Day options will be populated here -->
+                      </select>
+                      <div class="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" id="show-all-places-btn">
+                          <i class="fas fa-map-marker-alt me-1"></i> All Places
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary" id="show-by-day-btn">
+                          <i class="fas fa-calendar-day me-1"></i> By Day
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

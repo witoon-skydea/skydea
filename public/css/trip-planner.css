@@ -44,6 +44,31 @@
   padding-top: 0.75rem;
 }
 
+/* Custom extra small button size */
+.btn-xs {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  line-height: 1.2;
+  border-radius: 0.2rem;
+}
+
+/* Ensure card buttons stay compact */
+#places-cards-container .card-footer .btn {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
+}
+
+/* For mobile devices, hide button text and just show icons */
+@media (max-width: 767.98px) {
+  #places-cards-container .card-footer .btn-text {
+    display: none;
+  }
+  
+  #places-cards-container .card-footer .btn {
+    padding: 0.2rem 0.35rem;
+  }
+}
+
 .place-icon {
   width: 40px;
   height: 40px;

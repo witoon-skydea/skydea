@@ -313,6 +313,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Map control buttons
     showAllPlacesBtn?.addEventListener('click', () => showAllMarkersOnMap());
     showByDayBtn?.addEventListener('click', () => showItineraryOnMap());
+    
+    // Map day selector
+    const mapDaySelector = document.getElementById('map-day-selector');
+    mapDaySelector?.addEventListener('change', () => {
+      if (!mapDaySelector.classList.contains('d-none')) {
+        showItineraryOnMap();
+      }
+    });
   }
   
   // Update trip duration badge
@@ -535,11 +543,11 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
           <div class="card-footer bg-white border-0">
             <div class="d-flex justify-content-end gap-2">
-              <button class="btn btn-sm btn-outline-primary edit-place-card-btn" data-place-id="${place.id}">
-                <i class="fas fa-edit"></i> Edit
+              <button class="btn btn-xs btn-outline-primary edit-place-card-btn" data-place-id="${place.id}">
+                <i class="fas fa-edit"></i><span class="btn-text"> Edit</span>
               </button>
-              <button class="btn btn-sm btn-outline-danger delete-place-card-btn" data-place-id="${place.id}">
-                <i class="fas fa-trash-alt"></i> Delete
+              <button class="btn btn-xs btn-outline-danger delete-place-card-btn" data-place-id="${place.id}">
+                <i class="fas fa-trash-alt"></i><span class="btn-text"> Delete</span>
               </button>
             </div>
           </div>
@@ -844,12 +852,53 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
+  // Populate the map day selector dropdown
+  function populateMapDaySelector() {
+    const mapDaySelector = document.getElementById('map-day-selector');
+    
+    if (!mapDaySelector) return;
+    
+    // Clear existing options
+    mapDaySelector.innerHTML = '';
+    
+    // Calculate the number of days
+    const startDate = new Date(tripData.start_date);
+    const endDate = new Date(tripData.end_date);
+    const diffTime = Math.abs(endDate - startDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // Include start and end day
+    
+    // Add options for each day
+    for (let day = 1; day <= diffDays; day++) {
+      const date = new Date(startDate);
+      date.setDate(startDate.getDate() + day - 1);
+      const formattedDate = date.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+      
+      const option = document.createElement('option');
+      option.value = day;
+      option.textContent = `Day ${day} - ${formattedDate}`;
+      
+      // Set the active day as selected
+      const activeTabId = document.querySelector('#day-tabs .nav-link.active')?.getAttribute('id');
+      const activeDay = activeTabId ? parseInt(activeTabId.replace('day-', '').replace('-tab', '')) : 1;
+      
+      if (day === activeDay) {
+        option.selected = true;
+      }
+      
+      mapDaySelector.appendChild(option);
+    }
+  }
+
   // Show all markers on the map
   function showAllMarkersOnMap() {
     if (!map) return;
     
     // Clear any existing directions
     directionsRenderer.setDirections({ routes: [] });
+    
+    // Hide day selector
+    const mapDaySelector = document.getElementById('map-day-selector');
+    mapDaySelector.classList.add('d-none');
     
     // Show all markers
     markers.forEach(({ marker }) => {
@@ -869,11 +918,19 @@ document.addEventListener('DOMContentLoaded', function() {
       marker.setMap(null);
     });
     
-    // Get the active day tab
-    const activeTabId = document.querySelector('#day-tabs .nav-link.active').getAttribute('id');
-    const dayNumber = parseInt(activeTabId.replace('day-', '').replace('-tab', ''));
+    // Show day selector
+    const mapDaySelector = document.getElementById('map-day-selector');
+    mapDaySelector.classList.remove('d-none');
     
-    // Filter itinerary items for the active day
+    // Populate the day selector if it's empty
+    if (mapDaySelector.options.length === 0) {
+      populateMapDaySelector();
+    }
+    
+    // Get the selected day from the selector
+    const dayNumber = parseInt(mapDaySelector.value);
+    
+    // Filter itinerary items for the selected day
     const dayItems = itineraryData.filter(item => item.day_number === dayNumber && item.place_id)
       .sort((a, b) => a.order_index - b.order_index);
     
