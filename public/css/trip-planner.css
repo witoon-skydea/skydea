@@ -308,6 +308,27 @@
   color: #0d6efd;
 }
 
+/* Trip cover image styling */
+.trip-cover-image {
+  height: 220px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+.trip-cover-image::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+}
+
 /* Place search highlight */
 .place-search-highlight {
   animation: pulse 2s infinite;

@@ -76,6 +76,55 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
+  // Set the trip cover image using the first place with an image, or a default image
+  function setTripCoverImage() {
+    const tripCoverImage = document.getElementById('trip-cover-image');
+    
+    if (!tripCoverImage) return;
+    
+    // Default image path
+    const defaultImage = `${basePath}images/main_photo.png`;
+    
+    // Try to find a place with an image
+    let imageUrl = defaultImage;
+    
+    if (placesData.length > 0) {
+      // Filter places that have an image_url
+      const placesWithImages = placesData.filter(place => place.image_url);
+      
+      if (placesWithImages.length > 0) {
+        // Get the first place with an image
+        const place = placesWithImages[0];
+        
+        // Fix for potential CORS issues with Google Place images
+        if (place.image_url.includes('maps.googleapis.com')) {
+          // Use our backend proxy for Google images
+          const googlePhotoRef = new URL(place.image_url).searchParams.get('photoreference');
+          if (googlePhotoRef) {
+            imageUrl = `${basePath}api/places/photo?photoreference=${googlePhotoRef}&maxwidth=800`;
+          } else {
+            imageUrl = place.image_url;
+          }
+        } else {
+          imageUrl = place.image_url;
+        }
+      } else {
+        // Use a random background image if no places have images but trip has places
+        const backgroundImages = [
+          `${basePath}images/backgrounds/bg1.png`,
+          `${basePath}images/backgrounds/bg2.png`,
+          `${basePath}images/backgrounds/bg3.png`
+        ];
+        
+        const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+        imageUrl = backgroundImages[randomIndex];
+      }
+    }
+    
+    // Set the background image
+    tripCoverImage.style.backgroundImage = `url('${imageUrl}')`;
+  }
+
   // Update the view toggle buttons based on the current view
   function updateViewToggleButtons() {
     const viewTableBtn = document.getElementById('view-table-btn');
@@ -164,6 +213,14 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Counters updated');
       } catch (err) {
         console.error('Error updating counters:', err);
+      }
+      
+      try {
+        // Set trip cover image
+        setTripCoverImage();
+        console.log('Trip cover image set');
+      } catch (err) {
+        console.error('Error setting trip cover image:', err);
       }
       
       try {
@@ -1173,6 +1230,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Update UI
       updateCounters();
+      setTripCoverImage();
       renderPlacesHighlights();
       renderPlacesTable();
       
