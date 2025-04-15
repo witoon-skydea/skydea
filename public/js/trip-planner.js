@@ -2,11 +2,14 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Get base data
   const tripPlannerApp = document.getElementById('trip-planner-app');
-  const tripId = tripPlannerApp?.dataset.tripId;
+  const tripId = tripPlannerApp?.dataset.tripId || window.tripData?.tripId;
   const basePath = tripPlannerApp?.dataset.basePath || '/';
+  const isOwner = window.tripData?.isOwner === true;
+  const isPublic = window.tripData?.isPublic === true;
+  let shareCode = window.tripData?.shareCode || '';
   
   // Log for debugging
-  console.log('Trip Planner Initialization:', { tripId, basePath });
+  console.log('Trip Planner Initialization:', { tripId, basePath, isOwner, isPublic, shareCode });
   
   if (!tripId || !tripPlannerApp) {
     console.error('Trip ID not found in dataset or trip-planner-app element not found');
@@ -19,7 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
     createPlace: `${basePath}api/places`,
     itinerary: `${basePath}api/itinerary/trip/${tripId}`,
     createItinerary: `${basePath}api/itinerary`,
-    reorderItinerary: `${basePath}api/itinerary/reorder/batch`
+    reorderItinerary: `${basePath}api/itinerary/reorder/batch`,
+    privacy: `${basePath}api/trips/${tripId}/privacy`,
+    shareCode: `${basePath}api/trips/${tripId}/share-code`,
+    shareLink: `${basePath}api/trips/${tripId}/share`
   };
   
   // State variables
@@ -182,15 +188,43 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
     
-    // Trip edit button
-    editTripBtn?.addEventListener('click', openEditTripModal);
+    // Trip action buttons
+    if (isOwner) {
+      // Edit trip button
+      editTripBtn?.addEventListener('click', openEditTripModal);
+      
+      // Share trip button
+      document.getElementById('share-trip-btn')?.addEventListener('click', openShareTripModal);
+      
+      // Privacy settings button
+      document.getElementById('privacy-trip-btn')?.addEventListener('click', openPrivacyModal);
+      
+      // Delete trip button
+      document.getElementById('delete-trip-btn')?.addEventListener('click', confirmDeleteTrip);
+      
+      // Share modal buttons
+      document.getElementById('share-toggle-privacy-btn')?.addEventListener('click', toggleTripPrivacy);
+      document.getElementById('copy-share-link-btn')?.addEventListener('click', copyShareLink);
+      document.getElementById('regenerate-share-code-btn')?.addEventListener('click', regenerateShareCode);
+      
+      // Privacy modal buttons
+      document.getElementById('privacy-public-toggle')?.addEventListener('change', function() {
+        const label = this.nextElementSibling;
+        if (label) {
+          label.textContent = this.checked ? 'Public Trip' : 'Private Trip';
+        }
+      });
+      document.getElementById('save-privacy-btn')?.addEventListener('click', savePrivacySettings);
+    }
     
-    // Add place buttons
-    addPlaceBtn?.addEventListener('click', openAddPlaceModal);
-    addPlaceBtn2?.addEventListener('click', openAddPlaceModal);
-    emptyAddPlaceBtn?.addEventListener('click', openAddPlaceModal);
-    tableAddPlaceBtn?.addEventListener('click', openAddPlaceModal);
-    mapAddPlaceBtn?.addEventListener('click', openAddPlaceModal);
+    // Add place buttons - only if user is owner
+    if (isOwner) {
+      addPlaceBtn?.addEventListener('click', openAddPlaceModal);
+      addPlaceBtn2?.addEventListener('click', openAddPlaceModal);
+      emptyAddPlaceBtn?.addEventListener('click', openAddPlaceModal);
+      tableAddPlaceBtn?.addEventListener('click', openAddPlaceModal);
+      mapAddPlaceBtn?.addEventListener('click', openAddPlaceModal);
+    }
     
     // View all places button
     viewAllPlacesBtn?.addEventListener('click', () => {
@@ -290,14 +324,26 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Generate image source with proper fallback
       const placeName = place.name || 'Unknown Place';
-      const placeholderUrl = `https://via.placeholder.com/300x200?text=${encodeURIComponent(placeName)}`;
+      const defaultImage = `${basePath}images/main_photo.png`;
       
       // Ensure image_url is properly handled
-      const imageUrl = place.image_url || placeholderUrl;
+      let imageUrl = place.image_url;
+      
+      // Fix for potential CORS issues with Google Place images
+      if (imageUrl && imageUrl.includes('maps.googleapis.com')) {
+        // Use our backend proxy for Google images
+        const googlePhotoRef = new URL(imageUrl).searchParams.get('photoreference');
+        if (googlePhotoRef) {
+          imageUrl = `${basePath}api/places/photo?photoreference=${googlePhotoRef}&maxwidth=500`;
+        }
+      }
+      
+      // If no image, use default
+      imageUrl = imageUrl || defaultImage;
 
       placeCard.innerHTML = `
         <div class="card h-100 shadow-sm">
-          <img src="${imageUrl}" class="card-img-top" onerror="this.src='${placeholderUrl}'; this.onerror=null;" alt="${placeName}" style="height: 150px; object-fit: cover;">
+          <img src="${imageUrl}" class="card-img-top" onerror="this.src='${defaultImage}'; this.onerror=null;" alt="${placeName}" style="height: 150px; object-fit: cover;">
           <div class="card-body">
             <h5 class="card-title">${placeName}</h5>
             ${place.address ? `<p class="card-text text-muted small mb-2"><i class="fas fa-map-marker-alt me-2"></i>${place.address}</p>` : ''}
@@ -1147,7 +1193,7 @@ document.addEventListener('DOMContentLoaded', function() {
     selectedPlace = place;
 
     // First set default image URL for Google Places
-    selectedPlace.image_url = "https://www.prachachat.net/wp-content/uploads/2023/08/Google-Maps.png";
+    selectedPlace.image_url = `${basePath}images/main_photo.png`;
     
     // If we have a photo_url from the API, use that
     if (place.photo_url) {
@@ -1164,7 +1210,6 @@ document.addEventListener('DOMContentLoaded', function() {
           console.log('Using Google Places client-side photo URL:', selectedPlace.image_url);
         } catch (error) {
           console.warn('Could not get photo URL from Google Places client-side:', error);
-          // Keep the default image URL
           
           // Try one more approach - if we have photo_reference, use the /photo endpoint
           if (photo.photo_reference) {
@@ -1845,6 +1890,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('edit-trip-start-date').value = formatDateForInput(tripData.start_date);
     document.getElementById('edit-trip-end-date').value = formatDateForInput(tripData.end_date);
     
+    // Set the privacy toggle if it exists
+    const isPublicToggle = document.getElementById('edit-trip-is-public');
+    if (isPublicToggle) {
+      isPublicToggle.checked = tripData.is_public === 1;
+    }
+    
     document.getElementById('edit-trip-error').classList.add('d-none');
     
     // Show modal
@@ -1860,6 +1911,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const description = document.getElementById('edit-trip-description').value.trim();
       const startDate = document.getElementById('edit-trip-start-date').value;
       const endDate = document.getElementById('edit-trip-end-date').value;
+      const isPublic = document.getElementById('edit-trip-is-public')?.checked || false;
       
       // Validate required fields
       if (!title || !startDate || !endDate) {
@@ -1881,7 +1933,8 @@ document.addEventListener('DOMContentLoaded', function() {
         title,
         description: description || null,
         start_date: startDate,
-        end_date: endDate
+        end_date: endDate,
+        is_public: isPublic
       };
       
       // Disable update button and show loading
@@ -1990,6 +2043,310 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch (e) {
       console.error('Error formatting date for input:', e);
       return dateStr;
+    }
+  }
+  
+  // Open Share Trip modal
+  function openShareTripModal() {
+    // Update the badge status
+    updateSharePrivacyBadge(tripData.is_public === 1);
+    
+    // Update the toggle button text
+    updateShareToggleButtonText(tripData.is_public === 1);
+    
+    // Load and set the share link
+    loadShareLink();
+    
+    // Show modal
+    const modal = new bootstrap.Modal(document.getElementById('share-trip-modal'));
+    modal.show();
+  }
+  
+  // Open Privacy Settings modal
+  function openPrivacyModal() {
+    // Set the toggle based on current privacy
+    const privacyPublicToggle = document.getElementById('privacy-public-toggle');
+    if (privacyPublicToggle) {
+      privacyPublicToggle.checked = tripData.is_public === 1;
+      
+      // Update the label
+      const label = privacyPublicToggle.nextElementSibling;
+      if (label) {
+        label.textContent = tripData.is_public === 1 ? 'Public Trip' : 'Private Trip';
+      }
+    }
+    
+    // Show modal
+    const modal = new bootstrap.Modal(document.getElementById('privacy-modal'));
+    modal.show();
+  }
+  
+  // Update Share Privacy Badge
+  function updateSharePrivacyBadge(isPublic) {
+    const sharePrivacyBadge = document.getElementById('share-privacy-badge');
+    if (sharePrivacyBadge) {
+      if (isPublic) {
+        sharePrivacyBadge.className = 'badge bg-success me-2';
+        sharePrivacyBadge.innerHTML = '<i class="fas fa-unlock me-1"></i> Public';
+      } else {
+        sharePrivacyBadge.className = 'badge bg-secondary me-2';
+        sharePrivacyBadge.innerHTML = '<i class="fas fa-lock me-1"></i> Private';
+      }
+    }
+  }
+  
+  // Update Share Toggle Button Text
+  function updateShareToggleButtonText(isPublic) {
+    const toggleTextEl = document.getElementById('share-toggle-privacy-text');
+    if (toggleTextEl) {
+      toggleTextEl.textContent = isPublic ? 'Make Private' : 'Make Public';
+    }
+  }
+  
+  // Toggle Trip Privacy
+  async function toggleTripPrivacy() {
+    try {
+      const shareTogglePrivacyBtn = document.getElementById('share-toggle-privacy-btn');
+      const newIsPublic = !(tripData.is_public === 1);
+      
+      // Disable button during request
+      if (shareTogglePrivacyBtn) {
+        shareTogglePrivacyBtn.disabled = true;
+        shareTogglePrivacyBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...';
+      }
+      
+      const response = await fetch(apiUrls.privacy, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ is_public: newIsPublic })
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to update privacy settings');
+      }
+      
+      const data = await response.json();
+      
+      // Update local state
+      tripData.is_public = data.is_public ? 1 : 0;
+      
+      // Update UI
+      updateSharePrivacyBadge(data.is_public);
+      updateShareToggleButtonText(data.is_public);
+      
+      // Update privacy badge in the main view
+      const privacyBadge = document.getElementById('privacy-badge');
+      if (privacyBadge) {
+        privacyBadge.className = data.is_public ? 'badge bg-success' : 'badge bg-secondary';
+        privacyBadge.innerHTML = `<i class="fas ${data.is_public ? 'fa-unlock' : 'fa-lock'} me-1"></i> ${data.is_public ? 'Public' : 'Private'}`;
+      }
+      
+      // Re-enable button
+      if (shareTogglePrivacyBtn) {
+        shareTogglePrivacyBtn.disabled = false;
+        shareTogglePrivacyBtn.innerHTML = data.is_public ? 'Make Private' : 'Make Public';
+      }
+      
+      // Reload share link after privacy change
+      loadShareLink();
+      
+      showToast(`Trip is now ${data.is_public ? 'public' : 'private'}`, 'success');
+    } catch (error) {
+      console.error('Error toggling privacy:', error);
+      showToast(error.message || 'Failed to update privacy settings', 'danger');
+      
+      // Re-enable button
+      const shareTogglePrivacyBtn = document.getElementById('share-toggle-privacy-btn');
+      if (shareTogglePrivacyBtn) {
+        shareTogglePrivacyBtn.disabled = false;
+        shareTogglePrivacyBtn.innerHTML = tripData.is_public === 1 ? 'Make Private' : 'Make Public';
+      }
+    }
+  }
+  
+  // Load Share Link
+  async function loadShareLink() {
+    try {
+      const shareLinkInput = document.getElementById('share-link-input');
+      if (!shareLinkInput) return;
+      
+      const response = await fetch(apiUrls.shareLink);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to get share link');
+      }
+      
+      const data = await response.json();
+      
+      // Update the share code in the local state
+      shareCode = data.share_code;
+      
+      // Set the share link in the input field
+      shareLinkInput.value = data.share_url;
+    } catch (error) {
+      console.error('Error loading share link:', error);
+      const shareLinkInput = document.getElementById('share-link-input');
+      if (shareLinkInput) {
+        shareLinkInput.value = 'Error loading share link';
+      }
+    }
+  }
+  
+  // Copy Share Link to Clipboard
+  function copyShareLink() {
+    const shareLinkInput = document.getElementById('share-link-input');
+    if (!shareLinkInput) return;
+    
+    shareLinkInput.select();
+    shareLinkInput.setSelectionRange(0, 99999); // For mobile devices
+    
+    try {
+      document.execCommand('copy');
+      showToast('Share link copied to clipboard', 'success');
+    } catch (err) {
+      console.error('Could not copy text: ', err);
+      showToast('Failed to copy link', 'danger');
+    }
+  }
+  
+  // Regenerate Share Code
+  async function regenerateShareCode() {
+    try {
+      const regenerateShareCodeBtn = document.getElementById('regenerate-share-code-btn');
+      // Disable button during request
+      if (regenerateShareCodeBtn) {
+        regenerateShareCodeBtn.disabled = true;
+        regenerateShareCodeBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generating...';
+      }
+      
+      const response = await fetch(apiUrls.shareCode, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to regenerate share code');
+      }
+      
+      const data = await response.json();
+      
+      // Update the share code
+      shareCode = data.share_code;
+      
+      // Reload the share link
+      await loadShareLink();
+      
+      // Re-enable button
+      if (regenerateShareCodeBtn) {
+        regenerateShareCodeBtn.disabled = false;
+        regenerateShareCodeBtn.innerHTML = '<i class="fas fa-sync-alt me-1"></i> Generate New Link';
+      }
+      
+      showToast('New share link generated', 'success');
+    } catch (error) {
+      console.error('Error regenerating share code:', error);
+      showToast(error.message || 'Failed to regenerate share code', 'danger');
+      
+      // Re-enable button
+      const regenerateShareCodeBtn = document.getElementById('regenerate-share-code-btn');
+      if (regenerateShareCodeBtn) {
+        regenerateShareCodeBtn.disabled = false;
+        regenerateShareCodeBtn.innerHTML = '<i class="fas fa-sync-alt me-1"></i> Generate New Link';
+      }
+    }
+  }
+  
+  // Save Privacy Settings
+  async function savePrivacySettings() {
+    try {
+      const privacyPublicToggle = document.getElementById('privacy-public-toggle');
+      const savePrivacyBtn = document.getElementById('save-privacy-btn');
+      
+      if (!privacyPublicToggle || !savePrivacyBtn) return;
+      
+      const isPublic = privacyPublicToggle.checked;
+      
+      // Disable button during request
+      savePrivacyBtn.disabled = true;
+      savePrivacyBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+      
+      const response = await fetch(apiUrls.privacy, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ is_public: isPublic })
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to update privacy settings');
+      }
+      
+      const data = await response.json();
+      
+      // Update local state
+      tripData.is_public = data.is_public ? 1 : 0;
+      
+      // Update privacy badge in the main view
+      const privacyBadge = document.getElementById('privacy-badge');
+      if (privacyBadge) {
+        privacyBadge.className = data.is_public ? 'badge bg-success' : 'badge bg-secondary';
+        privacyBadge.innerHTML = `<i class="fas ${data.is_public ? 'fa-unlock' : 'fa-lock'} me-1"></i> ${data.is_public ? 'Public' : 'Private'}`;
+      }
+      
+      // Close modal
+      bootstrap.Modal.getInstance(document.getElementById('privacy-modal')).hide();
+      
+      // Re-enable button
+      savePrivacyBtn.disabled = false;
+      savePrivacyBtn.textContent = 'Save Changes';
+      
+      showToast(`Trip is now ${data.is_public ? 'public' : 'private'}`, 'success');
+    } catch (error) {
+      console.error('Error saving privacy settings:', error);
+      showToast(error.message || 'Failed to update privacy settings', 'danger');
+      
+      // Re-enable button
+      const savePrivacyBtn = document.getElementById('save-privacy-btn');
+      if (savePrivacyBtn) {
+        savePrivacyBtn.disabled = false;
+        savePrivacyBtn.textContent = 'Save Changes';
+      }
+    }
+  }
+  
+  // Confirm Delete Trip
+  function confirmDeleteTrip() {
+    if (confirm('Are you sure you want to delete this trip? This action cannot be undone.')) {
+      deleteTrip();
+    }
+  }
+  
+  // Delete Trip
+  async function deleteTrip() {
+    try {
+      const response = await fetch(`${basePath}api/trips/${tripId}`, {
+        method: 'DELETE'
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to delete trip');
+      }
+      
+      // Redirect to dashboard on success
+      window.location.href = `${basePath}dashboard`;
+    } catch (error) {
+      console.error('Error deleting trip:', error);
+      showToast(error.message || 'Failed to delete trip', 'danger');
     }
   }
   

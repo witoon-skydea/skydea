@@ -49,6 +49,12 @@ const validateTripData = (req, res, next) => {
       throw new AppError('Trip cannot exceed 30 days', 400);
     }
     
+    // Validate is_public if provided
+    if (req.body.is_public !== undefined) {
+      // Convert to boolean/integer
+      req.body.is_public = req.body.is_public ? 1 : 0;
+    }
+    
     // Continue to the next middleware
     next();
   } catch (error) {

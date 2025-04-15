@@ -12,9 +12,20 @@
           </p>
         </div>
         <div class="col-md-4 text-md-end mt-3 mt-md-0">
-          <button class="btn btn-outline-secondary me-2" id="edit-trip-btn">
-            <i class="fas fa-edit me-1"></i> Edit Trip
-          </button>
+          <% if (isOwner) { %>
+            <div class="dropdown d-inline-block me-2">
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="tripActionsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-cog me-1"></i> Actions
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="tripActionsDropdown">
+                <li><button class="dropdown-item" id="edit-trip-btn"><i class="fas fa-edit me-2"></i> Edit Trip</button></li>
+                <li><button class="dropdown-item" id="share-trip-btn"><i class="fas fa-share-alt me-2"></i> Share Trip</button></li>
+                <li><button class="dropdown-item" id="privacy-trip-btn"><i class="fas fa-lock me-2"></i> Privacy Settings</button></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><button class="dropdown-item text-danger" id="delete-trip-btn"><i class="fas fa-trash-alt me-2"></i> Delete Trip</button></li>
+              </ul>
+            </div>
+          <% } %>
           <a href="<%= basePath %>dashboard" class="btn btn-outline-primary">
             <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
           </a>
@@ -68,6 +79,24 @@
                 <label class="form-label text-muted">Last Updated</label>
                 <p class="mb-0"><%= new Date(trip.updated_at).toLocaleDateString() %></p>
               </div>
+              
+              <% if (isOwner) { %>
+              <div class="mb-3">
+                <label class="form-label text-muted">Privacy</label>
+                <p class="mb-0">
+                  <span class="badge <%= isPublic ? 'bg-success' : 'bg-secondary' %>" id="privacy-badge">
+                    <i class="fas <%= isPublic ? 'fa-unlock' : 'fa-lock' %> me-1"></i>
+                    <%= isPublic ? 'Public' : 'Private' %>
+                  </span>
+                </p>
+              </div>
+              <% } %>
+              
+              <% if (!isOwner) { %>
+              <div class="alert alert-info mb-0">
+                <small><i class="fas fa-info-circle me-1"></i> You are viewing a shared trip. You cannot edit this trip.</small>
+              </div>
+              <% } %>
             </div>
           </div>
         </div>
@@ -116,12 +145,18 @@
                   </div>
                   <div class="text-center mt-3">
                     <div class="btn-group">
-                      <button class="btn btn-primary" id="add-place-btn">
-                        <i class="fas fa-map-marker-alt me-1"></i> Add Place
-                      </button>
-                      <button class="btn btn-primary" id="plan-itinerary-btn">
-                        <i class="fas fa-calendar-day me-1"></i> Plan Itinerary
-                      </button>
+                      <% if (isOwner) { %>
+                        <button class="btn btn-primary" id="add-place-btn">
+                          <i class="fas fa-map-marker-alt me-1"></i> Add Place
+                        </button>
+                        <button class="btn btn-primary" id="plan-itinerary-btn">
+                          <i class="fas fa-calendar-day me-1"></i> Plan Itinerary
+                        </button>
+                      <% } else { %>
+                        <button class="btn btn-secondary" disabled>
+                          <i class="fas fa-eye me-1"></i> View Only Mode
+                        </button>
+                      <% } %>
                     </div>
                   </div>
                 </div>
@@ -493,6 +528,13 @@
               <input type="date" class="form-control" id="edit-trip-end-date" required>
             </div>
           </div>
+          <div class="mb-3">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="edit-trip-is-public">
+              <label class="form-check-label" for="edit-trip-is-public">Make Trip Public</label>
+            </div>
+            <small class="form-text text-muted">Public trips can be viewed by anyone with the link.</small>
+          </div>
           <div id="edit-trip-error" class="alert alert-danger d-none" role="alert"></div>
         </form>
       </div>
@@ -504,7 +546,105 @@
   </div>
 </div>
 
+<!-- Share Trip Modal -->
+<div class="modal fade" id="share-trip-modal" tabindex="-1" aria-labelledby="share-trip-modal-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="share-trip-modal-label">Share Trip</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Trip Privacy</label>
+          <div class="d-flex align-items-center mb-2">
+            <span class="badge me-2" id="share-privacy-badge"></span>
+            <button class="btn btn-sm btn-outline-primary" id="share-toggle-privacy-btn">
+              <span id="share-toggle-privacy-text">Make Public</span>
+            </button>
+          </div>
+          <small class="form-text text-muted">
+            Public trips can be viewed by anyone with the link. Private trips require a share code.
+          </small>
+        </div>
+        
+        <hr>
+        
+        <div class="mb-3">
+          <label class="form-label">Share Link</label>
+          <div class="input-group mb-2">
+            <input type="text" class="form-control" id="share-link-input" readonly>
+            <button class="btn btn-outline-primary" type="button" id="copy-share-link-btn">
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          <small class="form-text text-muted">
+            Share this link with others to let them view your trip.
+          </small>
+        </div>
+        
+        <div class="mb-3">
+          <button class="btn btn-sm btn-outline-secondary" id="regenerate-share-code-btn">
+            <i class="fas fa-sync-alt me-1"></i> Generate New Link
+          </button>
+          <small class="form-text text-muted d-block mt-1">
+            This will invalidate the previous share link.
+          </small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Privacy Settings Modal -->
+<div class="modal fade" id="privacy-modal" tabindex="-1" aria-labelledby="privacy-modal-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="privacy-modal-label">Trip Privacy Settings</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-check form-switch mb-3">
+          <input class="form-check-input" type="checkbox" id="privacy-public-toggle">
+          <label class="form-check-label" for="privacy-public-toggle">Public Trip</label>
+        </div>
+        
+        <div class="mb-3">
+          <small class="form-text text-muted">
+            <strong>Public trips:</strong> Anyone with the link can view the trip.<br>
+            <strong>Private trips:</strong> Only people with the share code can view the trip.
+          </small>
+        </div>
+        
+        <div class="alert alert-info">
+          <small>
+            <i class="fas fa-info-circle me-1"></i>
+            Changing privacy settings will apply immediately.
+          </small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="save-privacy-btn">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Trip Planner CSS and JavaScript -->
 <link rel="stylesheet" href="<%= basePath %>css/trip-planner.css">
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&libraries=places" defer></script>
+<script>
+  // Pass initial data to the script
+  window.tripData = {
+    tripId: <%= trip.id %>,
+    isOwner: <%= typeof isOwner !== 'undefined' ? (isOwner ? 'true' : 'false') : 'true' %>,
+    isPublic: <%= typeof isPublic !== 'undefined' ? (isPublic ? 'true' : 'false') : 'false' %>,
+    shareCode: "<%= typeof shareCode !== 'undefined' ? shareCode : '' %>"
+  };
+</script>
 <script src="<%= basePath %>js/trip-planner.js" defer></script>

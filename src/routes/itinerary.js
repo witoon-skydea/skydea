@@ -98,7 +98,7 @@ router.post('/', isAuthenticated, checkTripOwnership, validateItineraryItemData,
     
     const itemData = {
       trip_id: parseInt(trip_id),
-      place_id: place_id ? parseInt(place_id) : null,
+      place_id: place_id && place_id !== "" ? parseInt(place_id) : null,
       title,
       description,
       start_time,

@@ -1,0 +1,99 @@
+/* Trip Card Styling */
+.trip-card {
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.trip-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+}
+
+.trip-card .card-img-overlay-wrapper {
+  position: relative;
+}
+
+.trip-card-img {
+  transition: transform 0.3s ease;
+  height: 140px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.trip-card:hover .trip-card-img {
+  transform: scale(1.05);
+}
+
+.card-img-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2), rgba(0,0,0,0));
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px;
+}
+
+.trip-card .card-title {
+  color: white;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.trip-card .card-text {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.trip-card .badge {
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.places-count {
+  font-size: 0.75rem;
+}
+
+/* Timeline styling for activities */
+.timeline {
+  position: relative;
+  padding-left: 1.75rem;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-item:before {
+  content: '';
+  position: absolute;
+  left: -0.86rem;
+  top: 0;
+  height: 100%;
+  border-left: 1px dashed #e0e0e0;
+}
+
+.timeline-item-marker {
+  position: absolute;
+  left: -1.75rem;
+  top: 0;
+}
+
+.timeline-item-marker-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 100%;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+.timeline-item-marker-indicator i {
+  font-size: 0.875rem;
+}

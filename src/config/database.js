@@ -38,6 +38,8 @@ const db = new sqlite3.Database(path.resolve(dbPath), (err) => {
         description TEXT,
         start_date DATE NOT NULL,
         end_date DATE NOT NULL,
+        is_public INTEGER DEFAULT 0,
+        share_code TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -93,8 +95,81 @@ const db = new sqlite3.Database(path.resolve(dbPath), (err) => {
           console.log('Itinerary items table ready');
         }
       });
+      
+      // Check if trips table has the new columns
+      db.get("PRAGMA table_info(trips)", (err, rows) => {
+        if (err) {
+          console.error('Error checking trips table structure:', err);
+          return;
+        }
+        
+        // Check if is_public column exists
+        db.get("SELECT COUNT(*) as count FROM pragma_table_info('trips') WHERE name='is_public'", (err, row) => {
+          if (err) {
+            console.error('Error checking for is_public column:', err);
+            return;
+          }
+          
+          if (row.count === 0) {
+            // Add the is_public column
+            db.run("ALTER TABLE trips ADD COLUMN is_public INTEGER DEFAULT 0", (err) => {
+              if (err) {
+                console.error('Error adding is_public column:', err);
+              } else {
+                console.log('Added is_public column to trips table');
+              }
+            });
+          }
+        });
+        
+        // Check if share_code column exists
+        db.get("SELECT COUNT(*) as count FROM pragma_table_info('trips') WHERE name='share_code'", (err, row) => {
+          if (err) {
+            console.error('Error checking for share_code column:', err);
+            return;
+          }
+          
+          if (row.count === 0) {
+            // Add the share_code column
+            db.run("ALTER TABLE trips ADD COLUMN share_code TEXT", (err) => {
+              if (err) {
+                console.error('Error adding share_code column:', err);
+              } else {
+                console.log('Added share_code column to trips table');
+                
+                // Add share_code to existing trips
+                db.all("SELECT id FROM trips WHERE share_code IS NULL", (err, rows) => {
+                  if (err) {
+                    console.error('Error selecting trips without share_code:', err);
+                    return;
+                  }
+                  
+                  rows.forEach(row => {
+                    const shareCode = generateShareCode();
+                    db.run("UPDATE trips SET share_code = ? WHERE id = ?", [shareCode, row.id], (err) => {
+                      if (err) {
+                        console.error(`Error adding share_code to trip ${row.id}:`, err);
+                      }
+                    });
+                  });
+                });
+              }
+            });
+          }
+        });
+      });
     });
   }
 });
+
+// Generate a random share code
+function generateShareCode() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let code = '';
+  for (let i = 0; i < 10; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
 
 module.exports = db;
