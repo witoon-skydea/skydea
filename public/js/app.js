@@ -1,6 +1,9 @@
 // Skydea Application JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
+  // Initialize random background for home page
+  initializeRandomBackground();
+  
   // Initialize Bootstrap tooltips
   const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
   tooltips.forEach(tooltip => {
@@ -148,3 +151,31 @@ document.addEventListener('DOMContentLoaded', function() {
   // Run on scroll
   window.addEventListener('scroll', checkIfInView);
 });
+
+// Handle random background image for home page hero section
+function initializeRandomBackground() {
+  const heroElement = document.getElementById('random-hero-background');
+  
+  if (heroElement) {
+    // Array of background images
+    const backgrounds = [
+      'images/backgrounds/bg1.png',
+      'images/backgrounds/bg2.png',
+      'images/backgrounds/bg3.png'
+    ];
+    
+    // Get the base path from the page
+    let basePath = '/';
+    if (typeof window.appBasePath !== 'undefined') {
+      basePath = window.appBasePath;
+    }
+    
+    // Select a random background
+    const randomIndex = Math.floor(Math.random() * backgrounds.length);
+    const selectedBackground = backgrounds[randomIndex];
+    
+    // Apply the background image with the correct base path
+    const fullPath = basePath + selectedBackground;
+    heroElement.style.backgroundImage = `url('${fullPath}')`;
+  }
+}
