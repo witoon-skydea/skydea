@@ -76,6 +76,34 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
+  // Update the view toggle buttons based on the current view
+  function updateViewToggleButtons() {
+    const viewTableBtn = document.getElementById('view-table-btn');
+    const viewCardsBtn = document.getElementById('view-cards-btn');
+    const placesTableContainer = document.getElementById('places-table-container');
+    const placesCardsContainer = document.getElementById('places-cards-container');
+    
+    if (viewTableBtn && viewCardsBtn) {
+      if (currentPlacesView === 'table') {
+        viewTableBtn.classList.add('active');
+        viewCardsBtn.classList.remove('active');
+        
+        if (placesTableContainer && placesCardsContainer) {
+          placesTableContainer.classList.remove('d-none');
+          placesCardsContainer.classList.add('d-none');
+        }
+      } else {
+        viewTableBtn.classList.remove('active');
+        viewCardsBtn.classList.add('active');
+        
+        if (placesTableContainer && placesCardsContainer) {
+          placesTableContainer.classList.add('d-none');
+          placesCardsContainer.classList.remove('d-none');
+        }
+      }
+    }
+  }
+  
   // Load all trip data from API
   async function loadTripData() {
     try {
@@ -187,6 +215,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     });
+    
+    // View toggle buttons
+    const viewTableBtn = document.getElementById('view-table-btn');
+    const viewCardsBtn = document.getElementById('view-cards-btn');
+    
+    if (viewTableBtn && viewCardsBtn) {
+      viewTableBtn.addEventListener('click', function() {
+        if (currentPlacesView !== 'table') {
+          currentPlacesView = 'table';
+          updateViewToggleButtons();
+          renderPlacesTable();
+        }
+      });
+      
+      viewCardsBtn.addEventListener('click', function() {
+        if (currentPlacesView !== 'cards') {
+          currentPlacesView = 'cards';
+          updateViewToggleButtons();
+          renderPlacesTable();
+        }
+      });
+    }
     
     // Trip action buttons
     if (isOwner) {
@@ -315,8 +365,8 @@ document.addEventListener('DOMContentLoaded', function() {
     placesHighlights.classList.remove('d-none');
     highlightsContainer.innerHTML = '';
     
-    // Get up to 3 places to show as highlights
-    const highlights = placesData.slice(0, 3);
+    // Get up to 9 places to show as highlights
+    const highlights = placesData.slice(0, 9);
     
     highlights.forEach(place => {
       const placeCard = document.createElement('div');
@@ -356,25 +406,37 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
+  // Current active view (table or cards)
+  let currentPlacesView = 'table'; 
+
   // Render places table on the Places tab
   function renderPlacesTable() {
     const placesTableLoading = document.getElementById('places-table-loading');
     const placesTableEmpty = document.getElementById('places-table-empty');
     const placesTableContainer = document.getElementById('places-table-container');
+    const placesCardsContainer = document.getElementById('places-cards-container');
     const placesTableBody = document.getElementById('places-table-body');
+    const placesCardsGrid = document.getElementById('places-cards-grid');
     
     // Hide all initially
     placesTableLoading.classList.add('d-none');
     placesTableEmpty.classList.add('d-none');
     placesTableContainer.classList.add('d-none');
+    placesCardsContainer.classList.add('d-none');
     
     if (placesData.length === 0) {
       placesTableEmpty.classList.remove('d-none');
       return;
     }
     
-    // Show table container
-    placesTableContainer.classList.remove('d-none');
+    // Determine which view to show based on current selection
+    if (currentPlacesView === 'table') {
+      placesTableContainer.classList.remove('d-none');
+    } else {
+      placesCardsContainer.classList.remove('d-none');
+    }
+    
+    // Render table view
     placesTableBody.innerHTML = '';
     
     placesData.forEach(place => {
@@ -416,7 +478,7 @@ document.addEventListener('DOMContentLoaded', function() {
       placesTableBody.appendChild(row);
     });
     
-    // Add event listeners for edit and delete buttons
+    // Add event listeners for edit and delete buttons in table view
     document.querySelectorAll('.edit-place-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         const placeId = parseInt(this.dataset.placeId);
@@ -428,6 +490,77 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     document.querySelectorAll('.delete-place-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const placeId = parseInt(this.dataset.placeId);
+        const place = placesData.find(p => p.id === placeId);
+        if (place) {
+          confirmDeletePlace(place);
+        }
+      });
+    });
+    
+    // Render card view
+    placesCardsGrid.innerHTML = '';
+    
+    placesData.forEach(place => {
+      const placeCard = document.createElement('div');
+      placeCard.className = 'col-md-4 col-lg-4';
+      
+      // Generate image source with proper fallback
+      const placeName = place.name || 'Unknown Place';
+      const defaultImage = `${basePath}images/main_photo.png`;
+      
+      // Ensure image_url is properly handled
+      let imageUrl = place.image_url;
+      
+      // Fix for potential CORS issues with Google Place images
+      if (imageUrl && imageUrl.includes('maps.googleapis.com')) {
+        // Use our backend proxy for Google images
+        const googlePhotoRef = new URL(imageUrl).searchParams.get('photoreference');
+        if (googlePhotoRef) {
+          imageUrl = `${basePath}api/places/photo?photoreference=${googlePhotoRef}&maxwidth=500`;
+        }
+      }
+      
+      // If no image, use default
+      imageUrl = imageUrl || defaultImage;
+
+      placeCard.innerHTML = `
+        <div class="card h-100 shadow-sm">
+          <img src="${imageUrl}" class="card-img-top" onerror="this.src='${defaultImage}'; this.onerror=null;" alt="${placeName}" style="height: 150px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">${placeName}</h5>
+            ${place.address ? `<p class="card-text text-muted small mb-2"><i class="fas fa-map-marker-alt me-2"></i>${place.address}</p>` : ''}
+            ${place.description ? `<p class="card-text small">${truncateText(place.description, 100)}</p>` : ''}
+          </div>
+          <div class="card-footer bg-white border-0">
+            <div class="d-flex justify-content-end gap-2">
+              <button class="btn btn-sm btn-outline-primary edit-place-card-btn" data-place-id="${place.id}">
+                <i class="fas fa-edit"></i> Edit
+              </button>
+              <button class="btn btn-sm btn-outline-danger delete-place-card-btn" data-place-id="${place.id}">
+                <i class="fas fa-trash-alt"></i> Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      placesCardsGrid.appendChild(placeCard);
+    });
+    
+    // Add event listeners for card view buttons
+    document.querySelectorAll('.edit-place-card-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const placeId = parseInt(this.dataset.placeId);
+        const place = placesData.find(p => p.id === placeId);
+        if (place) {
+          openEditPlaceModal(place);
+        }
+      });
+    });
+    
+    document.querySelectorAll('.delete-place-card-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         const placeId = parseInt(this.dataset.placeId);
         const place = placesData.find(p => p.id === placeId);

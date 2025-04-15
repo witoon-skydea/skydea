@@ -205,9 +205,19 @@
                 <div class="card-header bg-white py-3">
                   <div class="d-flex align-items-center justify-content-between">
                     <h5 class="mb-0">All Places</h5>
-                    <button class="btn btn-primary" id="add-place-btn-2">
-                      <i class="fas fa-plus me-1"></i> Add Place
-                    </button>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="btn-group view-toggle me-2" role="group" aria-label="View toggle">
+                        <button type="button" class="btn btn-outline-primary active" id="view-table-btn" data-view="table">
+                          <i class="fas fa-list"></i> Table
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" id="view-cards-btn" data-view="cards">
+                          <i class="fas fa-th-large"></i> Cards
+                        </button>
+                      </div>
+                      <button class="btn btn-primary" id="add-place-btn-2">
+                        <i class="fas fa-plus me-1"></i> Add Place
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div class="card-body">
@@ -244,6 +254,12 @@
                           <!-- Places will be loaded here dynamically -->
                         </tbody>
                       </table>
+                    </div>
+                  </div>
+                  
+                  <div id="places-cards-container" class="d-none">
+                    <div class="row g-4" id="places-cards-grid">
+                      <!-- Places cards will be loaded here dynamically -->
                     </div>
                   </div>
                 </div>

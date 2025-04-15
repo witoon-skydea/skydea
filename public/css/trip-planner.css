@@ -15,6 +15,35 @@
   object-fit: cover;
 }
 
+/* View toggle styles */
+.view-toggle .btn.active {
+  background-color: #0d6efd;
+  color: white;
+  border-color: #0d6efd;
+}
+
+/* Places cards container */
+#places-cards-container .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+#places-cards-container .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+#places-cards-container .card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+#places-cards-container .card-footer {
+  background-color: transparent;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  padding-top: 0.75rem;
+}
+
 .place-icon {
   width: 40px;
   height: 40px;
