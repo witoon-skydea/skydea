@@ -365,11 +365,16 @@
             const tripCol = document.createElement('div');
             tripCol.className = 'col-md-6 col-lg-4 mb-4';
             
+            // Default image
+            const defaultImage = `<%= basePath %>images/main_photo.png`;
+            
             tripCol.innerHTML = `
               <div class="card h-100 shadow trip-card" data-trip-id="${trip.id}">
                 <div class="card-img-overlay-wrapper">
-                  <img src="<%= basePath %>images/main_photo.png" class="card-img-top trip-card-img" 
-                    alt="${trip.title}" style="height: 140px; object-fit: cover; width: 100%;">
+                  <div class="trip-card-img-container" data-trip-id="${trip.id}">
+                    <img src="${defaultImage}" class="card-img-top trip-card-img" 
+                      alt="${trip.title}" style="height: 140px; object-fit: cover; width: 100%;">
+                  </div>
                   <div class="card-img-overlay text-white d-flex flex-column justify-content-end" 
                       style="background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2), rgba(0,0,0,0));">
                     <h5 class="card-title mb-0">${trip.title}</h5>
@@ -399,9 +404,9 @@
             `;
             
             tripsGrid.appendChild(tripCol);
-            
-            // Load place count for this trip
+            // Load place count and cover image for this trip
             loadPlaceCount(trip.id);
+            loadTripCoverImage(trip.id);
           });
           
           // Add event listeners for delete buttons
@@ -464,21 +469,86 @@
         
         const places = await response.json();
         
-        // Find the badge element for this trip and update it
-        const tripRow = Array.from(tripsList.children).find(row => {
-          const deleteButton = row.querySelector('.delete-trip');
-          return deleteButton && deleteButton.getAttribute('data-trip-id') === tripId.toString();
-        });
+        // Store places data for later use in loadTripCoverImage
+        window.tripPlaces = window.tripPlaces || {};
+        window.tripPlaces[tripId] = places;
         
-        if (tripRow) {
-          const badge = tripRow.querySelector('.badge');
-          if (badge) {
-            badge.textContent = places.length;
-            badge.className = places.length > 0 ? 'badge bg-primary' : 'badge bg-secondary';
+        // Find all elements with data-trip-id attribute matching this trip
+        const tripElements = document.querySelectorAll(`[data-trip-id="${tripId}"]`);
+        
+        tripElements.forEach(element => {
+          // Update place count badges
+          if (element.classList.contains('places-count')) {
+            element.textContent = places.length;
+            element.className = places.length > 0 ? 'badge bg-primary places-count' : 'badge bg-secondary places-count';
+            element.setAttribute('data-trip-id', tripId);
           }
-        }
+        });
       } catch (error) {
         console.error(`Error loading places for trip ${tripId}:`, error);
+      }
+    }
+    
+    // Function to load and set the cover image for a trip
+    async function loadTripCoverImage(tripId) {
+      try {
+        // Wait for places data to be available (should have been fetched by loadPlaceCount)
+        if (!window.tripPlaces || !window.tripPlaces[tripId]) {
+          // If places aren't available yet, try again in a moment
+          setTimeout(() => loadTripCoverImage(tripId), 100);
+          return;
+        }
+        
+        const places = window.tripPlaces[tripId];
+        const defaultImage = `<%= basePath %>images/main_photo.png`;
+        let imageUrl = defaultImage;
+        
+        // Find the image container for this trip
+        const imgContainer = document.querySelector(`.trip-card-img-container[data-trip-id="${tripId}"]`);
+        if (!imgContainer) return;
+        
+        // Find a place with an image
+        if (places.length > 0) {
+          // Filter places that have an image_url
+          const placesWithImages = places.filter(place => place.image_url);
+          
+          if (placesWithImages.length > 0) {
+            // Get the first place with an image
+            const place = placesWithImages[0];
+            
+            // Handle potential CORS issues with Google Place images
+            if (place.image_url.includes('maps.googleapis.com')) {
+              // Use our backend proxy for Google images
+              const googlePhotoRef = new URL(place.image_url).searchParams.get('photoreference');
+              if (googlePhotoRef) {
+                imageUrl = `<%= basePath %>api/places/photo?photoreference=${googlePhotoRef}&maxwidth=800`;
+              } else {
+                imageUrl = place.image_url;
+              }
+            } else {
+              imageUrl = place.image_url;
+            }
+          } else {
+            // Use a random background image if no places have images but trip has places
+            const backgroundImages = [
+              `<%= basePath %>images/backgrounds/bg1.png`,
+              `<%= basePath %>images/backgrounds/bg2.png`,
+              `<%= basePath %>images/backgrounds/bg3.png`
+            ];
+            
+            const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+            imageUrl = backgroundImages[randomIndex];
+          }
+        }
+        
+        // Update the image source
+        const imgElement = imgContainer.querySelector('img');
+        if (imgElement) {
+          imgElement.src = imageUrl;
+          imgElement.setAttribute('onerror', `this.src='${defaultImage}'; this.onerror=null;`);
+        }
+      } catch (error) {
+        console.error(`Error loading cover image for trip ${tripId}:`, error);
       }
     }
     
@@ -584,8 +654,16 @@
   position: relative;
 }
 
+.trip-card-img-container {
+  overflow: hidden;
+  height: 140px;
+}
+
 .trip-card-img {
   transition: transform 0.3s ease;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 .trip-card:hover .trip-card-img {
