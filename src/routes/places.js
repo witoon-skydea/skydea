@@ -120,7 +120,11 @@ router.get('/details', isAuthenticated, async (req, res, next) => {
 
     // This would be your actual Google Maps API Key
     const apiKey = process.env.GOOGLE_MAPS_API_KEY || 'YOUR_GOOGLE_MAPS_API_KEY';
-    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,formatted_address,geometry,photos,rating,url&key=${apiKey}`;
+    
+    // Request more fields, especially 'photos' to get photo references
+    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,formatted_address,geometry,photos,rating,url,icon&key=${apiKey}`;
+    
+    console.log('Fetching place details from Google API:', url);
 
     https.get(url, (response) => {
       let data = '';
@@ -131,6 +135,17 @@ router.get('/details', isAuthenticated, async (req, res, next) => {
       response.on('end', () => {
         try {
           const parsedData = JSON.parse(data);
+          
+          // Process the photo reference if available and add a direct photo URL
+          if (parsedData.result && parsedData.result.photos && parsedData.result.photos.length > 0) {
+            const photoReference = parsedData.result.photos[0].photo_reference;
+            if (photoReference) {
+              // Add a direct URL to the photo using the Places Photo API
+              parsedData.result.photo_url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${apiKey}`;
+              console.log('Added photo URL to place data:', parsedData.result.photo_url);
+            }
+          }
+          
           res.json(parsedData);
         } catch (error) {
           console.error('Error parsing Google Place Details API response:', error);
@@ -143,6 +158,48 @@ router.get('/details', isAuthenticated, async (req, res, next) => {
     });
   } catch (error) {
     console.error('Error in Google Place Details:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Added: Get place photo as proxy to avoid CORS issues
+router.get('/photo', isAuthenticated, async (req, res, next) => {
+  try {
+    const { photoreference, maxwidth = 400 } = req.query;
+    if (!photoreference) {
+      return res.status(400).json({ error: 'photoreference parameter is required' });
+    }
+
+    // This would be your actual Google Maps API Key
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY || 'YOUR_GOOGLE_MAPS_API_KEY';
+    const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${maxwidth}&photoreference=${photoreference}&key=${apiKey}`;
+    
+    // Pipe the photo directly to the response
+    https.get(url, (response) => {
+      // If Google redirects us, follow the redirect
+      if (response.statusCode === 302 || response.statusCode === 301) {
+        const redirectUrl = response.headers.location;
+        if (redirectUrl) {
+          https.get(redirectUrl, (photoResponse) => {
+            res.set('Content-Type', photoResponse.headers['content-type']);
+            photoResponse.pipe(res);
+          }).on('error', (error) => {
+            console.error('Error following photo redirect:', error);
+            res.status(500).json({ error: 'Failed to get photo from redirect' });
+          });
+          return;
+        }
+      }
+      
+      // If no redirect, pipe directly
+      res.set('Content-Type', response.headers['content-type']);
+      response.pipe(res);
+    }).on('error', (error) => {
+      console.error('Error calling Google Place Photos API:', error);
+      res.status(500).json({ error: 'Failed to call Google Place Photos API' });
+    });
+  } catch (error) {
+    console.error('Error in Google Place Photos:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

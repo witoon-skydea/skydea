@@ -878,24 +878,15 @@ document.addEventListener('DOMContentLoaded', function() {
           return;
         }
         
-        // Check if place.geometry.location has lat/lng as functions or properties
-        let lat, lng;
-        if (typeof selectedPlace.geometry.location.lat === 'function') {
-          lat = selectedPlace.geometry.location.lat();
-          lng = selectedPlace.geometry.location.lng();
-        } else {
-          lat = selectedPlace.geometry.location.lat;
-          lng = selectedPlace.geometry.location.lng;
-        }
-        
+        // Use the lat/lng values we already stored when selecting the place
         placeData = {
           name: selectedPlace.name,
           address: selectedPlace.formatted_address,
-          latitude: lat,
-          longitude: lng,
+          latitude: selectedPlace.lat,
+          longitude: selectedPlace.lng,
           place_id: selectedPlace.place_id,
-          // Set a default image URL for places added from Google Maps
-          image_url: "https://www.prachachat.net/wp-content/uploads/2023/08/Google-Maps.png"
+          // Use the image URL that we already set (either from Google Photos or default)
+          image_url: selectedPlace.image_url
         };
       }
       
@@ -1100,8 +1091,38 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           `;
           
-          listItem.addEventListener('click', function(e) {
+          listItem.addEventListener('click', async function(e) {
             e.preventDefault();
+            
+            try {
+              // Get more details for this place including photos
+              const placeDetailsResponse = await fetch(`${basePath}api/places/details?placeId=${place.place_id}`);
+              
+              if (placeDetailsResponse.ok) {
+                const placeDetails = await placeDetailsResponse.json();
+                console.log('Place details from API:', placeDetails);
+                
+                if (placeDetails.result) {
+                  // If we got photo_url from the backend, use it
+                  if (placeDetails.result.photo_url) {
+                    place.photo_url = placeDetails.result.photo_url;
+                    console.log('Using photo URL from Google Places API:', place.photo_url);
+                  }
+                  
+                  // Merge any additional details with the place object
+                  Object.assign(place, {
+                    geometry: placeDetails.result.geometry,
+                    photos: placeDetails.result.photos,
+                    rating: placeDetails.result.rating,
+                    url: placeDetails.result.url
+                  });
+                }
+              }
+            } catch (error) {
+              console.warn('Error fetching place details:', error);
+              // Continue with selection even if details fetch fails
+            }
+            
             selectGooglePlace(place);
           });
           
@@ -1125,8 +1146,38 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Selected place:', place);
     selectedPlace = place;
 
-    // Add default image URL for Google Places
+    // First set default image URL for Google Places
     selectedPlace.image_url = "https://www.prachachat.net/wp-content/uploads/2023/08/Google-Maps.png";
+    
+    // If we have a photo_url from the API, use that
+    if (place.photo_url) {
+      selectedPlace.image_url = place.photo_url;
+      console.log('Using photo URL from API:', selectedPlace.image_url);
+    }
+    // Try to get a photo from Google Places client-side if available
+    else if (place.photos && place.photos.length > 0) {
+      const photo = place.photos[0];
+      if (photo.getUrl) {
+        try {
+          // Try to get a photo URL using the photo API
+          selectedPlace.image_url = photo.getUrl({ maxWidth: 500, maxHeight: 300 });
+          console.log('Using Google Places client-side photo URL:', selectedPlace.image_url);
+        } catch (error) {
+          console.warn('Could not get photo URL from Google Places client-side:', error);
+          // Keep the default image URL
+          
+          // Try one more approach - if we have photo_reference, use the /photo endpoint
+          if (photo.photo_reference) {
+            selectedPlace.image_url = `${basePath}api/places/photo?photoreference=${photo.photo_reference}&maxwidth=500`;
+            console.log('Using photo reference URL:', selectedPlace.image_url);
+          }
+        }
+      } else if (photo.photo_reference) {
+        // If we have photo_reference but no getUrl function, use our proxy endpoint
+        selectedPlace.image_url = `${basePath}api/places/photo?photoreference=${photo.photo_reference}&maxwidth=500`;
+        console.log('Using photo reference URL:', selectedPlace.image_url);
+      }
+    }
 
     // Show place details
     const detailsContainer = document.getElementById('google-place-details');
@@ -1144,6 +1195,10 @@ document.addEventListener('DOMContentLoaded', function() {
       lat = place.geometry.location.lat;
       lng = place.geometry.location.lng;
     }
+    
+    // Store lat/lng for later use
+    selectedPlace.lat = lat;
+    selectedPlace.lng = lng;
     
     document.getElementById('google-place-coords').textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
 
