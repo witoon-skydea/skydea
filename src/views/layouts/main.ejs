@@ -38,12 +38,20 @@
           <li class="nav-item">
             <a class="nav-link" href="<%= basePath %>"><i class="fas fa-home"></i> Home</a>
           </li>
-          <% if (locals.isAuthenticated) { %>
+          <% if (locals.isAuthenticated && locals.user) { %>
             <li class="nav-item">
               <a class="nav-link" href="<%= basePath %>dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<%= basePath %>auth/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user-circle"></i> <%= locals.user.username %>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="<%= basePath %>dashboard"><i class="fas fa-user"></i> My Profile</a></li>
+                <li><a class="dropdown-item" href="<%= basePath %>trips"><i class="fas fa-suitcase"></i> My Trips</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="<%= basePath %>auth/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+              </ul>
             </li>
           <% } else { %>
             <li class="nav-item">

@@ -1,30 +1,38 @@
-<!-- Hero Section with solid background instead of image -->
-<section class="hero text-center text-white">
+<!-- Clean Hero Section with Centered Card -->
+<section class="hero py-5">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-10">
-        <h1 class="display-4 mb-3 fw-bold">Welcome to Skydea</h1>
-        <p class="lead mb-4">Your premium platform for extraordinary sky experiences</p>
-        
-        <!-- Random Feature Image in medium size with caption -->
-        <div class="mt-3 mb-4">
-          <img src="" alt="Skydea Feature" id="random-feature-image" class="img-fluid rounded shadow-lg">
-          <p id="feature-image-caption" class="text-white-50 mt-2 font-italic"></p>
-        </div>
-        
-        <div class="mt-4">
-          <% if (!locals.isAuthenticated) { %>
-            <a href="<%= basePath %>auth/register" class="btn btn-light btn-lg me-3 shadow">
-              <i class="fas fa-rocket me-2"></i> Get Started
-            </a>
-            <a href="<%= basePath %>auth/login" class="btn btn-outline-light btn-lg">
-              <i class="fas fa-sign-in-alt me-2"></i> Sign In
-            </a>
-          <% } else { %>
-            <a href="<%= basePath %>dashboard" class="btn btn-light btn-lg shadow">
-              <i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard
-            </a>
-          <% } %>
+      <div class="col-md-8">
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+          <!-- Random Feature Image Card -->
+          <div class="card-img-top position-relative">
+            <img src="" alt="Skydea Feature" id="random-feature-image" class="img-fluid w-100">
+            <div class="position-absolute top-0 end-0 m-3">
+              <span class="badge bg-light text-primary p-2 rounded-pill shadow-sm" id="feature-image-caption"></span>
+            </div>
+          </div>
+          <div class="card-body p-5 text-center">
+            <h1 class="display-4 mb-3 fw-bold">Welcome to Skydea</h1>
+            <p class="lead mb-4">Plan your perfect journey with our easy-to-use trip planner</p>
+            
+            <div class="d-flex justify-content-center gap-3">
+              <% if (!locals.isAuthenticated) { %>
+                <a href="<%= basePath %>auth/register" class="btn btn-primary btn-lg shadow">
+                  <i class="fas fa-rocket me-2"></i> Get Started
+                </a>
+                <a href="<%= basePath %>auth/login" class="btn btn-outline-primary btn-lg">
+                  <i class="fas fa-sign-in-alt me-2"></i> Sign In
+                </a>
+              <% } else { %>
+                <a href="<%= basePath %>dashboard" class="btn btn-primary btn-lg shadow">
+                  <i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard
+                </a>
+                <a href="<%= basePath %>trips/new" class="btn btn-outline-primary btn-lg">
+                  <i class="fas fa-plus me-2"></i> Create New Trip
+                </a>
+              <% } %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -32,43 +40,46 @@
 </section>
 
 <!-- Features Section -->
-<section class="py-5 bg-white">
+<section class="py-5 bg-light">
   <div class="container">
     <div class="row text-center mb-5">
       <div class="col-lg-8 mx-auto">
-        <h2 class="fw-bold">Experience The Skydea Difference</h2>
-        <p class="lead text-muted">Discover why users choose our platform</p>
+        <h2 class="fw-bold">Why Choose Skydea?</h2>
+        <p class="lead text-muted">Everything you need to plan the perfect trip</p>
       </div>
     </div>
-    
-    <div class="row">
-      <div class="col-md-4 mb-4">
-        <div class="feature-card h-100">
-          <div class="feature-icon">
-            <i class="fas fa-user-shield"></i>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card border-0 h-100 shadow-sm">
+          <div class="card-body text-center p-4">
+            <div class="feature-icon bg-primary text-white rounded-circle mb-4">
+              <i class="fas fa-map-marked-alt"></i>
+            </div>
+            <h5 class="card-title">Easy Planning</h5>
+            <p class="card-text">Create detailed itineraries with our intuitive interface.</p>
           </div>
-          <h3 class="h4 mb-3">Secure & Reliable</h3>
-          <p class="text-muted mb-0">Your data is protected with advanced security measures and encryption technologies.</p>
         </div>
       </div>
-      
-      <div class="col-md-4 mb-4">
-        <div class="feature-card h-100">
-          <div class="feature-icon">
-            <i class="fas fa-bolt"></i>
+      <div class="col-md-4">
+        <div class="card border-0 h-100 shadow-sm">
+          <div class="card-body text-center p-4">
+            <div class="feature-icon bg-primary text-white rounded-circle mb-4">
+              <i class="fas fa-search-location"></i>
+            </div>
+            <h5 class="card-title">Discover Places</h5>
+            <p class="card-text">Find amazing destinations and add them to your trip.</p>
           </div>
-          <h3 class="h4 mb-3">Fast & Responsive</h3>
-          <p class="text-muted mb-0">Experience lightning-fast performance with our optimized platform across all devices.</p>
         </div>
       </div>
-      
-      <div class="col-md-4 mb-4">
-        <div class="feature-card h-100">
-          <div class="feature-icon">
-            <i class="fas fa-heart"></i>
+      <div class="col-md-4">
+        <div class="card border-0 h-100 shadow-sm">
+          <div class="card-body text-center p-4">
+            <div class="feature-icon bg-primary text-white rounded-circle mb-4">
+              <i class="fas fa-share-alt"></i>
+            </div>
+            <h5 class="card-title">Share & Collaborate</h5>
+            <p class="card-text">Share your trips with friends and family.</p>
           </div>
-          <h3 class="h4 mb-3">User-Friendly</h3>
-          <p class="text-muted mb-0">Intuitive interface designed to make your experience enjoyable and stress-free.</p>
         </div>
       </div>
     </div>
@@ -76,7 +87,7 @@
 </section>
 
 <!-- How It Works Section -->
-<section class="py-5 bg-light">
+<section class="py-5 bg-white">
   <div class="container">
     <div class="row text-center mb-5">
       <div class="col-lg-8 mx-auto">
@@ -92,8 +103,8 @@
             <div class="mb-4">
               <span class="display-4 fw-bold text-primary">01</span>
             </div>
-            <h3 class="h4 mb-3">Create an Account</h3>
-            <p class="text-muted mb-0">Register in seconds with just a few details to join our platform.</p>
+            <h3 class="h4 mb-3">Create a Trip</h3>
+            <p class="text-muted mb-0">Start by setting up a new trip with dates and destination.</p>
           </div>
         </div>
       </div>
@@ -104,8 +115,8 @@
             <div class="mb-4">
               <span class="display-4 fw-bold text-primary">02</span>
             </div>
-            <h3 class="h4 mb-3">Set Up Your Profile</h3>
-            <p class="text-muted mb-0">Customize your account settings and preferences for a personalized experience.</p>
+            <h3 class="h4 mb-3">Add Places</h3>
+            <p class="text-muted mb-0">Find and add interesting places to visit during your trip.</p>
           </div>
         </div>
       </div>
@@ -116,8 +127,8 @@
             <div class="mb-4">
               <span class="display-4 fw-bold text-primary">03</span>
             </div>
-            <h3 class="h4 mb-3">Enjoy The Experience</h3>
-            <p class="text-muted mb-0">Start enjoying all the premium features and benefits of the Skydea platform.</p>
+            <h3 class="h4 mb-3">Plan Your Itinerary</h3>
+            <p class="text-muted mb-0">Organize your activities day by day with our easy drag-and-drop interface.</p>
           </div>
         </div>
       </div>
@@ -130,8 +141,8 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8">
-        <h2 class="fw-bold mb-4">Ready to Experience Skydea?</h2>
-        <p class="lead mb-5">Join thousands of satisfied users on our platform today.</p>
+        <h2 class="fw-bold mb-4">Ready to Start Your Journey?</h2>
+        <p class="lead mb-5">Join thousands of satisfied travelers on our platform today.</p>
         
         <% if (!locals.isAuthenticated) { %>
           <a href="<%= basePath %>auth/register" class="btn btn-light btn-lg px-5 shadow">

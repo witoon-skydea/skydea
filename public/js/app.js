@@ -1,8 +1,11 @@
 // Skydea Application JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize random feature image for home page
-  initializeRandomFeatureImage();
+  // User authentication check - this ensures the dropdown works properly
+  const userDropdown = document.querySelector('.dropdown-toggle');
+  if (userDropdown) {
+    new bootstrap.Dropdown(userDropdown);
+  }
   
   // Initialize Bootstrap tooltips
   const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');

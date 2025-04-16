@@ -110,11 +110,10 @@ main {
   border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Home page hero - solid background without image */
+/* Hero section - clean design */
 .hero {
-  padding: 100px 0;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  color: white;
+  padding: 80px 0;
+  background-color: #f8fafc;
   position: relative;
   overflow: hidden;
 }
@@ -124,25 +123,28 @@ main {
   z-index: 2;
 }
 
-/* Remove the background image overlay */
+/* Main feature card styling */
+.hero .card {
+  transition: all 0.4s ease;
+}
 
-/* Feature image on homepage - fixed medium size */
+.hero .card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Feature image on homepage - responsive design */
 #random-feature-image {
   transition: all 0.3s ease;
-  border: 5px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  width: 400px;
-  height: 240px;
+  width: 100%;
+  height: auto;
   object-fit: cover;
-  margin: 20px auto;
   display: block;
 }
 
 /* Add hover effect to feature image */
-#random-feature-image:hover {
-  transform: scale(1.03);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-  border: 5px solid rgba(255, 255, 255, 0.3);
+.hero .card:hover #random-feature-image {
+  filter: brightness(1.05);
 }
 
 .hero h1 {
