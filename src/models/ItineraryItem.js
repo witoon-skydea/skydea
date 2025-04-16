@@ -15,18 +15,22 @@ class ItineraryItem {
       start_time, 
       end_time, 
       day_number, 
-      order_index 
+      order_index,
+      tags = null
     } = itemData;
     
     // Ensure place_id is properly handled
     const parsedPlaceId = place_id !== null && place_id !== "" ? parseInt(place_id) : null;
     
+    // Convert tags array to JSON string if it's an array
+    const tagsStr = Array.isArray(tags) ? JSON.stringify(tags) : tags;
+    
     return new Promise((resolve, reject) => {
       db.run(
         `INSERT INTO itinerary_items (
-          trip_id, place_id, title, description, start_time, end_time, day_number, order_index
-         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [trip_id, parsedPlaceId, title, description, start_time, end_time, day_number, order_index],
+          trip_id, place_id, title, description, start_time, end_time, day_number, order_index, tags
+         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [trip_id, parsedPlaceId, title, description, start_time, end_time, day_number, order_index, tagsStr],
         function(err) {
           if (err) {
             console.error('Error creating itinerary item:', err);
@@ -136,19 +140,23 @@ class ItineraryItem {
       start_time, 
       end_time, 
       day_number, 
-      order_index 
+      order_index,
+      tags
     } = itemData;
     
     // Ensure place_id is properly handled
     const parsedPlaceId = place_id !== null && place_id !== "" ? parseInt(place_id) : null;
     
+    // Convert tags array to JSON string if it's an array
+    const tagsStr = Array.isArray(tags) ? JSON.stringify(tags) : tags;
+    
     return new Promise((resolve, reject) => {
       db.run(
         `UPDATE itinerary_items 
          SET place_id = ?, title = ?, description = ?, start_time = ?, end_time = ?, 
-         day_number = ?, order_index = ?, updated_at = CURRENT_TIMESTAMP
+         day_number = ?, order_index = ?, tags = ?, updated_at = CURRENT_TIMESTAMP
          WHERE id = ?`,
-        [parsedPlaceId, title, description, start_time, end_time, day_number, order_index, id],
+        [parsedPlaceId, title, description, start_time, end_time, day_number, order_index, tagsStr, id],
         function(err) {
           if (err) {
             console.error('Error updating itinerary item:', err);

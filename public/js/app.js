@@ -1,8 +1,8 @@
 // Skydea Application JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize random background for home page
-  initializeRandomBackground();
+  // Initialize random feature image for home page
+  initializeRandomFeatureImage();
   
   // Initialize Bootstrap tooltips
   const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
@@ -152,13 +152,13 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', checkIfInView);
 });
 
-// Handle random background image for home page hero section
-function initializeRandomBackground() {
-  const heroElement = document.getElementById('random-hero-background');
+// Handle random feature image for home page
+function initializeRandomFeatureImage() {
+  const featureImageElement = document.getElementById('random-feature-image');
   
-  if (heroElement) {
+  if (featureImageElement) {
     // Array of background images
-    const backgrounds = [
+    const featureImages = [
       'images/backgrounds/bg1.png',
       'images/backgrounds/bg2.png',
       'images/backgrounds/bg3.png'
@@ -171,11 +171,30 @@ function initializeRandomBackground() {
     }
     
     // Select a random background
-    const randomIndex = Math.floor(Math.random() * backgrounds.length);
-    const selectedBackground = backgrounds[randomIndex];
+    const randomIndex = Math.floor(Math.random() * featureImages.length);
+    const selectedImage = featureImages[randomIndex];
     
-    // Apply the background image with the correct base path
-    const fullPath = basePath + selectedBackground;
-    heroElement.style.backgroundImage = `url('${fullPath}')`;
+    // Apply the selected image with the correct base path
+    const fullPath = basePath + selectedImage;
+    featureImageElement.src = fullPath;
+    featureImageElement.alt = `Skydea Feature Image ${randomIndex + 1}`;
+    
+    // Add a custom caption based on the image
+    const captions = [
+      "Plan your adventures with ease",
+      "Discover amazing destinations",
+      "Create unforgettable memories"
+    ];
+    
+    // Try to find a caption element
+    const captionElement = document.getElementById('feature-image-caption');
+    if (captionElement) {
+      captionElement.textContent = captions[randomIndex];
+    }
+    
+    // Log for debugging
+    console.log('Random feature image set:', fullPath);
+  } else {
+    console.log('Feature image element not found');
   }
 }

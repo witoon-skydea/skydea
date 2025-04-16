@@ -8,6 +8,7 @@ const appConfig = require('./config/app');
 
 // Load routes
 const indexRoutes = require('./routes/index');
+const homeRoutes = require('./routes/home');  // Add new direct home routes
 const authRoutes = require('./routes/auth');
 const tripRoutes = require('./routes/trips');
 const placeRoutes = require('./routes/places');
@@ -44,6 +45,8 @@ app.use(session({
 }));
 
 // Set up base path for static files
+app.use(express.static(path.join(__dirname, '../public')));
+// Also support the configured base path
 app.use(appConfig.appBasePath, express.static(path.join(__dirname, '../public')));
 
 // Set up the locals middleware
@@ -55,7 +58,10 @@ app.use(`${appConfig.appBasePath}api`, (req, res, next) => {
   next();
 });
 
-// Set up web routes
+// Direct root route handlers
+app.use('/', homeRoutes);
+
+// Set up web routes with base path
 app.use(appConfig.appBasePath, indexRoutes);
 app.use(`${appConfig.appBasePath}auth`, authRoutes);
 app.use(`${appConfig.appBasePath}trips`, tripRoutes);

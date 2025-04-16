@@ -89,7 +89,8 @@ router.post('/', isAuthenticated, checkTripOwnership, validateItineraryItemData,
       start_time, 
       end_time, 
       day_number, 
-      order_index 
+      order_index,
+      tags
     } = req.body;
     
     if (!trip_id) {
@@ -104,7 +105,8 @@ router.post('/', isAuthenticated, checkTripOwnership, validateItineraryItemData,
       start_time,
       end_time,
       day_number: parseInt(day_number),
-      order_index: parseInt(order_index)
+      order_index: parseInt(order_index),
+      tags: tags || null
     };
     
     const item = await ItineraryItem.create(itemData);
@@ -132,7 +134,8 @@ router.put('/:id', isAuthenticated, checkItemOwnership, validateItineraryItemDat
       start_time, 
       end_time, 
       day_number, 
-      order_index 
+      order_index,
+      tags
     } = req.body;
     
     const itemData = {
@@ -142,7 +145,8 @@ router.put('/:id', isAuthenticated, checkItemOwnership, validateItineraryItemDat
       start_time,
       end_time,
       day_number: parseInt(day_number),
-      order_index: parseInt(order_index)
+      order_index: parseInt(order_index),
+      tags: tags || null
     };
     
     const item = await ItineraryItem.update(itemId, itemData);

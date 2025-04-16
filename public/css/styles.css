@@ -110,29 +110,13 @@ main {
   border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Home page hero */
+/* Home page hero - solid background without image */
 .hero {
-  padding: 180px 0;
+  padding: 100px 0;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
   position: relative;
   overflow: hidden;
-}
-
-.hero-with-background {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
 }
 
 .hero .container {
@@ -140,16 +124,25 @@ main {
   z-index: 2;
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon fill="rgba(255,255,255,0.05)" points="0,100 100,0 100,100"/></svg>');
-  background-size: cover;
-  z-index: 1;
+/* Remove the background image overlay */
+
+/* Feature image on homepage - fixed medium size */
+#random-feature-image {
+  transition: all 0.3s ease;
+  border: 5px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  height: 240px;
+  object-fit: cover;
+  margin: 20px auto;
+  display: block;
+}
+
+/* Add hover effect to feature image */
+#random-feature-image:hover {
+  transform: scale(1.03);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  border: 5px solid rgba(255, 255, 255, 0.3);
 }
 
 .hero h1 {
@@ -316,6 +309,40 @@ footer p {
 }
 
 /* Responsive adjustments */
+/* Activity tags styling */
+.badge {
+  padding: 6px 10px;
+  font-weight: 500;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  text-transform: lowercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  transition: all 0.2s ease;
+}
+
+.badge i {
+  margin-right: 4px;
+  font-size: 0.7rem;
+}
+
+.badge.bg-secondary {
+  background-color: #718096 !important;
+}
+
+.badge.bg-secondary:hover {
+  background-color: #4a5568 !important;
+  transform: translateY(-1px);
+}
+
+.timeline-item .badge {
+  font-size: 0.7rem;
+}
+
 @media (max-width: 768px) {
   .hero {
     padding: 120px 0;

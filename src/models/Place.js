@@ -15,14 +15,15 @@ class Place {
       longitude = null, 
       address = null, 
       place_id = null, 
-      image_url = null 
+      image_url = null,
+      category = null 
     } = placeData;
     
     return new Promise((resolve, reject) => {
       db.run(
-        `INSERT INTO places (trip_id, name, description, latitude, longitude, address, place_id, image_url) 
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [trip_id, name, description, latitude, longitude, address, place_id, image_url],
+        `INSERT INTO places (trip_id, name, description, latitude, longitude, address, place_id, image_url, category) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [trip_id, name, description, latitude, longitude, address, place_id, image_url, category],
         function(err) {
           if (err) {
             console.error('Error creating place:', err);
@@ -100,16 +101,17 @@ class Place {
       longitude, 
       address, 
       place_id, 
-      image_url 
+      image_url,
+      category 
     } = placeData;
     
     return new Promise((resolve, reject) => {
       db.run(
         `UPDATE places 
          SET name = ?, description = ?, latitude = ?, longitude = ?, 
-         address = ?, place_id = ?, image_url = ?, updated_at = CURRENT_TIMESTAMP
+         address = ?, place_id = ?, image_url = ?, category = ?, updated_at = CURRENT_TIMESTAMP
          WHERE id = ?`,
-        [name, description, latitude, longitude, address, place_id, image_url, id],
+        [name, description, latitude, longitude, address, place_id, image_url, category, id],
         function(err) {
           if (err) {
             console.error('Error updating place:', err);

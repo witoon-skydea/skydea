@@ -67,11 +67,16 @@ const validateTripData = (req, res, next) => {
  */
 const validatePlaceData = (req, res, next) => {
   try {
-    const { name, latitude, longitude } = req.body;
+    const { name, latitude, longitude, category } = req.body;
     
     // Check required fields
     if (!name || !name.trim()) {
       throw new AppError('Place name is required', 400);
+    }
+    
+    // Category is required
+    if (!category || !category.trim()) {
+      throw new AppError('Place category is required', 400);
     }
     
     // Validate latitude if provided
@@ -102,7 +107,7 @@ const validatePlaceData = (req, res, next) => {
  */
 const validateItineraryItemData = (req, res, next) => {
   try {
-    const { title, start_time, end_time, day_number, order_index } = req.body;
+    const { title, start_time, end_time, day_number, order_index, tags } = req.body;
     
     // Check required fields
     if (!title || !title.trim()) {
@@ -142,6 +147,30 @@ const validateItineraryItemData = (req, res, next) => {
     // In a real app, you might want to do more sophisticated validation
     if (start_time >= end_time) {
       throw new AppError('Start time must be before end time', 400);
+    }
+    
+    // Validate tags if provided
+    if (tags !== undefined && tags !== null) {
+      // If tags is a string, try to parse it as JSON
+      if (typeof tags === 'string') {
+        try {
+          const parsedTags = JSON.parse(tags);
+          if (!Array.isArray(parsedTags)) {
+            throw new AppError('Tags must be an array', 400);
+          }
+          // Store the parsed tags back in the request body
+          req.body.tags = parsedTags;
+        } catch (err) {
+          // If it's not valid JSON and not an empty string, it's an error
+          if (tags.trim() !== '') {
+            throw new AppError('Invalid tags format', 400);
+          }
+          // If it's an empty string, set tags to null
+          req.body.tags = null;
+        }
+      } else if (tags !== null && !Array.isArray(tags)) {
+        throw new AppError('Tags must be an array', 400);
+      }
     }
     
     // Continue to the next middleware

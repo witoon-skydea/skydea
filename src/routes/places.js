@@ -121,8 +121,8 @@ router.get('/details', isAuthenticated, async (req, res, next) => {
     // This would be your actual Google Maps API Key
     const apiKey = process.env.GOOGLE_MAPS_API_KEY || 'YOUR_GOOGLE_MAPS_API_KEY';
     
-    // Request more fields, especially 'photos' to get photo references
-    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,formatted_address,geometry,photos,rating,url,icon&key=${apiKey}`;
+    // Request more fields, especially 'photos' to get photo references and types for categories
+    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,formatted_address,geometry,photos,rating,url,icon,types&key=${apiKey}`;
     
     console.log('Fetching place details from Google API:', url);
 
@@ -144,6 +144,39 @@ router.get('/details', isAuthenticated, async (req, res, next) => {
               parsedData.result.photo_url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${apiKey}`;
               console.log('Added photo URL to place data:', parsedData.result.photo_url);
             }
+          }
+          
+          // Process types to derive a category
+          if (parsedData.result && parsedData.result.types && parsedData.result.types.length > 0) {
+            // Map Google place types to our custom categories
+            const typeToCategory = {
+              'lodging': 'hotel',
+              'hotel': 'hotel',
+              'restaurant': 'restaurant',
+              'food': 'restaurant',
+              'cafe': 'restaurant',
+              'bar': 'restaurant',
+              'shopping_mall': 'shopping',
+              'store': 'shopping',
+              'museum': 'sight seeing',
+              'tourist_attraction': 'sight seeing',
+              'park': 'sight seeing',
+              'airport': 'transportation',
+              'subway_station': 'transportation',
+              'train_station': 'transportation',
+              'bus_station': 'transportation'
+            };
+            
+            // Find the first matching category
+            parsedData.result.category = 'other'; // Default category
+            for (const type of parsedData.result.types) {
+              if (typeToCategory[type]) {
+                parsedData.result.category = typeToCategory[type];
+                break;
+              }
+            }
+            
+            console.log('Derived category from place types:', parsedData.result.category);
           }
           
           res.json(parsedData);
@@ -215,7 +248,8 @@ router.post('/', isAuthenticated, checkTripOwnership, validatePlaceData, async (
       longitude, 
       address, 
       place_id, 
-      image_url 
+      image_url,
+      category
     } = req.body;
     
     if (!trip_id) {
@@ -230,7 +264,8 @@ router.post('/', isAuthenticated, checkTripOwnership, validatePlaceData, async (
       longitude: longitude ? parseFloat(longitude) : null,
       address,
       place_id,
-      image_url
+      image_url,
+      category
     };
     
     const place = await Place.create(placeData);
@@ -258,7 +293,8 @@ router.put('/:id', isAuthenticated, checkPlaceOwnership, validatePlaceData, asyn
       longitude, 
       address, 
       place_id, 
-      image_url 
+      image_url,
+      category
     } = req.body;
     
     const placeData = {
@@ -268,7 +304,8 @@ router.put('/:id', isAuthenticated, checkPlaceOwnership, validatePlaceData, asyn
       longitude: longitude ? parseFloat(longitude) : null,
       address,
       place_id,
-      image_url
+      image_url,
+      category
     };
     
     const place = await Place.update(placeId, placeData);

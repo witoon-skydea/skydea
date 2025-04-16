@@ -3,12 +3,21 @@ const router = express.Router();
 const { isAuthenticated } = require('../middlewares/auth');
 const appConfig = require('../config/app');
 
-// Home page
+// Home page - main route
 router.get('/', (req, res) => {
   res.render('home', { 
     title: 'Welcome to Skydea',
     basePath: appConfig.appBasePath
   });
+});
+
+// Alternative home routes for navigation issues
+router.get('/index', (req, res) => {
+  res.redirect('/');
+});
+
+router.get('/home', (req, res) => {
+  res.redirect('/');
 });
 
 // Dashboard (protected route)

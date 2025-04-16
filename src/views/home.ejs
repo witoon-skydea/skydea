@@ -1,13 +1,18 @@
-<!-- Hero Section -->
-<section class="hero hero-with-background text-center text-white" id="random-hero-background">
-  <div class="hero-overlay"></div>
+<!-- Hero Section with solid background instead of image -->
+<section class="hero text-center text-white">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-10">
         <h1 class="display-4 mb-3 fw-bold">Welcome to Skydea</h1>
         <p class="lead mb-4">Your premium platform for extraordinary sky experiences</p>
         
-        <div class="mt-5">
+        <!-- Random Feature Image in medium size with caption -->
+        <div class="mt-3 mb-4">
+          <img src="" alt="Skydea Feature" id="random-feature-image" class="img-fluid rounded shadow-lg">
+          <p id="feature-image-caption" class="text-white-50 mt-2 font-italic"></p>
+        </div>
+        
+        <div class="mt-4">
           <% if (!locals.isAuthenticated) { %>
             <a href="<%= basePath %>auth/register" class="btn btn-light btn-lg me-3 shadow">
               <i class="fas fa-rocket me-2"></i> Get Started

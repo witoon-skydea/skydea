@@ -1,5 +1,30 @@
 // Trip Planner Application JavaScript
 document.addEventListener('DOMContentLoaded', function() {
+  // Helper function to get icon for place category
+  function getCategoryIcon(category) {
+    const icons = {
+      'hotel': 'fa-hotel',
+      'restaurant': 'fa-utensils',
+      'shopping': 'fa-shopping-bag',
+      'sight seeing': 'fa-camera',
+      'transportation': 'fa-bus',
+      'other': 'fa-map-marker-alt'
+    };
+    
+    return icons[category] || 'fa-map-marker-alt';
+  }
+  
+  // Helper function to get category icon for an activity's place
+  function getPlaceCategoryIcon(placeId) {
+    if (!placeId) return '';
+    
+    const place = placesData.find(p => p.id === placeId);
+    if (place && place.category) {
+      return `<span class="ms-2 badge bg-light text-dark"><i class="fas ${getCategoryIcon(place.category)} me-1"></i>${place.category}</span>`;
+    }
+    
+    return '';
+  }
   // Get base data
   const tripPlannerApp = document.getElementById('trip-planner-app');
   const tripId = tripPlannerApp?.dataset.tripId || window.tripData?.tripId;
@@ -735,8 +760,17 @@ document.addEventListener('DOMContentLoaded', function() {
           const startTime = formatTime(item.start_time);
           const endTime = formatTime(item.end_time);
           
+          // Determine category class for the timeline item
+          let categoryClass = '';
+          if (item.place_id) {
+            const place = placesData.find(p => p.id === item.place_id);
+            if (place && place.category) {
+              categoryClass = place.category.replace(' ', '-');
+            }
+          }
+          
           timelineHTML += `
-            <div class="timeline-item" data-item-id="${item.id}" draggable="true">
+            <div class="timeline-item ${categoryClass}" data-item-id="${item.id}" draggable="true">
               <div class="timeline-item-content">
                 <div class="timeline-time">
                   <span class="badge bg-primary">${startTime} - ${endTime}</span>
@@ -753,9 +787,18 @@ document.addEventListener('DOMContentLoaded', function() {
                       </button>
                     </div>
                   </div>
-                  ${item.place_name ? `<p class="mb-1 small"><i class="fas fa-map-marker-alt me-2"></i>${item.place_name}</p>` :
-                   (item.place_id ? `<p class="mb-1 small text-muted"><i class="fas fa-map-marker-alt me-2"></i>ไม่พบข้อมูลสถานที่</p>` : 
-                   `<p class="mb-1 small text-muted"><i class="fas fa-info-circle me-2"></i>กิจกรรมไม่ระบุสถานที่</p>`)}
+                  ${item.place_name ? 
+                    `<p class="mb-1 small">
+                      <i class="fas fa-map-marker-alt me-2"></i>${item.place_name}
+                      ${getPlaceCategoryIcon(item.place_id)}
+                    </p>` :
+                   (item.place_id ? 
+                    `<p class="mb-1 small text-muted">
+                      <i class="fas fa-map-marker-alt me-2"></i>ไม่พบข้อมูลสถานที่
+                    </p>` : 
+                    `<p class="mb-1 small text-muted">
+                      <i class="fas fa-info-circle me-2"></i>กิจกรรมไม่ระบุสถานที่
+                    </p>`)}
                   ${item.description ? `<p class="mb-0 text-muted small">${item.description}</p>` : ''}
                   ${renderTags(item.tags)}
                 </div>
@@ -1121,7 +1164,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Open the Edit Place modal with pre-filled data
-  function openEditPlaceModal(place) {
+function openEditPlaceModal(place) {
     // Fill form with place data
     document.getElementById('place-name').value = place.name;
     document.getElementById('place-description').value = place.description || '';
@@ -1130,17 +1173,29 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('place-longitude').value = place.longitude || '';
     document.getElementById('place-image').value = place.image_url || '';
     
+    // Set category if exists, otherwise default to 'other'
+    const categorySelect = document.getElementById('place-category');
+    const category = place.category || 'other';
+    if (categorySelect) {
+      const option = Array.from(categorySelect.options).find(opt => opt.value === category);
+      if (option) {
+        categorySelect.value = category;
+      } else {
+        categorySelect.value = 'other';
+      }
+    }
+
     document.getElementById('manual-place-error').classList.add('d-none');
-    
+
     // Make sure we're on the manual tab
     document.getElementById('manual-tab').click();
-    
+
     // Set save button to "Update Place"
     const saveBtn = document.getElementById('save-place-btn');
     saveBtn.textContent = 'Update Place';
     saveBtn.dataset.mode = 'edit';
     saveBtn.dataset.placeId = place.id;
-    
+
     // Show modal
     const modal = new bootstrap.Modal(document.getElementById('add-place-modal'));
     modal.show();
@@ -1163,7 +1218,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const latitude = document.getElementById('place-latitude').value.trim();
         const longitude = document.getElementById('place-longitude').value.trim();
         const imageUrl = document.getElementById('place-image').value.trim();
-        
+        const category = document.getElementById('place-category').value.trim();
+
         // Validate required fields
         if (!name) {
           const errorElement = document.getElementById('manual-place-error');
@@ -1171,7 +1227,15 @@ document.addEventListener('DOMContentLoaded', function() {
           errorElement.classList.remove('d-none');
           return;
         }
-        
+
+        // Validate category
+        if (!category) {
+          const errorElement = document.getElementById('manual-place-error');
+          errorElement.textContent = 'Category is required';
+          errorElement.classList.remove('d-none');
+          return;
+        }
+
         // Validate coordinates if provided
         if ((latitude && !longitude) || (!latitude && longitude)) {
           const errorElement = document.getElementById('manual-place-error');
@@ -1179,14 +1243,15 @@ document.addEventListener('DOMContentLoaded', function() {
           errorElement.classList.remove('d-none');
           return;
         }
-        
+
         placeData = {
           name,
           description: description || null,
           address: address || null,
           latitude: latitude ? parseFloat(latitude) : null,
           longitude: longitude ? parseFloat(longitude) : null,
-          image_url: imageUrl || null
+          image_url: imageUrl || null,
+          category: category
         };
       } else {
         // Google Places selection
@@ -1203,7 +1268,9 @@ document.addEventListener('DOMContentLoaded', function() {
           longitude: selectedPlace.lng,
           place_id: selectedPlace.place_id,
           // Use the image URL that we already set (either from Google Photos or default)
-          image_url: selectedPlace.image_url
+          image_url: selectedPlace.image_url,
+          // Use the category from Google Places or default to 'other'
+          category: selectedPlace.category || 'other'
         };
       }
       
@@ -1467,6 +1534,37 @@ document.addEventListener('DOMContentLoaded', function() {
     // First set default image URL for Google Places
     selectedPlace.image_url = `${basePath}images/main_photo.png`;
     
+    // Set place category if available, otherwise default to 'other'
+    if (!selectedPlace.category && place.types && place.types.length > 0) {
+      // Map Google place types to our custom categories
+      const typeToCategory = {
+        'lodging': 'hotel',
+        'hotel': 'hotel',
+        'restaurant': 'restaurant',
+        'food': 'restaurant',
+        'cafe': 'restaurant',
+        'bar': 'restaurant',
+        'shopping_mall': 'shopping',
+        'store': 'shopping',
+        'museum': 'sight seeing',
+        'tourist_attraction': 'sight seeing',
+        'park': 'sight seeing',
+        'airport': 'transportation',
+        'subway_station': 'transportation',
+        'train_station': 'transportation',
+        'bus_station': 'transportation'
+      };
+      
+      // Find the first matching category
+      selectedPlace.category = 'other'; // Default category
+      for (const type of place.types) {
+        if (typeToCategory[type]) {
+          selectedPlace.category = typeToCategory[type];
+          break;
+        }
+      }
+    }
+    
     // If we have a photo_url from the API, use that
     if (place.photo_url) {
       selectedPlace.image_url = place.photo_url;
@@ -1502,6 +1600,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('google-place-name').textContent = place.name;
     document.getElementById('google-place-address').textContent = place.formatted_address || 'No address available';
+    
+    // Add category display if available
+    const categoryInfo = selectedPlace.category ? 
+      `<span class="badge bg-light text-dark ms-2"><i class="fas ${getCategoryIcon(selectedPlace.category)} me-1"></i>${selectedPlace.category}</span>` : '';
+    document.getElementById('google-place-address').innerHTML = 
+      (place.formatted_address || 'No address available') + categoryInfo;
     
     // Check if place.geometry.location has lat/lng as functions or properties
     let lat, lng;

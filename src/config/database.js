@@ -62,6 +62,7 @@ const db = new sqlite3.Database(path.resolve(dbPath), (err) => {
         address TEXT,
         place_id TEXT,
         image_url TEXT,
+        category TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE
@@ -70,6 +71,25 @@ const db = new sqlite3.Database(path.resolve(dbPath), (err) => {
           console.error('Error creating places table', err);
         } else {
           console.log('Places table ready');
+          
+          // Check if places table has the category column
+          db.get("SELECT COUNT(*) as count FROM pragma_table_info('places') WHERE name='category'", (err, row) => {
+            if (err) {
+              console.error('Error checking for category column:', err);
+              return;
+            }
+
+            if (row.count === 0) {
+              // Add the category column
+              db.run("ALTER TABLE places ADD COLUMN category TEXT", (err) => {
+                if (err) {
+                  console.error('Error adding category column:', err);
+                } else {
+                  console.log('Added category column to places table');
+                }
+              });
+            }
+          });
         }
       });
 
@@ -84,6 +104,7 @@ const db = new sqlite3.Database(path.resolve(dbPath), (err) => {
         end_time DATETIME NOT NULL,
         day_number INTEGER NOT NULL,
         order_index INTEGER NOT NULL,
+        tags TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE,
@@ -93,6 +114,25 @@ const db = new sqlite3.Database(path.resolve(dbPath), (err) => {
           console.error('Error creating itinerary_items table', err);
         } else {
           console.log('Itinerary items table ready');
+        }
+      });
+      
+      // Check if itinerary_items table has the tags column
+      db.get("SELECT COUNT(*) as count FROM pragma_table_info('itinerary_items') WHERE name='tags'", (err, row) => {
+        if (err) {
+          console.error('Error checking for tags column:', err);
+          return;
+        }
+        
+        if (row.count === 0) {
+          // Add the tags column
+          db.run("ALTER TABLE itinerary_items ADD COLUMN tags TEXT", (err) => {
+            if (err) {
+              console.error('Error adding tags column:', err);
+            } else {
+              console.log('Added tags column to itinerary_items table');
+            }
+          });
         }
       });
       

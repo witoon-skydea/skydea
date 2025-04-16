@@ -26,9 +26,14 @@
               </ul>
             </div>
           <% } %>
-          <a href="<%= basePath %>dashboard" class="btn btn-outline-primary">
-            <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
-          </a>
+          <div class="btn-group">
+            <button onclick="window.location.href='<%= basePath %>'" class="btn btn-outline-secondary">
+              <i class="fas fa-home me-1"></i> Home
+            </button>
+            <a href="<%= basePath %>dashboard" class="btn btn-outline-primary">
+              <i class="fas fa-arrow-left me-1"></i> Dashboard
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -411,6 +416,18 @@
                 </div>
               </div>
               <div class="mb-3">
+                <label for="place-category" class="form-label">Category (Required)</label>
+                <select class="form-select" id="place-category" required>
+                  <option value="">Select a category</option>
+                  <option value="hotel">Hotel</option>
+                  <option value="restaurant">Restaurant</option>
+                  <option value="shopping">Shopping</option>
+                  <option value="sight seeing">Sight Seeing</option>
+                  <option value="transportation">Transportation</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="mb-3">
                 <label for="place-image" class="form-label">Image URL (Optional)</label>
                 <input type="url" class="form-control" id="place-image" placeholder="e.g., https://example.com/eiffel-tower.jpg">
               </div>
@@ -512,6 +529,11 @@
               <label for="activity-end-time" class="form-label">End Time</label>
               <input type="time" class="form-control" id="activity-end-time" required>
             </div>
+          </div>
+          <div class="mb-3">
+            <label for="activity-tags" class="form-label">Tags (Optional, comma separated)</label>
+            <input type="text" class="form-control" id="activity-tags" placeholder="e.g., museum, family, shopping">
+            <small class="form-text text-muted">Categorize your activity with relevant tags</small>
           </div>
           <div id="activity-form-error" class="alert alert-danger d-none" role="alert"></div>
         </form>
