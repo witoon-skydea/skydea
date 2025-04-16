@@ -1,7 +1,7 @@
-// Enhanced Home Page JavaScript
+// Clean Home Page with Carousel JavaScript
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize random feature image for home page
-  initializeRandomFeatureImage();
+  // Initialize carousel
+  initializeImageCarousel();
   
   // Fix for home navigation issue
   const homeLinks = document.querySelectorAll('a[href="' + window.appBasePath + '"]');
@@ -16,18 +16,29 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('Found', homeLinks.length, 'home links on page');
 });
 
-// Enhanced random feature image function
-function initializeRandomFeatureImage() {
-  const featureImageElement = document.getElementById('random-feature-image');
-  const captionElement = document.getElementById('feature-image-caption');
+// Function to initialize image carousel
+function initializeImageCarousel() {
+  const carouselInner = document.querySelector('#featureCarousel .carousel-inner');
   
-  if (featureImageElement) {
-    // Array of background images
-    const featureImages = [
-      'images/backgrounds/bg1.png',
-      'images/backgrounds/bg2.png',
-      'images/backgrounds/bg3.png',
-      'images/main_photo.png'
+  if (carouselInner) {
+    // Array of carousel images with captions
+    const carouselImages = [
+      {
+        src: 'images/backgrounds/bg1.png',
+        caption: 'Plan your adventures with ease'
+      },
+      {
+        src: 'images/backgrounds/bg2.png',
+        caption: 'Discover amazing destinations'
+      },
+      {
+        src: 'images/backgrounds/bg3.png',
+        caption: 'Create unforgettable memories'
+      },
+      {
+        src: 'images/main_photo.png',
+        caption: 'Your journey starts here'
+      }
     ];
     
     // Get the base path from the page
@@ -36,30 +47,31 @@ function initializeRandomFeatureImage() {
       basePath = window.appBasePath;
     }
     
-    // Select a random background
-    const randomIndex = Math.floor(Math.random() * featureImages.length);
-    const selectedImage = featureImages[randomIndex];
+    // Create carousel items
+    carouselImages.forEach((image, index) => {
+      const isActive = index === 0 ? 'active' : '';
+      const fullImagePath = basePath + image.src;
+      
+      const carouselItem = document.createElement('div');
+      carouselItem.className = `carousel-item ${isActive}`;
+      carouselItem.style.backgroundImage = `url('${fullImagePath}')`;
+      
+      const caption = document.createElement('div');
+      caption.className = 'carousel-caption d-none d-md-block';
+      caption.innerHTML = `<h5>${image.caption}</h5>`;
+      
+      carouselItem.appendChild(caption);
+      carouselInner.appendChild(carouselItem);
+    });
     
-    // Apply the selected image with the correct base path
-    const fullPath = basePath + selectedImage;
-    featureImageElement.src = fullPath;
-    featureImageElement.alt = `Skydea Feature Image ${randomIndex + 1}`;
+    // Initialize Bootstrap carousel
+    new bootstrap.Carousel(document.getElementById('featureCarousel'), {
+      interval: 5000,
+      wrap: true
+    });
     
-    // Add custom captions based on the image
-    const captions = [
-      "Plan your adventures with ease",
-      "Discover amazing destinations",
-      "Create unforgettable memories",
-      "Your journey starts here"
-    ];
-    
-    // Set the caption text if element exists
-    if (captionElement) {
-      captionElement.textContent = captions[randomIndex];
-    }
-    
-    console.log('Random feature image set:', fullPath);
+    console.log('Carousel initialized with', carouselImages.length, 'images');
   } else {
-    console.log('Feature image element not found');
+    console.log('Carousel element not found');
   }
 }

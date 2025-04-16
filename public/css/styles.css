@@ -110,41 +110,53 @@ main {
   border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Hero section - clean design */
+/* Ultra-clean hero section */
 .hero {
   padding: 80px 0;
-  background-color: #f8fafc;
+  background-color: #ffffff;
   position: relative;
-  overflow: hidden;
 }
 
-.hero .container {
-  position: relative;
-  z-index: 2;
-}
-
-/* Main feature card styling */
+/* Main feature card styling - minimal and clean */
 .hero .card {
   transition: all 0.4s ease;
+  border: none;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .hero .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Feature image on homepage - responsive design */
-#random-feature-image {
-  transition: all 0.3s ease;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  display: block;
+/* Carousel styling */
+.carousel {
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
 }
 
-/* Add hover effect to feature image */
-.hero .card:hover #random-feature-image {
-  filter: brightness(1.05);
+.carousel-item {
+  height: 400px;
+  background-position: center;
+  background-size: cover;
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  padding: 10px 15px;
+  bottom: 20px;
+}
+
+/* Card content styling */
+.card-body {
+  padding: 2.5rem !important;
+}
+
+.hero .btn {
+  padding: 12px 24px;
+  font-weight: 500;
 }
 
 .hero h1 {

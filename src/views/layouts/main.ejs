@@ -24,8 +24,8 @@
   <link rel="stylesheet" href="<%= basePath %>css/trip-cards.css">
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <!-- Navigation - Clean and Simple Design -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container">
       <a class="navbar-brand" href="<%= basePath %>">
         <i class="fas fa-cloud"></i> Skydea
@@ -40,13 +40,16 @@
           </li>
           <% if (locals.isAuthenticated && locals.user) { %>
             <li class="nav-item">
+              <a class="nav-link" href="<%= basePath %>trips"><i class="fas fa-suitcase"></i> My Trips</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="<%= basePath %>dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-user-circle"></i> <%= locals.user.username %>
               </a>
-              <ul class="dropdown-menu dropdown-menu-end">
+              <ul class="dropdown-menu dropdown-menu-end shadow-sm">
                 <li><a class="dropdown-item" href="<%= basePath %>dashboard"><i class="fas fa-user"></i> My Profile</a></li>
                 <li><a class="dropdown-item" href="<%= basePath %>trips"><i class="fas fa-suitcase"></i> My Trips</a></li>
                 <li><hr class="dropdown-divider"></li>

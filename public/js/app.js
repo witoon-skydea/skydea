@@ -1,10 +1,28 @@
 // Skydea Application JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
-  // User authentication check - this ensures the dropdown works properly
+  // User authentication check - this ensures the dropdown works correctly
   const userDropdown = document.querySelector('.dropdown-toggle');
   if (userDropdown) {
+    // Initialize dropdown
     new bootstrap.Dropdown(userDropdown);
+    
+    // Add active class to dashboard link when on dashboard page
+    if (window.location.pathname.includes('/dashboard')) {
+      document.querySelector('a[href*="dashboard"]').classList.add('active');
+    }
+    
+    console.log('User is authenticated, dropdown initialized');
+  } else {
+    // Add active class to login/register links when on those pages
+    const path = window.location.pathname;
+    if (path.includes('/login')) {
+      document.querySelector('a[href*="login"]').classList.add('active');
+    } else if (path.includes('/register')) {
+      document.querySelector('a[href*="register"]').classList.add('active');
+    }
+    
+    console.log('User is not authenticated');
   }
   
   // Initialize Bootstrap tooltips

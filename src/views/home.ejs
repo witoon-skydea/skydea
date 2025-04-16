@@ -1,16 +1,26 @@
-<!-- Clean Hero Section with Centered Card -->
-<section class="hero py-5">
+<!-- Clean and Simple Hero Section with Carousel Card Only -->
+<section class="hero py-5 bg-white">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
+        <!-- Simple Card with Carousel -->
         <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
-          <!-- Random Feature Image Card -->
-          <div class="card-img-top position-relative">
-            <img src="" alt="Skydea Feature" id="random-feature-image" class="img-fluid w-100">
-            <div class="position-absolute top-0 end-0 m-3">
-              <span class="badge bg-light text-primary p-2 rounded-pill shadow-sm" id="feature-image-caption"></span>
+          <!-- Carousel -->
+          <div id="featureCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <!-- Carousel items will be dynamically populated via JavaScript -->
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#featureCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#featureCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
           </div>
+          
+          <!-- Card Content -->
           <div class="card-body p-5 text-center">
             <h1 class="display-4 mb-3 fw-bold">Welcome to Skydea</h1>
             <p class="lead mb-4">Plan your perfect journey with our easy-to-use trip planner</p>
@@ -34,125 +44,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Features Section -->
-<section class="py-5 bg-light">
-  <div class="container">
-    <div class="row text-center mb-5">
-      <div class="col-lg-8 mx-auto">
-        <h2 class="fw-bold">Why Choose Skydea?</h2>
-        <p class="lead text-muted">Everything you need to plan the perfect trip</p>
-      </div>
-    </div>
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card border-0 h-100 shadow-sm">
-          <div class="card-body text-center p-4">
-            <div class="feature-icon bg-primary text-white rounded-circle mb-4">
-              <i class="fas fa-map-marked-alt"></i>
-            </div>
-            <h5 class="card-title">Easy Planning</h5>
-            <p class="card-text">Create detailed itineraries with our intuitive interface.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card border-0 h-100 shadow-sm">
-          <div class="card-body text-center p-4">
-            <div class="feature-icon bg-primary text-white rounded-circle mb-4">
-              <i class="fas fa-search-location"></i>
-            </div>
-            <h5 class="card-title">Discover Places</h5>
-            <p class="card-text">Find amazing destinations and add them to your trip.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card border-0 h-100 shadow-sm">
-          <div class="card-body text-center p-4">
-            <div class="feature-icon bg-primary text-white rounded-circle mb-4">
-              <i class="fas fa-share-alt"></i>
-            </div>
-            <h5 class="card-title">Share & Collaborate</h5>
-            <p class="card-text">Share your trips with friends and family.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- How It Works Section -->
-<section class="py-5 bg-white">
-  <div class="container">
-    <div class="row text-center mb-5">
-      <div class="col-lg-8 mx-auto">
-        <h2 class="fw-bold">How It Works</h2>
-        <p class="lead text-muted">Three simple steps to get started</p>
-      </div>
-    </div>
-    
-    <div class="row">
-      <div class="col-md-4 mb-4 mb-md-0">
-        <div class="card border-0 h-100">
-          <div class="card-body text-center">
-            <div class="mb-4">
-              <span class="display-4 fw-bold text-primary">01</span>
-            </div>
-            <h3 class="h4 mb-3">Create a Trip</h3>
-            <p class="text-muted mb-0">Start by setting up a new trip with dates and destination.</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-md-4 mb-4 mb-md-0">
-        <div class="card border-0 h-100">
-          <div class="card-body text-center">
-            <div class="mb-4">
-              <span class="display-4 fw-bold text-primary">02</span>
-            </div>
-            <h3 class="h4 mb-3">Add Places</h3>
-            <p class="text-muted mb-0">Find and add interesting places to visit during your trip.</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-md-4">
-        <div class="card border-0 h-100">
-          <div class="card-body text-center">
-            <div class="mb-4">
-              <span class="display-4 fw-bold text-primary">03</span>
-            </div>
-            <h3 class="h4 mb-3">Plan Your Itinerary</h3>
-            <p class="text-muted mb-0">Organize your activities day by day with our easy drag-and-drop interface.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA Section -->
-<section class="py-5 bg-primary text-white text-center">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <h2 class="fw-bold mb-4">Ready to Start Your Journey?</h2>
-        <p class="lead mb-5">Join thousands of satisfied travelers on our platform today.</p>
-        
-        <% if (!locals.isAuthenticated) { %>
-          <a href="<%= basePath %>auth/register" class="btn btn-light btn-lg px-5 shadow">
-            <i class="fas fa-user-plus me-2"></i> Create Free Account
-          </a>
-        <% } else { %>
-          <a href="<%= basePath %>dashboard" class="btn btn-light btn-lg px-5 shadow">
-            <i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard
-          </a>
-        <% } %>
       </div>
     </div>
   </div>
