@@ -1,38 +1,67 @@
-/* Timeline item with category decoration */
-.timeline-item.hotel .timeline-item-content::before {
-  background-color: #f1c40f;
+/* Responsive adjustments for timeline */
+@media (max-width: 768px) {
+  .timeline {
+    padding-left: 2rem;
+  }
+  
+  .timeline-item-content {
+    padding: 12px;
+  }
+  
+  .timeline-item .timeline-item-marker-indicator {
+    height: 1.75rem;
+    width: 1.75rem;
+  }
+  
+  .timeline-item .timeline-item-marker-indicator i {
+    font-size: 0.8rem;
+  }
+  
+  .timeline-item:before {
+    width: 12px;
+    height: 12px;
+    left: -0.75rem;
+  }
+  
+  .timeline:before {
+    left: 0.42rem;
+  }
+  
+  /* Adjust animations for mobile */
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .timeline-item:hover .timeline-item-content {
+    transform: translateY(-2px) translateX(2px);
+  }
 }
 
-.timeline-item.restaurant .timeline-item-content::before {
-  background-color: #e74c3c;
-}
-
-.timeline-item.shopping .timeline-item-content::before {
-  background-color: #9b59b6;
-}
-
-.timeline-item.sight-seeing .timeline-item-content::before {
-  background-color: #3498db;
-}
-
-.timeline-item.transportation .timeline-item-content::before {
-  background-color: #2ecc71;
-}
-
-/* Category tag in activities */
-.category-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
-  border-radius: 0.25rem;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
-  background-color: #f8f9fa;
-  color: #343a40;
-  border: 1px solid #dee2e6;
-}
-
-.category-tag i {
-  margin-right: 0.25rem;
+/* Print styles - disable animations when printing */
+@media print {
+  .timeline-item {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  
+  .timeline-item:before {
+    animation: none !important;
+  }
+  
+  .timeline-item .timeline-item-content {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+  
+  .timeline-time .badge {
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+  }
 }

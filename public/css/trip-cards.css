@@ -54,46 +54,128 @@
   font-size: 0.75rem;
 }
 
-/* Timeline styling for activities */
+/* Enhanced Timeline styling for activities */
 .timeline {
   position: relative;
-  padding-left: 1.75rem;
+  padding-left: 2.5rem; /* Increased padding for better spacing */
+  margin-top: 1rem;
+}
+
+.timeline:before {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  top: 0;
+  height: 100%;
+  border-left: 2px solid #e9ecef; /* Solid line instead of dashed */
+  z-index: 1;
 }
 
 .timeline-item {
   position: relative;
   padding-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover {
+  transform: translateX(3px);
 }
 
 .timeline-item:last-child {
   padding-bottom: 0;
 }
 
-.timeline-item:before {
+/* Timeline connector - replaced by :before in trip-planner.css */
+.timeline-item:after {
   content: '';
   position: absolute;
-  left: -0.86rem;
-  top: 0;
-  height: 100%;
-  border-left: 1px dashed #e0e0e0;
+  left: -2rem;
+  top: 1.2rem; /* Aligned with the time badge */
+  height: calc(100% - 1.2rem);
+  z-index: 1;
 }
 
+.timeline-item:last-child:after {
+  display: none;
+}
+
+/* Enhanced timeline time marker */
 .timeline-item-marker {
   position: absolute;
-  left: -1.75rem;
-  top: 0;
+  left: -2.5rem;
+  top: 1rem;
+  z-index: 3;
 }
 
 .timeline-item-marker-indicator {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 2rem;
-  width: 2rem;
-  border-radius: 100%;
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+  height: 2.25rem;
+  width: 2.25rem;
+  border-radius: 50%;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
+  background-color: #ffffff;
+  border: 2px solid var(--secondary-color);
+  transition: all 0.2s ease;
+  transform: scale(0.9);
+}
+
+.timeline-item:hover .timeline-item-marker-indicator {
+  transform: scale(1);
+  box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.2);
 }
 
 .timeline-item-marker-indicator i {
-  font-size: 0.875rem;
+  font-size: 1rem;
+  color: var(--secondary-color);
+}
+
+/* Category-specific marker indicators */
+.timeline-item.hotel .timeline-item-marker-indicator {
+  border-color: var(--hotel-color);
+}
+
+.timeline-item.restaurant .timeline-item-marker-indicator {
+  border-color: var(--restaurant-color);
+}
+
+.timeline-item.shopping .timeline-item-marker-indicator {
+  border-color: var(--shopping-color);
+}
+
+.timeline-item.sight-seeing .timeline-item-marker-indicator {
+  border-color: var(--sight-seeing-color);
+}
+
+.timeline-item.transportation .timeline-item-marker-indicator {
+  border-color: var(--transportation-color);
+}
+
+.timeline-item.other .timeline-item-marker-indicator {
+  border-color: var(--other-color);
+}
+
+.timeline-item.hotel .timeline-item-marker-indicator i {
+  color: var(--hotel-color);
+}
+
+.timeline-item.restaurant .timeline-item-marker-indicator i {
+  color: var(--restaurant-color);
+}
+
+.timeline-item.shopping .timeline-item-marker-indicator i {
+  color: var(--shopping-color);
+}
+
+.timeline-item.sight-seeing .timeline-item-marker-indicator i {
+  color: var(--sight-seeing-color);
+}
+
+.timeline-item.transportation .timeline-item-marker-indicator i {
+  color: var(--transportation-color);
+}
+
+.timeline-item.other .timeline-item-marker-indicator i {
+  color: var(--other-color);
 }

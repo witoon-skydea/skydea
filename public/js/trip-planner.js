@@ -20,10 +20,32 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const place = placesData.find(p => p.id === placeId);
     if (place && place.category) {
-      return `<span class="ms-2 badge bg-light text-dark"><i class="fas ${getCategoryIcon(place.category)} me-1"></i>${place.category}</span>`;
+      // Get the clean category name (without spaces)
+      const categoryClass = place.category.replace(/\s+/g, '-').toLowerCase();
+      // Return a nicer styled category badge with the appropriate icon
+      return `<span class="category-badge ${categoryClass}"><i class="fas ${getCategoryIcon(place.category)}"></i> ${place.category}</span>`;
     }
     
     return '';
+  }
+
+  // Helper function to get time marker icon based on place category
+  function getTimeMarkerIcon(placeId) {
+    if (!placeId) return 'fa-clock';
+    
+    const place = placesData.find(p => p.id === placeId);
+    if (!place || !place.category) return 'fa-clock';
+    
+    const icons = {
+      'hotel': 'fa-bed',
+      'restaurant': 'fa-utensils',
+      'shopping': 'fa-shopping-bag',
+      'sight seeing': 'fa-camera',
+      'transportation': 'fa-bus',
+      'other': 'fa-map-marker-alt'
+    };
+    
+    return icons[place.category] || 'fa-clock';
   }
   // Get base data
   const tripPlannerApp = document.getElementById('trip-planner-app');
@@ -760,6 +782,9 @@ document.addEventListener('DOMContentLoaded', function() {
           const startTime = formatTime(item.start_time);
           const endTime = formatTime(item.end_time);
           
+          // Set animation order for staggered effect
+          const orderIndex = index + 1;
+          
           // Determine category class for the timeline item
           let categoryClass = '';
           if (item.place_id) {
@@ -769,8 +794,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
           }
           
+          // Get the appropriate icon for time marker based on the place category
+          const timeMarkerIcon = getTimeMarkerIcon(item.place_id);
+          
           timelineHTML += `
-            <div class="timeline-item ${categoryClass}" data-item-id="${item.id}" draggable="true">
+            <div class="timeline-item ${categoryClass}" data-item-id="${item.id}" draggable="true" style="--order-index: ${orderIndex}">
+              <div class="timeline-item-marker">
+                <div class="timeline-item-marker-indicator">
+                  <i class="fas ${timeMarkerIcon}"></i>
+                </div>
+              </div>
               <div class="timeline-item-content">
                 <div class="timeline-time">
                   <span class="badge bg-primary">${startTime} - ${endTime}</span>
