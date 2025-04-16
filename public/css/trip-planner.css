@@ -292,6 +292,81 @@
   opacity: 0.9 !important;
 }
 
+/* Activity Tags */
+.activity-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+}
+
+.activity-tag {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  background-color: #f0f0f0;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+}
+
+.activity-tag:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-1px);
+}
+
+.activity-tag i {
+  margin-right: 0.2rem;
+  font-size: 0.6rem;
+}
+
+/* Tag filter container */
+.tag-filter-container {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.tag-filter-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.tag-filter {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  background-color: #f0f0f0;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag-filter.active {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.tag-filter:hover:not(.active) {
+  background-color: #e0e0e0;
+}
+
+/* Tag color variations */
+.tag-color-1 { background-color: #e6f7ff; color: #0078d4; }
+.tag-color-2 { background-color: #e6ffed; color: #28a745; }
+.tag-color-3 { background-color: #fff3e6; color: #fd7e14; }
+.tag-color-4 { background-color: #ffe6e6; color: #dc3545; }
+.tag-color-5 { background-color: #f7e6ff; color: #6f42c1; }
+.tag-color-6 { background-color: #e6e6ff; color: #3a3ad1; }
+.tag-color-7 { background-color: #fffde6; color: #d1b113; }
+.tag-color-8 { background-color: #e6fff1; color: #20c997; }
+
 /* Trip overview cards */
 .overview-stats-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;

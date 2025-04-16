@@ -649,6 +649,12 @@ document.addEventListener('DOMContentLoaded', function() {
     itineraryEmpty.classList.add('d-none');
     itineraryContainer.classList.add('d-none');
     
+    // Remove existing tag filter container if present
+    const existingTagFilter = document.getElementById('tag-filter-container');
+    if (existingTagFilter) {
+      existingTagFilter.remove();
+    }
+    
     if (itineraryData.length === 0) {
       itineraryEmpty.classList.remove('d-none');
       return;
@@ -747,10 +753,11 @@ document.addEventListener('DOMContentLoaded', function() {
                       </button>
                     </div>
                   </div>
-                  ${item.place_name ? `<p class="mb-1 small"><i class="fas fa-map-marker-alt me-2"></i>${item.place_name}</p>` : 
+                  ${item.place_name ? `<p class="mb-1 small"><i class="fas fa-map-marker-alt me-2"></i>${item.place_name}</p>` :
                    (item.place_id ? `<p class="mb-1 small text-muted"><i class="fas fa-map-marker-alt me-2"></i>ไม่พบข้อมูลสถานที่</p>` : 
                    `<p class="mb-1 small text-muted"><i class="fas fa-info-circle me-2"></i>กิจกรรมไม่ระบุสถานที่</p>`)}
                   ${item.description ? `<p class="mb-0 text-muted small">${item.description}</p>` : ''}
+                  ${renderTags(item.tags)}
                 </div>
               </div>
             </div>
@@ -793,6 +800,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const item = itineraryData.find(i => i.id === itemId);
         if (item) {
           confirmDeleteActivity(item);
+        }
+      });
+    });
+
+    // Add the filter by tag section if there are any tags in the itinerary
+    renderTagFilters();
+    
+    // Add click event listeners directly to the activity tags
+    document.querySelectorAll('.activity-tag').forEach(tagElement => {
+      tagElement.addEventListener('click', function() {
+        const tag = this.dataset.tag;
+        if (tag) {
+          // Find the corresponding filter and click it
+          const filterElement = document.querySelector(`.tag-filter[data-tag="${tag}"]`);
+          if (filterElement) {
+            filterElement.click();
+          }
         }
       });
     });
@@ -1680,6 +1704,27 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('activity-place').value = '';
     }
     
+    // Set tags if available
+    if (item.tags) {
+      let tagsValue = '';
+      try {
+        // If tags is a JSON string, parse it
+        if (typeof item.tags === 'string') {
+          const parsedTags = JSON.parse(item.tags);
+          if (Array.isArray(parsedTags)) {
+            tagsValue = parsedTags.join(', ');
+          }
+        } else if (Array.isArray(item.tags)) {
+          tagsValue = item.tags.join(', ');
+        }
+      } catch (e) {
+        console.warn('Error parsing tags:', e);
+      }
+      document.getElementById('activity-tags').value = tagsValue;
+    } else {
+      document.getElementById('activity-tags').value = '';
+    }
+
     document.getElementById('activity-form-error').classList.add('d-none');
     
     // Set save button to "Update Activity"
@@ -1774,6 +1819,22 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
       
+      // Get tags from input and process them
+      const tagsInput = document.getElementById('activity-tags').value.trim();
+      let tags = null;
+      
+      if (tagsInput) {
+        // Split by comma and trim each tag
+        tags = tagsInput.split(',')
+          .map(tag => tag.trim())
+          .filter(tag => tag.length > 0); // Remove empty tags
+          
+        // Set to null if empty array (no valid tags)
+        if (tags.length === 0) {
+          tags = null;
+        }
+      }
+
       const activityData = {
         title,
         description: description || null,
@@ -1781,7 +1842,8 @@ document.addEventListener('DOMContentLoaded', function() {
         day_number: parseInt(dayNumber),
         order_index: parseInt(orderIndex),
         start_time: startTime,
-        end_time: endTime
+        end_time: endTime,
+        tags: tags
       };
       
       console.log('Prepared activity data:', activityData);
@@ -2240,6 +2302,228 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
+  // Render tag filters above the itinerary
+  function renderTagFilters() {
+    // Get all unique tags from all items
+    const allTags = [];
+    
+    itineraryData.forEach(item => {
+      try {
+        let itemTags = [];
+        if (typeof item.tags === 'string' && item.tags) {
+          itemTags = JSON.parse(item.tags);
+        } else if (Array.isArray(item.tags)) {
+          itemTags = item.tags;
+        }
+        
+        if (Array.isArray(itemTags)) {
+          itemTags.forEach(tag => {
+            if (tag && !allTags.includes(tag)) {
+              allTags.push(tag);
+            }
+          });
+        }
+      } catch (e) {
+        console.warn('Error parsing tags for item:', item.id, e);
+      }
+    });
+    
+    // If no tags found, no need to render filters
+    if (allTags.length === 0) {
+      return;
+    }
+    
+    // Sort tags alphabetically
+    allTags.sort();
+    
+    // Get or create the filter container
+    let filterContainer = document.getElementById('tag-filter-container');
+    
+    if (!filterContainer) {
+      filterContainer = document.createElement('div');
+      filterContainer.id = 'tag-filter-container';
+      filterContainer.className = 'tag-filter-container';
+      
+      // Add it above the day tabs
+      const dayTabs = document.getElementById('day-tabs');
+      dayTabs.parentNode.insertBefore(filterContainer, dayTabs);
+    } else {
+      // Clear existing filters
+      filterContainer.innerHTML = '';
+    }
+    
+    // Add the filter title
+    const filterTitle = document.createElement('span');
+    filterTitle.className = 'tag-filter-title';
+    filterTitle.innerHTML = '<i class="fas fa-tag me-1"></i> Filter by tag:';
+    filterContainer.appendChild(filterTitle);
+    
+    // Add "All" filter
+    const allFilter = document.createElement('span');
+    allFilter.className = 'tag-filter active';
+    allFilter.textContent = 'All';
+    allFilter.dataset.tag = 'all';
+    filterContainer.appendChild(allFilter);
+    
+    // Add filter for each tag
+    allTags.forEach((tag, index) => {
+      const tagFilter = document.createElement('span');
+      tagFilter.className = `tag-filter tag-color-${(index % 8) + 1}`;
+      tagFilter.textContent = tag;
+      tagFilter.dataset.tag = tag;
+      filterContainer.appendChild(tagFilter);
+    });
+    
+    // Add event listeners for tag filters
+    document.querySelectorAll('.tag-filter').forEach(filter => {
+      filter.addEventListener('click', function() {
+        // Remove active class from all filters
+        document.querySelectorAll('.tag-filter').forEach(f => f.classList.remove('active'));
+        
+        // Add active class to the clicked filter
+        this.classList.add('active');
+        
+        // Filter the itinerary based on the selected tag
+        const selectedTag = this.dataset.tag;
+        filterItineraryByTag(selectedTag);
+      });
+    });
+  }
+  
+  // Filter itinerary items based on selected tag
+  function filterItineraryByTag(tag) {
+    // Show all items if tag is 'all'
+    if (tag === 'all') {
+      document.querySelectorAll('.timeline-item').forEach(item => {
+        item.style.display = '';
+      });
+      
+      // Update empty day message visibility
+      updateEmptyDayMessages();
+      return;
+    }
+    
+    // Otherwise, filter based on the tag
+    document.querySelectorAll('.timeline-item').forEach(item => {
+      const itemId = parseInt(item.dataset.itemId);
+      const itineraryItem = itineraryData.find(i => i.id === itemId);
+      
+      if (itineraryItem) {
+        try {
+          let itemTags = [];
+          if (typeof itineraryItem.tags === 'string' && itineraryItem.tags) {
+            itemTags = JSON.parse(itineraryItem.tags);
+          } else if (Array.isArray(itineraryItem.tags)) {
+            itemTags = itineraryItem.tags;
+          }
+          
+          if (Array.isArray(itemTags) && itemTags.includes(tag)) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        } catch (e) {
+          console.warn('Error filtering item by tag:', itemId, e);
+          item.style.display = 'none';
+        }
+      }
+    });
+    
+    // Update empty day message visibility
+    updateEmptyDayMessages();
+  }
+  
+  // Update the empty day messages based on visible items
+  function updateEmptyDayMessages() {
+    const dayContainers = document.querySelectorAll('.tab-pane[id^="day-"]');
+    
+    dayContainers.forEach(container => {
+      const dayNumber = parseInt(container.id.replace('day-', ''));
+      const timelineContainer = container.querySelector('.timeline-container');
+      
+      if (!timelineContainer) return;
+      
+      // Count visible items in this day
+      const visibleItems = Array.from(timelineContainer.querySelectorAll('.timeline-item'))
+        .filter(item => item.style.display !== 'none');
+      
+      // Show empty message if no visible items
+      let emptyMessage = container.querySelector('.day-empty-message');
+      
+      if (visibleItems.length === 0) {
+        // If there's no empty message, create one
+        if (!emptyMessage) {
+          emptyMessage = document.createElement('div');
+          emptyMessage.className = 'day-empty-message text-center p-4';
+          
+          const date = new Date(tripData.start_date);
+          date.setDate(date.getDate() + dayNumber - 1);
+          const formattedDate = date.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+          
+          emptyMessage.innerHTML = `
+            <div class="mb-3">
+              <i class="fas fa-filter fa-3x text-muted opacity-50"></i>
+            </div>
+            <h5>No Activities Match Filter</h5>
+            <p class="text-muted mb-0">No activities with the selected tag found for Day ${dayNumber}</p>
+          `;
+          
+          // Add before the timeline container
+          container.querySelector('.timeline').appendChild(emptyMessage);
+        } else {
+          emptyMessage.style.display = '';
+        }
+      } else if (emptyMessage) {
+        // Hide the empty message if there are visible items
+        emptyMessage.style.display = 'none';
+      }
+    });
+  }
+  
+  // Render tags for an activity
+  function renderTags(tags) {
+    if (!tags) return '';
+    
+    try {
+      let tagArray = [];
+      
+      // Check if tags is a string that needs to be parsed
+      if (typeof tags === 'string') {
+        try {
+          tagArray = JSON.parse(tags);
+        } catch (e) {
+          // If it's not valid JSON, try splitting by comma
+          tagArray = tags.split(',').map(tag => tag.trim()).filter(tag => tag);
+        }
+      } else if (Array.isArray(tags)) {
+        tagArray = tags;
+      }
+      
+      if (!Array.isArray(tagArray) || tagArray.length === 0) {
+        return '';
+      }
+      
+      let tagsHtml = '<div class="activity-tags">';
+      
+      tagArray.forEach((tag, index) => {
+        if (tag && tag.trim()) {
+          // Use a color class based on the tag name (to get consistent colors)
+          const colorIndex = (index % 8) + 1;
+          tagsHtml += `<span class="activity-tag tag-color-${colorIndex}" data-tag="${tag.trim()}" 
+                            onclick="document.querySelector('.tag-filter[data-tag=\\'${tag.trim()}\\']')?.click()">
+            <i class="fas fa-tag"></i>${tag.trim()}
+          </span>`;
+        }
+      });
+      
+      tagsHtml += '</div>';
+      return tagsHtml;
+    } catch (e) {
+      console.warn('Error rendering tags:', e, tags);
+      return '';
+    }
+  }
+  
   // Utility function to format time (e.g., "13:30" to "1:30 PM")
   function formatTime(timeStr) {
     if (!timeStr) return '';
@@ -2602,6 +2886,40 @@ document.addEventListener('DOMContentLoaded', function() {
   function truncateText(text, maxLength) {
     if (!text) return '';
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  }
+  
+  // Render tags for an activity
+  function renderTags(tags) {
+    if (!tags) return '';
+    
+    let tagArray;
+    try {
+      // If tags is a string (JSON), parse it
+      if (typeof tags === 'string') {
+        tagArray = JSON.parse(tags);
+      } else if (Array.isArray(tags)) {
+        tagArray = tags;
+      } else {
+        return '';
+      }
+      
+      if (!Array.isArray(tagArray) || tagArray.length === 0) {
+        return '';
+      }
+      
+      return `
+        <div class="mt-2">
+          ${tagArray.map(tag => `
+            <span class="badge bg-secondary me-1">
+              <i class="fas fa-tag me-1"></i>${tag}
+            </span>
+          `).join('')}
+        </div>
+      `;
+    } catch (e) {
+      console.warn('Error rendering tags:', e);
+      return '';
+    }
   }
   
   // Show toast notification
