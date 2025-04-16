@@ -1,3 +1,382 @@
+/* Trip Planner CSS Styles */
+
+/* Define category colors */
+:root {
+  --hotel-color: #f1c40f;
+  --restaurant-color: #e74c3c;
+  --shopping-color: #9b59b6;
+  --sight-seeing-color: #3498db;
+  --transportation-color: #2ecc71;
+  --other-color: #95a5a6;
+}
+
+/* Enhanced timeline items with category-specific styling */
+.timeline-item .timeline-item-content {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #e0e0e0;
+  transition: all 0.2s ease;
+}
+
+.timeline-item .timeline-item-content:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Category-specific styling */
+.timeline-item.hotel .timeline-item-content {
+  border-left: 4px solid var(--hotel-color);
+  background-color: rgba(241, 196, 15, 0.05);
+}
+
+.timeline-item.restaurant .timeline-item-content {
+  border-left: 4px solid var(--restaurant-color);
+  background-color: rgba(231, 76, 60, 0.05);
+}
+
+.timeline-item.shopping .timeline-item-content {
+  border-left: 4px solid var(--shopping-color);
+  background-color: rgba(155, 89, 182, 0.05);
+}
+
+.timeline-item.sight-seeing .timeline-item-content {
+  border-left: 4px solid var(--sight-seeing-color);
+  background-color: rgba(52, 152, 219, 0.05);
+}
+
+.timeline-item.transportation .timeline-item-content {
+  border-left: 4px solid var(--transportation-color);
+  background-color: rgba(46, 204, 113, 0.05);
+}
+
+.timeline-item.other .timeline-item-content {
+  border-left: 4px solid var(--other-color);
+  background-color: rgba(149, 165, 166, 0.05);
+}
+
+/* Time dots styling based on category */
+.timeline-item:before {
+  content: '';
+  position: absolute;
+  left: -0.86rem;
+  top: 1.2rem; /* Adjusted to align with the time badge */
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+  z-index: 2;
+}
+
+/* Category-specific time dots */
+.timeline-item.hotel:before {
+  background-color: var(--hotel-color);
+  box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.2);
+}
+
+.timeline-item.restaurant:before {
+  background-color: var(--restaurant-color);
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+}
+
+.timeline-item.shopping:before {
+  background-color: var(--shopping-color);
+  box-shadow: 0 0 0 3px rgba(155, 89, 182, 0.2);
+}
+
+.timeline-item.sight-seeing:before {
+  background-color: var(--sight-seeing-color);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.timeline-item.transportation:before {
+  background-color: var(--transportation-color);
+  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+}
+
+.timeline-item.other:before {
+  background-color: var(--other-color);
+  box-shadow: 0 0 0 3px rgba(149, 165, 166, 0.2);
+}
+
+/* Enhanced timeline body styling */
+.timeline-body {
+  padding: 8px 0 0 0;
+}
+
+/* Enhanced time badge styling */
+.timeline-time {
+  margin-bottom: 10px;
+}
+
+.timeline-time .badge {
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Category-specific time badges */
+.timeline-item.hotel .timeline-time .badge {
+  background-color: var(--hotel-color) !important;
+}
+
+.timeline-item.restaurant .timeline-time .badge {
+  background-color: var(--restaurant-color) !important;
+}
+
+.timeline-item.shopping .timeline-time .badge {
+  background-color: var(--shopping-color) !important;
+}
+
+.timeline-item.sight-seeing .timeline-time .badge {
+  background-color: var(--sight-seeing-color) !important;
+}
+
+.timeline-item.transportation .timeline-time .badge {
+  background-color: var(--transportation-color) !important;
+}
+
+.timeline-item.other .timeline-time .badge {
+  background-color: var(--other-color) !important;
+}
+
+/* Category tag in activities */
+.category-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  border-radius: 0.25rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: #f8f9fa;
+  color: #343a40;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.category-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.category-tag i {
+  margin-right: 0.25rem;
+}
+
+/* Category badge styling */
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  margin-left: 6px;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Category-specific badges */
+.category-badge.hotel {
+  background-color: var(--hotel-color);
+}
+
+.category-badge.restaurant {
+  background-color: var(--restaurant-color);
+}
+
+.category-badge.shopping {
+  background-color: var(--shopping-color);
+}
+
+.category-badge.sight-seeing {
+  background-color: var(--sight-seeing-color);
+}
+
+.category-badge.transportation {
+  background-color: var(--transportation-color);
+}
+
+.category-badge.other {
+  background-color: var(--other-color);
+}
+
+/* Timeline Activity Cards Enhancement */
+.timeline-item .timeline-actions {
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+.timeline-item:hover .timeline-actions {
+  opacity: 1;
+}
+
+.timeline-actions .btn {
+  margin-left: 5px;
+  transition: all 0.2s ease;
+}
+
+.timeline-actions .btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Day tabs enhancement */
+#day-tabs .nav-link {
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border: none;
+  background-color: #f8f9fa;
+  color: #495057;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+#day-tabs .nav-link:hover {
+  background-color: #e9ecef;
+}
+
+#day-tabs .nav-link.active {
+  background-color: #3498db;
+  color: #ffffff;
+  box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
+}
+
+/* Day header enhancement */
+.timeline-header {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.timeline-header h5 {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* Timeline container */
+.timeline-container {
+  padding-left: 10px;
+}
+
+/* Timeline fade effect */
+.timeline:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+  pointer-events: none;
+  z-index: 2;
+  display: none; /* Only show for longer timelines */
+}
+
+/* Empty day styles */
+.empty-day-message {
+  text-align: center;
+  padding: 30px 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.empty-day-message i {
+  font-size: 3rem;
+  color: #dee2e6;
+  margin-bottom: 15px;
+}
+
+/* Animation effects for timeline items */
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulseTime {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+  }
+}
+
+/* Apply animations to timeline items */
+.timeline-item {
+  animation: fadeInRight 0.5s ease forwards;
+  animation-delay: calc(var(--order-index, 0) * 0.1s);
+  opacity: 0; /* Start invisible */
+}
+
+/* Pulse animation for time dots */
+.timeline-item:before {
+  animation: pulseTime 2s infinite;
+}
+
+/* Category-specific pulse animations */
+.timeline-item.hotel:before {
+  animation: pulseTime 2s infinite;
+  animation-name: pulseHotel;
+}
+
+@keyframes pulseHotel {
+  0% {
+    box-shadow: 0 0 0 0 rgba(241, 196, 15, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(241, 196, 15, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(241, 196, 15, 0);
+  }
+}
+
+.timeline-item.restaurant:before {
+  animation: pulseTime 2s infinite;
+  animation-name: pulseRestaurant;
+}
+
+@keyframes pulseRestaurant {
+  0% {
+    box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(231, 76, 60, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
+  }
+}
+
+/* Hover effects */
+.timeline-item .timeline-item-content {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline-item:hover .timeline-item-content {
+  transform: translateY(-3px) translateX(3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
 /* Responsive adjustments for timeline */
 @media (max-width: 768px) {
   .timeline {
