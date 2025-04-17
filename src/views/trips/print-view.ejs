@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= trip.title %> - Trip Plan</title>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #2c3e50;
+            line-height: 1.6;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Print Header */
+        .print-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .print-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .print-header p {
+            margin: 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        /* Sections */
+        .section {
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        /* Trip Overview */
+        .trip-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .trip-detail {
+            flex: 1;
+            min-width: 200px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .trip-detail h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            color: #7f8c8d;
+        }
+        
+        .trip-detail p {
+            margin: 0;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        
+        .trip-description {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        /* Places Section */
+        .category {
+            margin-bottom: 25px;
+        }
+        
+        .category-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #3498db;
+            margin-bottom: 15px;
+        }
+        
+        .place {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .place:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .place-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .place-address {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        
+        .place-description {
+            font-size: 13px;
+            font-style: italic;
+            color: #95a5a6;
+        }
+        
+        /* Itinerary Section */
+        .day {
+            margin-bottom: 30px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .day-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        
+        .activity {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border-left: 3px solid #3498db;
+        }
+        
+        .activity-time {
+            font-weight: 600;
+            color: #3498db;
+        }
+        
+        .activity-title {
+            font-weight: 600;
+            margin: 5px 0;
+        }
+        
+        .activity-location {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        
+        .activity-description {
+            font-size: 13px;
+            font-style: italic;
+            color: #95a5a6;
+        }
+        
+        .activity-tags {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        
+        .activity-tag {
+            display: inline-block;
+            background-color: #e0e0e0;
+            color: #7f8c8d;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-right: 5px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 40px;
+            font-size: 12px;
+            color: #95a5a6;
+        }
+        
+        /* Print Controls (visible only on screen) */
+        .print-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        
+        .print-btn {
+            background-color: white;
+            color: #3498db;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .print-btn:hover {
+            background-color: #f8f9fa;
+        }
+        
+        /* Print Media Query */
+        @media print {
+            body {
+                background-color: white;
+            }
+            
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+                padding: 0;
+            }
+            
+            .print-controls {
+                display: none;
+            }
+            
+            .print-header {
+                background-color: #2c3e50 !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+            
+            .day {
+                page-break-inside: avoid;
+            }
+            
+            @page {
+                size: A4;
+                margin: 1cm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Print Controls (only visible on screen) -->
+    <div class="print-controls">
+        <button class="print-btn" onclick="window.print()">
+            <i class="fas fa-print"></i> Print / Save as PDF
+        </button>
+    </div>
+    
+    <div class="container">
+        <!-- Header -->
+        <div class="print-header">
+            <h1><%= trip.title %></h1>
+            <p><%= new Date(trip.start_date).toLocaleDateString() %> - <%= new Date(trip.end_date).toLocaleDateString() %></p>
+        </div>
+        
+        <!-- Trip Overview Section -->
+        <div class="section">
+            <h2 class="section-title">Trip Overview</h2>
+            
+            <div class="trip-details">
+                <div class="trip-detail">
+                    <h3>Duration</h3>
+                    <p><%= Math.ceil((new Date(trip.end_date) - new Date(trip.start_date)) / (1000 * 60 * 60 * 24)) + 1 %> days</p>
+                </div>
+                
+                <div class="trip-detail">
+                    <h3>Created</h3>
+                    <p><%= new Date(trip.created_at).toLocaleDateString() %></p>
+                </div>
+                
+                <div class="trip-detail">
+                    <h3>Last Updated</h3>
+                    <p><%= new Date(trip.updated_at).toLocaleDateString() %></p>
+                </div>
+            </div>
+            
+            <% if (trip.description) { %>
+            <div class="trip-description">
+                <p><%= trip.description %></p>
+            </div>
+            <% } %>
+        </div>
+        
+        <!-- Places Section -->
+        <% if (places && places.length > 0) { %>
+        <div class="section">
+            <h2 class="section-title">Places to Visit</h2>
+            
+            <% 
+                // Group places by category
+                const placesByCategory = {};
+                places.forEach(place => {
+                    const category = place.category || 'Uncategorized';
+                    if (!placesByCategory[category]) {
+                        placesByCategory[category] = [];
+                    }
+                    placesByCategory[category].push(place);
+                });
+                
+                // Display places by category
+                Object.keys(placesByCategory).sort().forEach(category => {
+            %>
+                <div class="category">
+                    <h3 class="category-title"><%= category.charAt(0).toUpperCase() + category.slice(1) %> (<%= placesByCategory[category].length %>)</h3>
+                    
+                    <% placesByCategory[category].forEach(place => { %>
+                        <div class="place">
+                            <div class="place-name"><%= place.name %></div>
+                            <% if (place.address) { %>
+                                <div class="place-address"><%= place.address %></div>
+                            <% } %>
+                            <% if (place.description) { %>
+                                <div class="place-description"><%= place.description %></div>
+                            <% } %>
+                        </div>
+                    <% }) %>
+                </div>
+            <% }) %>
+        </div>
+        <% } %>
+        
+        <!-- Itinerary Section -->
+        <% if (itineraryItems && itineraryItems.length > 0) { %>
+        <div class="section">
+            <h2 class="section-title">Daily Itinerary</h2>
+            
+            <%
+                // Group items by day
+                const itemsByDay = {};
+                itineraryItems.forEach(item => {
+                    if (!itemsByDay[item.day_number]) {
+                        itemsByDay[item.day_number] = [];
+                    }
+                    itemsByDay[item.day_number].push(item);
+                });
+                
+                // Sort days numerically
+                const sortedDays = Object.keys(itemsByDay).sort((a, b) => parseInt(a) - parseInt(b));
+                
+                // Function to get place by ID
+                const getPlaceById = (placeId) => {
+                    return places.find(place => place.id === placeId) || null;
+                };
+                
+                // Function to format time (HH:MM:SS to AM/PM)
+                const formatTime = (timeStr) => {
+                    if (!timeStr) return 'N/A';
+                    
+                    let hours, minutes;
+                    
+                    if (timeStr.includes(':')) {
+                        const parts = timeStr.split(':');
+                        hours = parseInt(parts[0], 10);
+                        minutes = parseInt(parts[1], 10);
+                    } else {
+                        try {
+                            const date = new Date(timeStr);
+                            hours = date.getHours();
+                            minutes = date.getMinutes();
+                        } catch (e) {
+                            return timeStr;
+                        }
+                    }
+                    
+                    const ampm = hours >= 12 ? 'PM' : 'AM';
+                    hours = hours % 12;
+                    hours = hours ? hours : 12;
+                    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+                    
+                    return `${hours}:${formattedMinutes} ${ampm}`;
+                };
+                
+                // Loop through each day
+                sortedDays.forEach(day => {
+                    // Sort items by order_index
+                    itemsByDay[day].sort((a, b) => a.order_index - b.order_index);
+            %>
+                <div class="day">
+                    <h3 class="day-title">Day <%= day %></h3>
+                    
+                    <% itemsByDay[day].forEach(item => { 
+                        const place = item.place_id ? getPlaceById(item.place_id) : null;
+                    %>
+                        <div class="activity">
+                            <div class="activity-time">
+                                <%= formatTime(item.start_time) %> - <%= formatTime(item.end_time) %>
+                            </div>
+                            <div class="activity-title"><%= item.title %></div>
+                            
+                            <% if (place) { %>
+                                <div class="activity-location">
+                                    Location: <%= place.name %>
+                                    <% if (place.address) { %>
+                                        (<%= place.address %>)
+                                    <% } %>
+                                </div>
+                            <% } %>
+                            
+                            <% if (item.description) { %>
+                                <div class="activity-description">
+                                    <%= item.description %>
+                                </div>
+                            <% } %>
+                            
+                            <% if (item.tags) { 
+                                let tags = [];
+                                if (typeof item.tags === 'string') {
+                                    try {
+                                        tags = JSON.parse(item.tags);
+                                    } catch (e) {
+                                        tags = [item.tags];
+                                    }
+                                } else if (Array.isArray(item.tags)) {
+                                    tags = item.tags;
+                                }
+                                
+                                if (tags.length > 0) { 
+                            %>
+                                <div class="activity-tags">
+                                    <% tags.forEach(tag => { %>
+                                        <span class="activity-tag"><%= tag %></span>
+                                    <% }) %>
+                                </div>
+                            <% } 
+                            } %>
+                        </div>
+                    <% }) %>
+                </div>
+            <% }) %>
+        </div>
+        <% } %>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>Generated by Skydea Trip Planner - <%= new Date().toLocaleDateString() %></p>
+            <p>Page <span class="page-number"></span></p>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-open print dialog when page loads
+        window.addEventListener('load', function() {
+            // Slight delay to ensure page is fully loaded
+            setTimeout(function() {
+                window.print();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

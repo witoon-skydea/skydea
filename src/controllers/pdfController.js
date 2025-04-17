@@ -22,36 +22,16 @@ exports.exportTripToPdf = async (req, res) => {
     // Get itinerary items for this trip
     const itineraryItems = await ItineraryItem.findByTripId(tripId);
     
-    // Group itinerary items by day
-    const itemsByDay = groupItemsByDay(itineraryItems);
-    
-    // Create PDF document
-    const doc = new PDFDocument({
-      margins: { top: 50, bottom: 50, left: 72, right: 72 },
-      size: 'A4',
-      info: {
-        Title: `${trip.title} - Trip Plan`,
-        Author: 'Skydea Trip Planner',
-        Subject: 'Travel Itinerary',
-        Keywords: 'travel, itinerary, trip, plan',
-      }
+    // Render the print view
+    res.render('trips/print-view', {
+      trip,
+      places,
+      itineraryItems,
+      layout: false
     });
-
-    // Set response headers
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename=${encodeURIComponent(trip.title)}_trip_plan.pdf`);
-    
-    // Pipe PDF to response
-    doc.pipe(res);
-    
-    // Generate PDF content
-    generatePdfContent(doc, trip, places, itemsByDay);
-    
-    // Finalize the PDF and end the stream
-    doc.end();
   } catch (error) {
-    console.error('Error generating trip PDF:', error);
-    res.status(500).send('Error generating PDF');
+    console.error('Error generating trip PDF view:', error);
+    res.status(500).send('Error generating print view');
   }
 };
 
