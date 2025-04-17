@@ -54,12 +54,18 @@ function initializeImageCarousel() {
       
       const carouselItem = document.createElement('div');
       carouselItem.className = `carousel-item ${isActive}`;
-      carouselItem.style.backgroundImage = `url('${fullImagePath}')`;
+      
+      // Use an img element instead of background-image for better control
+      const img = document.createElement('img');
+      img.src = fullImagePath;
+      img.className = 'carousel-image d-block w-100';
+      img.alt = image.caption;
       
       const caption = document.createElement('div');
       caption.className = 'carousel-caption d-none d-md-block';
       caption.innerHTML = `<h5>${image.caption}</h5>`;
       
+      carouselItem.appendChild(img);
       carouselItem.appendChild(caption);
       carouselInner.appendChild(carouselItem);
     });

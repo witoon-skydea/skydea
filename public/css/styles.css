@@ -137,9 +137,17 @@ main {
 }
 
 .carousel-item {
-  height: 400px;
-  background-position: center;
-  background-size: cover;
+  height: auto;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.carousel-image {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  object-position: center;
 }
 
 .carousel-caption {
@@ -169,6 +177,19 @@ main {
   font-size: 1.25rem;
   margin-bottom: 30px;
   opacity: 0.9;
+}
+
+/* Featured image container styling */
+.featured-image-container {
+  overflow: hidden;
+  max-height: 400px;
+}
+
+.featured-image-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* Feature cards */
