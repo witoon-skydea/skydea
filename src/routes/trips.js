@@ -269,7 +269,8 @@ router.get('/:id/pdf-preview', checkTripOwnership, async (req, res, next) => {
       title: `${trip.title} - Export PDF`,
       trip,
       isOwner,
-      basePath: appConfig.appBasePath
+      basePath: appConfig.appBasePath,
+      layout: 'layouts/main'
     });
   } catch (error) {
     next(new AppError('Failed to load PDF preview', 500));
