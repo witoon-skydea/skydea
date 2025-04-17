@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { isAuthenticated } = require('../middlewares/auth');
+const { isAuthenticated, isAuthenticatedOrShared } = require('../middlewares/auth');
 const { validateTripData } = require('../middlewares/validation');
 const { AppError } = require('../middlewares/errorHandler');
 const appConfig = require('../config/app');
@@ -19,6 +19,15 @@ const checkTripOwnership = async (req, res, next) => {
     const trip = await Trip.findById(tripId);
     
     if (!trip) {
+      // For web routes, render the error page
+      if (!req.isApiRequest && !req.path.includes('/api/')) {
+        return res.status(404).render('error', {
+          title: 'Trip Not Found',
+          message: 'The trip you are looking for does not exist',
+          error: {},
+          basePath: appConfig.appBasePath
+        });
+      }
       return res.status(404).json({ error: 'Trip not found' });
     }
     
@@ -45,9 +54,31 @@ const checkTripOwnership = async (req, res, next) => {
     }
     
     // If none of the above conditions are met, deny access
+    
+    // For web routes, render a proper error page
+    if (!req.isApiRequest && !req.path.includes('/api/')) {
+      return res.status(403).render('error', {
+        title: 'Access Denied',
+        message: 'You do not have permission to access this trip',
+        error: {},
+        basePath: appConfig.appBasePath
+      });
+    }
+    
     return res.status(403).json({ error: 'You do not have permission to access this trip' });
   } catch (error) {
     console.error('Error checking trip ownership:', error);
+    
+    // For web routes, render a proper error page
+    if (!req.isApiRequest && !req.path.includes('/api/')) {
+      return res.status(500).render('error', {
+        title: 'Server Error',
+        message: 'An error occurred while processing your request',
+        error: {},
+        basePath: appConfig.appBasePath
+      });
+    }
+    
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -84,7 +115,7 @@ router.post('/', isAuthenticated, validateTripData, async (req, res, next) => {
 });
 
 // Get a specific trip
-router.get('/:id', isAuthenticated, checkTripOwnership, async (req, res, next) => {
+router.get('/:id', isAuthenticatedOrShared, checkTripOwnership, async (req, res, next) => {
   try {
     // Trip is already available in res.locals.trip from middleware
     const trip = res.locals.trip;
@@ -165,7 +196,7 @@ router.delete('/:id', isAuthenticated, checkTripOwnership, async (req, res, next
 });
 
 // Render trip planner page
-router.get('/:id/planner', checkTripOwnership, async (req, res, next) => {
+router.get('/:id/planner', isAuthenticatedOrShared, checkTripOwnership, async (req, res, next) => {
   try {
     // Trip is already available in res.locals.trip from middleware
     const trip = res.locals.trip;

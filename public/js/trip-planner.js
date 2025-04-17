@@ -320,6 +320,13 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
     
+    // Update Dashboard link for non-authenticated users
+    const dashboardLink = document.querySelector('a[href="' + basePath + 'dashboard"]');
+    if (dashboardLink && !window.isAuthenticated) {
+      dashboardLink.href = basePath + 'auth/login';
+      dashboardLink.innerHTML = '<i class="fas fa-sign-in-alt me-1"></i> Login';
+    }
+    
     // View toggle buttons
     const viewTableBtn = document.getElementById('view-table-btn');
     const viewCardsBtn = document.getElementById('view-cards-btn');
@@ -529,6 +536,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const placesCardsContainer = document.getElementById('places-cards-container');
     const placesTableBody = document.getElementById('places-table-body');
     const placesCardsGrid = document.getElementById('places-cards-grid');
+    
+    // Hide edit buttons for read-only view
+    if (!isOwner) {
+      document.querySelectorAll('#add-place-btn, #add-place-btn-2, #empty-add-place-btn, #table-add-place-btn, #map-add-place-btn, #add-activity-btn, #empty-add-activity-btn').forEach(button => {
+        if (button) button.style.display = 'none';
+      });
+    }
     
     // Hide all initially
     placesTableLoading.classList.add('d-none');
