@@ -1,0 +1,93 @@
+<section class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card border-0 shadow-lg">
+          <div class="card-header bg-white py-3">
+            <h4 class="mb-0 fw-bold">My Profile</h4>
+          </div>
+          <div class="card-body p-4">
+            <% if (locals.success) { %>
+              <div class="alert alert-success alert-dismissible fade show mb-4">
+                <i class="fas fa-check-circle me-2"></i> <%= success %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            <% } %>
+            
+            <% if (locals.error) { %>
+              <div class="alert alert-danger alert-dismissible fade show mb-4">
+                <i class="fas fa-exclamation-circle me-2"></i> <%= error %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            <% } %>
+            
+            <div class="row mb-4">
+              <div class="col-md-12">
+                <h5 class="fw-bold mb-3">Account Information</h5>
+                <div class="p-3 bg-light rounded">
+                  <div class="mb-3">
+                    <label class="form-label text-muted">Username</label>
+                    <div class="fw-bold"><%= user.username %></div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label text-muted">Email</label>
+                    <div class="fw-bold"><%= user.email %></div>
+                  </div>
+                  <div>
+                    <label class="form-label text-muted">Member Since</label>
+                    <div class="fw-bold"><%= new Date(user.created_at).toLocaleDateString() %></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-12">
+                <h5 class="fw-bold mb-3">Google Maps API Settings</h5>
+                <div class="alert alert-info mb-3">
+                  <h6 class="mb-2"><i class="fas fa-info-circle me-1"></i> Why use your own API Key?</h6>
+                  <p class="mb-2">Google Maps API has usage limits that are tied to the API key. By providing your own key:</p>
+                  <ul class="mb-0">
+                    <li>You get your own usage quota</li>
+                    <li>You can use features you've specifically enabled</li>
+                    <li>Your trips won't be affected by other users' consumption</li>
+                  </ul>
+                </div>
+                <div class="alert alert-primary mb-3">
+                  <p class="mb-0"><strong>Current Status:</strong> 
+                    <% if (user.google_maps_api_key) { %>
+                      <span class="badge bg-success">Using Your API Key</span>
+                    <% } else { %>
+                      <span class="badge bg-secondary">Using Default API Key</span>
+                    <% } %>
+                  </p>
+                </div>
+                <form action="<%= basePath %>profile/update-api-key" method="POST">
+                  <div class="mb-3">
+                    <label for="googleMapsApiKey" class="form-label">Google Maps API Key</label>
+                    <input type="text" class="form-control" id="googleMapsApiKey" name="googleMapsApiKey" 
+                      value="<%= user.google_maps_api_key || '' %>" 
+                      placeholder="Enter your Google Maps API Key">
+                    <div class="form-text">
+                      <i class="fas fa-info-circle me-1"></i> 
+                      If left blank, the application's default API key will be used.
+                    </div>
+                    <div class="form-text">
+                      <i class="fas fa-external-link-alt me-1"></i> 
+                      <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">Get your own API key from Google Cloud Console</a>
+                    </div>
+                  </div>
+                  <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">
+                      <i class="fas fa-save me-2"></i> Save API Key
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -39,7 +39,7 @@ exports.showRegister = (req, res) => {
 exports.register = async (req, res) => {
   try {
     console.log('Register form submitted with data:', req.body);
-    const { username, email, password, confirmPassword } = req.body;
+    const { username, email, password, confirmPassword, googleMapsApiKey } = req.body;
     
     // Input validation
     if (!username || !email || !password || !confirmPassword) {
@@ -61,8 +61,13 @@ exports.register = async (req, res) => {
     }
     
     // Create user
-    console.log('Attempting to create user with:', { username, email });
-    const user = await User.create({ username, email, password });
+    console.log('Attempting to create user with:', { username, email, googleMapsApiKey });
+    const user = await User.create({ 
+      username, 
+      email, 
+      password, 
+      google_maps_api_key: googleMapsApiKey || null 
+    });
     console.log('User created successfully:', user);
     
     req.session.success = 'Registration successful! You can now log in.';

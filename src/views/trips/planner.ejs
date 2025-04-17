@@ -85,6 +85,26 @@
                 <label class="form-label text-muted">Last Updated</label>
                 <p class="mb-0"><%= new Date(trip.updated_at).toLocaleDateString() %></p>
               </div>
+
+              <% if (isOwner) { %>
+              <div class="mb-3">
+                <label class="form-label text-muted">Google Maps API</label>
+                <p class="mb-0">
+                  <% if (typeof isUsingCustomApiKey !== 'undefined' && isUsingCustomApiKey) { %>
+                    <span class="badge bg-success">
+                      <i class="fas fa-check-circle me-1"></i> Using Your API Key
+                    </span>
+                  <% } else { %>
+                    <span class="badge bg-secondary">
+                      <i class="fas fa-info-circle me-1"></i> Using Default API Key
+                    </span>
+                    <a href="<%= basePath %>profile" class="btn btn-sm btn-link p-0 ms-2">
+                      <i class="fas fa-cog"></i> Configure
+                    </a>
+                  <% } %>
+                </p>
+              </div>
+              <% } %>
               
               <% if (isOwner) { %>
               <div class="mb-3">

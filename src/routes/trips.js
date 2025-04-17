@@ -171,12 +171,22 @@ router.get('/:id/planner', checkTripOwnership, async (req, res, next) => {
     const trip = res.locals.trip;
     const isOwner = res.locals.isOwner;
     
+    // Get user-specific Google Maps API Key if user is authenticated
+    let googleMapsApiKey = appConfig.googleMaps.apiKey;
+    let isUsingCustomApiKey = false;
+    
+    if (req.session?.user?.google_maps_api_key) {
+      googleMapsApiKey = req.session.user.google_maps_api_key;
+      isUsingCustomApiKey = true;
+    }
+    
     res.render('trips/planner', {
       title: `${trip.title} - Trip Planner`,
       trip,
       isOwner,
       basePath: appConfig.appBasePath,
-      googleMapsApiKey: appConfig.googleMaps.apiKey,
+      googleMapsApiKey: googleMapsApiKey,
+      isUsingCustomApiKey: isUsingCustomApiKey,
       shareCode: trip.share_code,
       isPublic: trip.is_public === 1
     });

@@ -10,6 +10,7 @@ const appConfig = require('./config/app');
 const indexRoutes = require('./routes/index');
 const homeRoutes = require('./routes/home');  // Add new direct home routes
 const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
 const tripRoutes = require('./routes/trips');
 const placeRoutes = require('./routes/places');
 const itineraryRoutes = require('./routes/itinerary');
@@ -64,6 +65,7 @@ app.use('/', homeRoutes);
 // Set up web routes with base path
 app.use(appConfig.appBasePath, indexRoutes);
 app.use(`${appConfig.appBasePath}auth`, authRoutes);
+app.use(`${appConfig.appBasePath}profile`, profileRoutes);
 app.use(`${appConfig.appBasePath}trips`, tripRoutes);
 app.use(`${appConfig.appBasePath}places`, placeRoutes);
 app.use(`${appConfig.appBasePath}itinerary`, itineraryRoutes);

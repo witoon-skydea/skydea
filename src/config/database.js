@@ -20,6 +20,7 @@ const db = new sqlite3.Database(path.resolve(dbPath), (err) => {
         username TEXT UNIQUE NOT NULL,
         email TEXT UNIQUE NOT NULL,
         password TEXT NOT NULL,
+        google_maps_api_key TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`, (err) => {
@@ -27,6 +28,25 @@ const db = new sqlite3.Database(path.resolve(dbPath), (err) => {
           console.error('Error creating users table', err);
         } else {
           console.log('Users table ready');
+          
+          // Check if users table has the google_maps_api_key column
+          db.get("SELECT COUNT(*) as count FROM pragma_table_info('users') WHERE name='google_maps_api_key'", (err, row) => {
+            if (err) {
+              console.error('Error checking for google_maps_api_key column:', err);
+              return;
+            }
+
+            if (row.count === 0) {
+              // Add the google_maps_api_key column
+              db.run("ALTER TABLE users ADD COLUMN google_maps_api_key TEXT", (err) => {
+                if (err) {
+                  console.error('Error adding google_maps_api_key column:', err);
+                } else {
+                  console.log('Added google_maps_api_key column to users table');
+                }
+              });
+            }
+          });
         }
       });
 

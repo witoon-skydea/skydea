@@ -4,11 +4,11 @@ const bcrypt = require('bcrypt');
 class User {
   /**
    * Create a new user
-   * @param {Object} userData - User data (username, email, password)
+   * @param {Object} userData - User data (username, email, password, google_maps_api_key)
    * @returns {Promise} - Resolves with the created user object or rejects with error
    */
   static async create(userData) {
-    const { username, email, password } = userData;
+    const { username, email, password, google_maps_api_key } = userData;
     
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -43,8 +43,8 @@ class User {
           // Insert the new user
           console.log('Inserting new user into database');
           db.run(
-            'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-            [username, email, hashedPassword],
+            'INSERT INTO users (username, email, password, google_maps_api_key) VALUES (?, ?, ?, ?)',
+            [username, email, hashedPassword, google_maps_api_key || null],
             function(err) {
               if (err) {
                 console.error('Error inserting new user:', err);
@@ -55,7 +55,7 @@ class User {
               
               // Get the newly created user
               db.get(
-                'SELECT id, username, email, created_at, updated_at FROM users WHERE id = ?',
+                'SELECT id, username, email, google_maps_api_key, created_at, updated_at FROM users WHERE id = ?',
                 [this.lastID],
                 (err, user) => {
                   if (err) {
@@ -81,7 +81,7 @@ class User {
   static findById(id) {
     return new Promise((resolve, reject) => {
       db.get(
-        'SELECT id, username, email, created_at, updated_at FROM users WHERE id = ?',
+        'SELECT id, username, email, google_maps_api_key, created_at, updated_at FROM users WHERE id = ?',
         [id],
         (err, user) => {
           if (err) {

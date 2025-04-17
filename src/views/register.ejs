@@ -62,6 +62,22 @@
               </div>
               
               <div class="mb-4">
+                <label for="googleMapsApiKey" class="form-label">Google Maps API Key (Optional)</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0">
+                    <i class="fas fa-map-marker-alt text-muted"></i>
+                  </span>
+                  <input type="text" class="form-control border-start-0" id="googleMapsApiKey" name="googleMapsApiKey" placeholder="Enter your Google Maps API Key">
+                </div>
+                <div class="form-text">
+                  <i class="fas fa-info-circle me-1"></i> You can provide your own Google Maps API key for better usage limits. If left blank, the system will use the default key.
+                </div>
+                <div class="form-text">
+                  <i class="fas fa-external-link-alt me-1"></i> <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">Get your API key from Google Cloud Console</a>
+                </div>
+              </div>
+              
+              <div class="mb-4">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="terms" required>
                   <label class="form-check-label" for="terms">
