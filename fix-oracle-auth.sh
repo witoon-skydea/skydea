@@ -13,7 +13,7 @@ SSH_KEY="/Users/witoonpongsilathong/MCP_folder/oracle_mm_config/ssh-key-2025-04-
 SERVER_IP="140.245.58.185"
 SSH_USER="ubuntu"
 PROJECT_NAME="skydea"
-REMOTE_DIR="/home/ubuntu/$PROJECT_NAME"
+REMOTE_DIR="/home/ubuntu/mm_skydea_app"
 PORT="3001"
 APP_BASE_PATH="/skydea"
 
