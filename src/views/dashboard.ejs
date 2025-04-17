@@ -71,13 +71,13 @@
               </div>
               
               <div class="col-md-3 col-sm-6">
-                <a href="#" class="text-decoration-none">
+                <a href="<%= basePath %>api-keys" class="text-decoration-none">
                   <div class="card h-100 border-0 shadow-sm">
                     <div class="card-body text-center">
                       <div class="mb-3">
-                        <i class="fas fa-question-circle fa-2x text-primary"></i>
+                        <i class="fas fa-key fa-2x text-primary"></i>
                       </div>
-                      <h6 class="mb-0">Help Center</h6>
+                      <h6 class="mb-0">API Keys</h6>
                     </div>
                   </div>
                 </a>
@@ -154,6 +154,39 @@
             <span id="trip-count">0</span>
           </div>
           <div class="stat-label">Trips</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- API Keys Card -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card border-0 shadow">
+          <div class="card-header bg-white py-3">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <i class="fas fa-key fa-lg text-primary me-2"></i>
+                <h5 class="mb-0">API Access</h5>
+              </div>
+              <a href="<%= basePath %>api-keys" class="btn btn-sm btn-primary">
+                <i class="fas fa-cog me-1"></i> Manage API Keys
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="flex-shrink-0 me-3">
+                <div class="rounded-circle bg-light p-3">
+                  <i class="fas fa-code fa-2x text-primary"></i>
+                </div>
+              </div>
+              <div>
+                <h5 class="mb-1">Developer API Access</h5>
+                <p class="mb-0">Use API keys to connect your Skydea trips to external applications and services. Create, update, and manage your trips programmatically.</p>
+                <a href="<%= basePath %>api-keys" class="btn btn-link px-0">Create your first API key <i class="fas fa-arrow-right ms-1"></i></a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
