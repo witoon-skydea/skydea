@@ -1,0 +1,37 @@
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Account Settings</h6>
+  </div>
+  <div class="card-body p-0">
+    <div class="list-group list-group-flush">
+      <a href="<%= basePath %>profile" class="list-group-item list-group-item-action <%= active === 'profile' ? 'active' : '' %>">
+        <i class="fas fa-user-circle mr-2"></i> Profile
+      </a>
+      <a href="<%= basePath %>profile/password" class="list-group-item list-group-item-action <%= active === 'password' ? 'active' : '' %>">
+        <i class="fas fa-lock mr-2"></i> Change Password
+      </a>
+      <a href="<%= basePath %>profile/preferences" class="list-group-item list-group-item-action <%= active === 'preferences' ? 'active' : '' %>">
+        <i class="fas fa-cog mr-2"></i> Preferences
+      </a>
+      <a href="<%= basePath %>api-keys" class="list-group-item list-group-item-action <%= active === 'api-keys' ? 'active' : '' %>">
+        <i class="fas fa-key mr-2"></i> API Keys
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">My Content</h6>
+  </div>
+  <div class="card-body p-0">
+    <div class="list-group list-group-flush">
+      <a href="<%= basePath %>dashboard" class="list-group-item list-group-item-action">
+        <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+      </a>
+      <a href="<%= basePath %>trips" class="list-group-item list-group-item-action">
+        <i class="fas fa-route mr-2"></i> My Trips
+      </a>
+    </div>
+  </div>
+</div>

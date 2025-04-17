@@ -4,12 +4,21 @@ const appConfig = require('../config/app');
  * Middleware to check if user is authenticated
  */
 exports.isAuthenticated = (req, res, next) => {
+  console.log('isAuthenticated check:', {
+    sessionID: req.sessionID,
+    isAuthenticated: req.session.isAuthenticated,
+    hasUser: !!req.session.user,
+    userID: req.session.user?.id
+  });
+  
   if (req.session.isAuthenticated && req.session.user) {
+    console.log('User is authenticated, proceeding to next middleware');
     return next();
   }
   
+  console.log('User is NOT authenticated, redirecting to login');
   req.session.error = 'You need to be logged in to access this page';
-  return res.redirect(appConfig.getPath('login'));
+  return res.redirect(appConfig.getPath('auth/login'));
 };
 
 /**
@@ -49,7 +58,7 @@ exports.isAuthenticatedOrShared = (req, res, next) => {
   // If neither authenticated nor shared, redirect to login
   console.log('Not authenticated or shared, redirecting to login');
   req.session.error = 'You need to be logged in to access this page';
-  return res.redirect(appConfig.getPath('login'));
+  return res.redirect(appConfig.getPath('auth/login'));
 };
 
 /**
@@ -70,5 +79,10 @@ exports.setLocals = (req, res, next) => {
   res.locals.user = req.session.user || null;
   res.locals.isAuthenticated = req.session.isAuthenticated || false;
   res.locals.basePath = appConfig.appBasePath;
+  
+  // Add flash messages to res.locals
+  res.locals.success = req.flash ? req.flash('success') : null;
+  res.locals.error = req.flash ? req.flash('error') : null;
+  
   next();
 };

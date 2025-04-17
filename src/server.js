@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const flash = require('connect-flash');
 const cors = require('cors');
 const appConfig = require('./config/app');
 
@@ -14,6 +15,8 @@ const profileRoutes = require('./routes/profile');
 const tripRoutes = require('./routes/trips');
 const placeRoutes = require('./routes/places');
 const itineraryRoutes = require('./routes/itinerary');
+const apiKeysRoutes = require('./routes/apiKeys');
+const externalApiRoutes = require('./routes/externalApi');
 
 // Load middleware
 const { setLocals } = require('./middlewares/auth');
@@ -37,13 +40,20 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(session({
   secret: appConfig.sessionSecret,
-  resave: false,
-  saveUninitialized: false,
+  resave: true,
+  saveUninitialized: true,
   cookie: {
-    secure: appConfig.nodeEnv === 'production',
+    secure: false, // Setting to false regardless of environment
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }));
+app.use(flash()); // Add flash message support
+
+// Add session debugging
+app.use((req, res, next) => {
+  console.log(`[Session Debug] SessionID: ${req.sessionID}, Auth Status: ${req.session.isAuthenticated || false}`);
+  next();
+});
 
 // Add request logging middleware for debugging
 app.use((req, res, next) => {
@@ -96,6 +106,12 @@ const apiItineraryRoutes = require('./routes/itinerary');
 app.use(`${appConfig.appBasePath}api/trips`, apiTripRoutes);
 app.use(`${appConfig.appBasePath}api/places`, apiPlaceRoutes);
 app.use(`${appConfig.appBasePath}api/itinerary`, apiItineraryRoutes);
+
+// API keys management routes
+app.use(`${appConfig.appBasePath}api-keys`, apiKeysRoutes);
+
+// External API routes
+app.use(`${appConfig.appBasePath}api/external`, externalApiRoutes);
 
 // Log API routes for debugging
 console.log(`API route base: ${appConfig.appBasePath}api/`);

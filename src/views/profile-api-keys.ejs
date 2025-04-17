@@ -1,0 +1,128 @@
+<%- include('partials/header') %>
+
+<div class="container-fluid mt-4">
+  <div class="row">
+    <div class="col-md-3">
+      <%- include('partials/profile-sidebar', { active: 'api-keys' }) %>
+    </div>
+    <div class="col-md-9">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">API Keys</h6>
+        </div>
+        <div class="card-body">
+          <% if (success && success.length > 0) { %>
+            <div class="alert alert-success">
+              <%= success %>
+            </div>
+          <% } %>
+
+          <% if (error && error.length > 0) { %>
+            <div class="alert alert-danger">
+              <%= error %>
+            </div>
+          <% } %>
+
+          <div class="mb-4">
+            <p>API keys allow you to interact with your Skydea data from external applications. Keep your API keys secret!</p>
+            
+            <div class="alert alert-info">
+              <h6>How to use your API key</h6>
+              <p>Include your API key in every request to the API using one of the following methods:</p>
+              <ol>
+                <li><strong>HTTP Header:</strong> <code>X-API-Key: your_api_key_here</code></li>
+                <li><strong>Query Parameter:</strong> <code>?api_key=your_api_key_here</code></li>
+              </ol>
+              <p>For full documentation and examples, see the <a href="<%= basePath %>documentation/api" class="alert-link">API Documentation</a>.</p>
+            </div>
+          </div>
+
+          <!-- Create API Key -->
+          <form action="<%= basePath %>api-keys" method="POST" class="mb-4">
+            <div class="form-group">
+              <label for="description">API Key Description</label>
+              <input type="text" class="form-control" id="description" name="description" placeholder="e.g., Mobile App, Desktop Client" required>
+              <small class="form-text text-muted">Use a descriptive name to remember what this API key is for.</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Create New API Key</button>
+          </form>
+
+          <!-- API Keys List -->
+          <div class="table-responsive">
+            <table class="table table-bordered" id="api-keys-table">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>API Key</th>
+                  <th>Created</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (apiKeys && apiKeys.length > 0) { %>
+                  <% apiKeys.forEach(apiKey => { %>
+                    <tr>
+                      <td><%= apiKey.description %></td>
+                      <td>
+                        <div class="input-group">
+                          <input type="text" class="form-control api-key-value" value="<%= apiKey.api_key %>" readonly>
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary copy-btn" type="button" data-clipboard-text="<%= apiKey.api_key %>">
+                              <i class="fas fa-copy"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                      <td><%= new Date(apiKey.created_at).toLocaleString() %></td>
+                      <td>
+                        <% if (apiKey.is_active) { %>
+                          <span class="badge badge-success">Active</span>
+                        <% } else { %>
+                          <span class="badge badge-danger">Inactive</span>
+                        <% } %>
+                      </td>
+                      <td>
+                        <form action="<%= basePath %>api-keys/<%= apiKey.id %>/delete" method="POST">
+                          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this API key? This action cannot be undone.')">
+                            <i class="fas fa-trash"></i> Delete
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                  <% }); %>
+                <% } else { %>
+                  <tr>
+                    <td colspan="5" class="text-center">No API keys found. Create your first API key using the form above.</td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Clipboard.js for copy functionality -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+<script>
+  // Initialize clipboard.js
+  document.addEventListener('DOMContentLoaded', function() {
+    var clipboard = new ClipboardJS('.copy-btn');
+    
+    clipboard.on('success', function(e) {
+      // Change button text temporarily
+      var originalHtml = e.trigger.innerHTML;
+      e.trigger.innerHTML = '<i class="fas fa-check"></i>';
+      setTimeout(function() {
+        e.trigger.innerHTML = originalHtml;
+      }, 2000);
+      
+      e.clearSelection();
+    });
+  });
+</script>
+
+<%- include('partials/footer') %>
