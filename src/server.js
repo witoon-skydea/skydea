@@ -140,6 +140,14 @@ const PORT = appConfig.port;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   console.log(`Base path: ${appConfig.appBasePath}`);
+  console.log(`Environment: ${appConfig.nodeEnv}`);
+  console.log('Server should continue running...');
+})
+.on('error', (err) => {
+  console.error('Server error:', err);
+})
+.on('close', () => {
+  console.log('Server closed');
 });
 
 module.exports = app;

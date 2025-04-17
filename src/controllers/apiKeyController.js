@@ -1,5 +1,6 @@
 const ApiKey = require('../models/ApiKey');
 const { AppError } = require('../middlewares/errorHandler');
+const appConfig = require('../config/app');
 
 /**
  * API Key management controller
@@ -58,7 +59,7 @@ class ApiKeyController {
       }
       
       // For web requests
-      res.redirect('/api-keys');
+      res.redirect(appConfig.getPath('api-keys'));
     } catch (error) {
       console.error('Error creating API key:', error);
       
@@ -74,7 +75,7 @@ class ApiKeyController {
       }
       
       // For web requests
-      res.redirect('/api-keys');
+      res.redirect(appConfig.getPath('api-keys'));
     }
   }
 
@@ -104,7 +105,7 @@ class ApiKeyController {
         }
         
         // For web requests
-        return res.redirect('/api-keys');
+        return res.redirect(appConfig.getPath('api-keys'));
       }
       
       // Flash success message
@@ -119,7 +120,7 @@ class ApiKeyController {
       }
       
       // For web requests
-      res.redirect('/api-keys');
+      res.redirect(appConfig.getPath('api-keys'));
     } catch (error) {
       console.error('Error deleting API key:', error);
       
@@ -135,7 +136,7 @@ class ApiKeyController {
       }
       
       // For web requests
-      res.redirect('/api-keys');
+      res.redirect(appConfig.getPath('api-keys'));
     }
   }
 }
