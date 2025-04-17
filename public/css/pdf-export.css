@@ -1,0 +1,242 @@
+/* PDF Preview Styles */
+.pdf-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.pdf-options-card {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  margin-bottom: 30px;
+}
+
+.pdf-options-header {
+  background-color: #f8f9fa;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.pdf-options-body {
+  padding: 20px;
+}
+
+.pdf-preview-container {
+  background-color: #f0f0f0;
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.pdf-preview-page {
+  width: 595px; /* A4 width in pixels at 72 dpi */
+  height: 842px; /* A4 height in pixels at 72 dpi */
+  background-color: white;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 50px;
+  position: relative;
+  display: inline-block;
+  transform: scale(0.8);
+  transform-origin: top center;
+  margin-bottom: -60px;
+  border: 1px solid #ddd;
+}
+
+.pdf-preview-header {
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.pdf-preview-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.pdf-preview-dates {
+  font-size: 14px;
+  color: #666;
+}
+
+.pdf-preview-section {
+  margin-bottom: 30px;
+}
+
+.pdf-preview-section-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-decoration: underline;
+}
+
+.pdf-preview-text-block {
+  height: 10px;
+  background-color: #f0f0f0;
+  margin-bottom: 10px;
+  border-radius: 2px;
+}
+
+.pdf-preview-list-item {
+  height: 10px;
+  background-color: #f0f0f0;
+  margin-bottom: 8px;
+  width: 80%;
+  border-radius: 2px;
+}
+
+.pdf-preview-day {
+  margin-bottom: 20px;
+}
+
+.pdf-preview-day-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #2c3e50;
+}
+
+.pdf-preview-activity {
+  height: 10px;
+  background-color: #f0f0f0;
+  margin-bottom: 8px;
+  margin-left: 15px;
+  width: 70%;
+  border-radius: 2px;
+}
+
+.pdf-preview-footer {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 10px;
+}
+
+.pdf-preview-page-number {
+  font-size: 10px;
+}
+
+.pdf-download-btn {
+  background-color: #3498db;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.pdf-download-btn:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pdf-customize-btn {
+  border-radius: 30px;
+  padding: 10px 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.pdf-customize-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* PDF Content Styles */
+.pdf-title {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.pdf-subtitle {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #7f8c8d;
+}
+
+.pdf-section {
+  margin-bottom: 20px;
+}
+
+.pdf-section-title {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #e0e0e0;
+  color: #2c3e50;
+}
+
+.pdf-item {
+  margin-bottom: 10px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.pdf-item:before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #3498db;
+}
+
+.pdf-day {
+  margin-bottom: 20px;
+}
+
+.pdf-day-title {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #3498db;
+}
+
+.pdf-activity {
+  margin-bottom: 15px;
+  padding-left: 20px;
+  border-left: 3px solid #e0e0e0;
+}
+
+.pdf-activity-time {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #2c3e50;
+}
+
+.pdf-activity-title {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #2c3e50;
+}
+
+.pdf-activity-location {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #7f8c8d;
+}
+
+.pdf-activity-description {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-size: 12px;
+  color: #95a5a6;
+  font-style: italic;
+}

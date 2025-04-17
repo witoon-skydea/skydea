@@ -7,6 +7,7 @@ const appConfig = require('../config/app');
 const Trip = require('../models/Trip');
 const Place = require('../models/Place');
 const ItineraryItem = require('../models/ItineraryItem');
+const pdfController = require('../controllers/pdfController');
 
 // Middleware to check trip ownership
 const checkTripOwnership = async (req, res, next) => {
@@ -256,6 +257,27 @@ router.get('/:id/share', isAuthenticated, checkTripOwnership, async (req, res, n
     next(new AppError(error.message || 'Failed to get share link', 500));
   }
 });
+
+// PDF preview page
+router.get('/:id/pdf-preview', checkTripOwnership, async (req, res, next) => {
+  try {
+    // Trip is already available in res.locals.trip from middleware
+    const trip = res.locals.trip;
+    const isOwner = res.locals.isOwner;
+    
+    res.render('trips/pdf-preview', {
+      title: `${trip.title} - Export PDF`,
+      trip,
+      isOwner,
+      basePath: appConfig.appBasePath
+    });
+  } catch (error) {
+    next(new AppError('Failed to load PDF preview', 500));
+  }
+});
+
+// Export trip to PDF
+router.get('/:id/export-pdf', checkTripOwnership, pdfController.exportTripToPdf);
 
 // Export the router
 module.exports = router;

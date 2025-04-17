@@ -1,0 +1,162 @@
+<%- include('../layouts/main', { title: title }) %>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card border-0 shadow">
+        <div class="card-header bg-white py-3">
+          <div class="d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">Export Trip as PDF</h5>
+            <a href="<%= basePath %>trips/<%= trip.id %>/planner" class="btn btn-sm btn-outline-secondary">
+              <i class="fas fa-arrow-left me-1"></i> Back to Trip
+            </a>
+          </div>
+        </div>
+        <div class="card-body p-4">
+          <div class="text-center mb-4">
+            <div class="display-1 text-primary">
+              <i class="fas fa-file-pdf"></i>
+            </div>
+            <h2 class="mt-3"><%= trip.title %> - Trip Plan</h2>
+            <p class="text-muted">
+              Export your complete trip plan as a beautiful PDF document.
+            </p>
+          </div>
+          
+          <div class="alert alert-info">
+            <div class="d-flex">
+              <div class="me-3">
+                <i class="fas fa-info-circle fa-2x"></i>
+              </div>
+              <div>
+                <h5>What's included in the PDF?</h5>
+                <ul class="mb-0">
+                  <li>Trip overview and details</li>
+                  <li>List of all places to visit</li>
+                  <li>Complete daily itinerary</li>
+                  <li>Activity timelines</li>
+                  <li>Page numbers and beautiful formatting</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="d-grid gap-2 mt-4">
+            <a href="<%= basePath %>trips/<%= trip.id %>/export-pdf" class="btn btn-primary btn-lg">
+              <i class="fas fa-download me-2"></i> Download PDF
+            </a>
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#customizeModal">
+              <i class="fas fa-cog me-2"></i> Customize PDF Options
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card border-0 shadow mt-4">
+        <div class="card-header bg-white py-3">
+          <h5 class="mb-0">PDF Preview</h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="pdf-preview">
+            <!-- PDF preview mockup -->
+            <div class="pdf-preview-page">
+              <div class="pdf-preview-header">
+                <div class="pdf-preview-title"><%= trip.title %></div>
+                <div class="pdf-preview-dates">
+                  <%= new Date(trip.start_date).toLocaleDateString() %> - 
+                  <%= new Date(trip.end_date).toLocaleDateString() %>
+                </div>
+              </div>
+              <div class="pdf-preview-content">
+                <div class="pdf-preview-section">
+                  <div class="pdf-preview-section-title">Trip Overview</div>
+                  <div class="pdf-preview-text-block"></div>
+                  <div class="pdf-preview-text-block"></div>
+                </div>
+                <div class="pdf-preview-section">
+                  <div class="pdf-preview-section-title">Places</div>
+                  <div class="pdf-preview-list-item"></div>
+                  <div class="pdf-preview-list-item"></div>
+                  <div class="pdf-preview-list-item"></div>
+                </div>
+                <div class="pdf-preview-section">
+                  <div class="pdf-preview-section-title">Itinerary</div>
+                  <div class="pdf-preview-day">
+                    <div class="pdf-preview-day-title">Day 1</div>
+                    <div class="pdf-preview-activity"></div>
+                    <div class="pdf-preview-activity"></div>
+                    <div class="pdf-preview-activity"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="pdf-preview-footer">
+                <div class="pdf-preview-page-number">Page 1 of 3</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Customize PDF Modal -->
+<div class="modal fade" id="customizeModal" tabindex="-1" aria-labelledby="customizeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="customizeModalLabel">Customize PDF Options</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="pdf-options-form" action="<%= basePath %>trips/<%= trip.id %>/export-pdf" method="get">
+          <div class="mb-3">
+            <label class="form-label">Paper Size</label>
+            <select class="form-select" name="paperSize">
+              <option value="a4" selected>A4 (Default)</option>
+              <option value="letter">US Letter</option>
+              <option value="legal">US Legal</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Sections to Include</label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="include-overview" name="sections[]" value="overview" checked>
+              <label class="form-check-label" for="include-overview">Trip Overview</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="include-places" name="sections[]" value="places" checked>
+              <label class="form-check-label" for="include-places">Places to Visit</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="include-itinerary" name="sections[]" value="itinerary" checked>
+              <label class="form-check-label" for="include-itinerary">Daily Itinerary</label>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Document Title</label>
+            <input type="text" class="form-control" name="documentTitle" value="<%= trip.title %> - Trip Plan">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="apply-pdf-options">Apply & Download</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add JavaScript for the PDF options form -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const optionsForm = document.getElementById('pdf-options-form');
+    const applyButton = document.getElementById('apply-pdf-options');
+    
+    applyButton.addEventListener('click', function() {
+      optionsForm.submit();
+    });
+  });
+</script>
