@@ -1085,12 +1085,29 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Show itinerary on the map
   function showItineraryOnMap() {
-    if (!map || !directionsService || !directionsRenderer) return;
+    // Validate map is initialized
+    if (!map) {
+      console.error('Map not initialized');
+      showToast('Map not initialized yet. Please try again.', 'warning');
+      return;
+    }
     
-    // Hide all markers initially
-    markers.forEach(({ marker }) => {
-      marker.setMap(null);
-    });
+    // Check if Google Maps services are available
+    if (!directionsService || !directionsRenderer) {
+      console.error('Google Maps Direction services not initialized');
+      showToast('Map services not fully loaded. Please try again.', 'warning');
+      return;
+    }
+    
+    try {
+      // Clear previous routes
+      directionsRenderer.setMap(null);
+      directionsRenderer.setMap(map);
+      
+      // Hide all markers initially
+      markers.forEach(({ marker }) => {
+        marker.setMap(null);
+      });
     
     // Show day selector
     const mapDaySelector = document.getElementById('map-day-selector');
@@ -1104,9 +1121,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get the selected day from the selector
     const dayNumber = parseInt(mapDaySelector.value);
     
-    // Filter itinerary items for the selected day
-    const dayItems = itineraryData.filter(item => item.day_number === dayNumber && item.place_id)
-      .sort((a, b) => a.order_index - b.order_index);
+    // Filter itinerary items for the selected day that have places
+    const dayItems = itineraryData.filter(item => {
+      // Make sure we have valid data
+      if (item.day_number !== dayNumber) return false;
+      if (!item.place_id) return false;
+      
+      // Verify the place exists in our placesData
+      const place = placesData.find(p => p.id === item.place_id);
+      return place && place.latitude && place.longitude;
+    }).sort((a, b) => a.order_index - b.order_index);
+    
+    console.log(`Found ${dayItems.length} itinerary items with valid places for day ${dayNumber}`);
     
     if (dayItems.length < 2) {
       // Not enough points for directions
@@ -1130,20 +1156,46 @@ document.addEventListener('DOMContentLoaded', function() {
     let destination = null;
     
     // Find related place objects for each itinerary item
-    const routePoints = dayItems.map(item => {
-      const place = placesData.find(p => p.id === item.place_id);
-      if (place && place.latitude && place.longitude) {
+    let routePoints = [];
+    
+    try {
+      routePoints = dayItems.map(item => {
+        const place = placesData.find(p => p.id === item.place_id);
+        if (!place) {
+          console.warn(`Place not found for place_id ${item.place_id}`);
+          return null;
+        }
+        
+        if (!place.latitude || !place.longitude) {
+          console.warn(`Place ${place.name} (ID: ${place.id}) missing coordinates`);
+          return null;
+        }
+        
         return {
           location: { lat: place.latitude, lng: place.longitude },
-          name: place.name,
+          name: place.name || 'Unnamed Place',
           placeId: place.id
         };
-      }
-      return null;
-    }).filter(point => point !== null);
+      }).filter(point => point !== null);
+      
+      console.log(`Generated ${routePoints.length} valid route points`);
+    } catch (error) {
+      console.error('Error generating route points:', error);
+      showToast('Error preparing route data', 'danger');
+      showAllMarkersOnMap(); // Fallback to showing all markers
+      return;
+    }
     
     if (routePoints.length < 2) {
-      showToast('Not enough places with valid coordinates', 'warning');
+      console.warn('Not enough valid route points for directions');
+      showToast('Not enough places with valid coordinates for selected day', 'warning');
+      
+      // Show the few markers we do have
+      routePoints.forEach(point => {
+        const markerObj = markers.find(m => m.place.id === point.placeId);
+        if (markerObj) markerObj.marker.setMap(map);
+      });
+      
       return;
     }
     
@@ -1160,29 +1212,60 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
     
-    // Request directions
-    directionsService.route({
-      origin: origin,
-      destination: destination,
-      waypoints: waypoints,
-      travelMode: google.maps.TravelMode.DRIVING,
-      optimizeWaypoints: false
-    }, (result, status) => {
-      if (status === google.maps.DirectionsStatus.OK) {
-        directionsRenderer.setDirections(result);
-        
-        // Show markers for each location in the route
-        routePoints.forEach(point => {
-          const markerObj = markers.find(m => m.place.id === point.placeId);
-          if (markerObj) {
-            markerObj.marker.setMap(map);
+    // Wrap directions request in try/catch
+    try {
+      console.log('Requesting directions with:', {
+        origin,
+        destination,
+        waypointsCount: waypoints.length
+      });
+      
+      // Request directions
+      directionsService.route({
+        origin: origin,
+        destination: destination,
+        waypoints: waypoints,
+        travelMode: google.maps.TravelMode.DRIVING,
+        optimizeWaypoints: false
+      }, (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          try {
+            // Clear previous directions first
+            directionsRenderer.setDirections(null);
+            // Set new directions
+            directionsRenderer.setDirections(result);
+            
+            console.log('Directions successfully displayed');
+            
+            // Show markers for each location in the route
+            routePoints.forEach(point => {
+              const markerObj = markers.find(m => m.place.id === point.placeId);
+              if (markerObj) {
+                markerObj.marker.setMap(map);
+              }
+            });
+          } catch (renderError) {
+            console.error('Error rendering directions:', renderError);
+            showToast('Error displaying route on map', 'danger');
+            showAllMarkersOnMap(); // Fallback
           }
-        });
-      } else {
-        showToast('Could not display directions: ' + status, 'danger');
-        showAllMarkersOnMap();
-      }
-    });
+        } else {
+          console.error('Directions request failed with status:', status);
+          showToast('Could not display directions: ' + status, 'danger');
+          showAllMarkersOnMap(); // Fallback
+        }
+      });
+    } catch (error) {
+      console.error('Error requesting directions:', error);
+      showToast('Error creating route request', 'danger');
+      showAllMarkersOnMap(); // Fallback
+      return;
+    }
+    
+  } catch (error) {
+    console.error('Error in showItineraryOnMap:', error);
+    showToast('An error occurred displaying the route', 'danger');
+    showAllMarkersOnMap(); // Fallback
   }
   
   // Open the Add Place modal
