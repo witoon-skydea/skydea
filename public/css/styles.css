@@ -343,6 +343,19 @@ footer p {
   opacity: 0.8;
 }
 
+/* Hero Section Image Fix */
+.hero-section .img-fluid {
+  max-height: 400px;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* Remove the unnecessary box in the hero section */
+.hero-section .small-frame-box {
+  display: none;
+}
+
 /* Responsive adjustments */
 /* Activity tags styling */
 .badge {
