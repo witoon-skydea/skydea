@@ -105,6 +105,13 @@ exports.login = async (req, res) => {
     req.session.user = user;
     req.session.isAuthenticated = true;
     
+    console.log('User authenticated successfully:', {
+      id: user.id,
+      username: user.username,
+      isAuthenticated: req.session.isAuthenticated,
+      sessionID: req.sessionID
+    });
+    
     return res.redirect('/dashboard');
   } catch (error) {
     console.error('Login error:', error);

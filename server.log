@@ -1,0 +1,1803 @@
+
+> skydea@1.0.0 start
+> node src/server.js
+
+API route base: /api/
+Server is running on port 3000
+Base path: /
+Connected to SQLite database
+Users table ready
+Trips table ready
+Places table ready
+Itinerary items table ready
+[Session Debug] SessionID: W-y0CQFT8J52QvXbf3oW-A9ftmCu3dLL, Auth Status: false
+[2025-04-17T11:47:31.386Z] POST /auth/login
+User authenticated successfully: {
+  id: 1,
+  username: 'witoonp',
+  isAuthenticated: true,
+  sessionID: 'W-y0CQFT8J52QvXbf3oW-A9ftmCu3dLL'
+}
+[Session Debug] SessionID: W-y0CQFT8J52QvXbf3oW-A9ftmCu3dLL, Auth Status: true
+[2025-04-17T11:47:37.181Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'W-y0CQFT8J52QvXbf3oW-A9ftmCu3dLL',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: false
+[2025-04-17T11:48:39.284Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: false
+[2025-04-17T11:48:39.313Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: false
+[2025-04-17T11:48:39.315Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: false
+[2025-04-17T11:48:39.316Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: false
+[2025-04-17T11:48:39.323Z] GET /images/backgrounds/bg2.png
+[Session Debug] SessionID: y9AmS__vVg9QcYl3YCou7TQGz8JA7KPx, Auth Status: false
+[2025-04-17T11:48:39.333Z] GET /apple-touch-icon-precomposed.png
+[ERROR] Status 404 for GET /apple-touch-icon-precomposed.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: wkQwSZ2_JG8dn0QC5qmK3RDr4P8FSJrk, Auth Status: false
+[2025-04-17T11:48:39.337Z] GET /apple-touch-icon.png
+[Session Debug] SessionID: MPnVADnJ13YqRK93fWFLPeZ3U7YaInby, Auth Status: false
+[2025-04-17T11:48:39.340Z] GET /favicon.ico
+[ERROR] Status 404 for GET /apple-touch-icon.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: 84b0I5-rwiXsCVKAi8IdSIDv4XG7P-o_, Auth Status: false
+[2025-04-17T11:48:39.342Z] GET /images/backgrounds/bg2.png
+[ERROR] Status 404 for GET /favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: 4cCcju0K6pXRJBP9jrSfoG9d45WFwfdM, Auth Status: false
+[2025-04-17T11:48:39.345Z] GET /images/favicon.ico
+[ERROR] Status 404 for GET /images/favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: false
+[2025-04-17T11:48:40.587Z] GET /auth/login
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: false
+[2025-04-17T11:48:40.609Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: false
+[2025-04-17T11:48:40.610Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: false
+[2025-04-17T11:48:40.611Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: false
+[2025-04-17T11:48:40.613Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: false
+[2025-04-17T11:48:40.613Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: false
+[2025-04-17T11:48:40.615Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: false
+[2025-04-17T11:48:46.444Z] POST /auth/login
+User authenticated successfully: {
+  id: 1,
+  username: 'witoonp',
+  isAuthenticated: true,
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq'
+}
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:48:46.519Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:48:46.534Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:48:46.534Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:48:46.534Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:48:46.535Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:48:46.535Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:48:46.536Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:48:46.541Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:48:51.559Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:48:51.563Z] GET /images/backgrounds/bg3.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:48:51.580Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:48:51.581Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:48:51.583Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:48:51.589Z] GET /images/backgrounds/bg3.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:49:06.356Z] GET /auth/login
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:49:06.364Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:49:06.384Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:49:06.387Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:49:06.387Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:49:06.388Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:49:06.390Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:49:06.390Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:49:06.393Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:49:11.392Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:49:11.412Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:49:11.413Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:49:11.414Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:01.582Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:01.605Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:01.607Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:01.608Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: sX1JXMnz2A0bNS4GVZn4htqTq_OKGKVj, Auth Status: false
+[2025-04-17T11:51:01.621Z] GET /apple-touch-icon-precomposed.png
+[ERROR] Status 404 for GET /apple-touch-icon-precomposed.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: ylWjGLNd2HFqgj2ZJNt40MXMs-AakHdf, Auth Status: false
+[2025-04-17T11:51:01.624Z] GET /apple-touch-icon.png
+[Session Debug] SessionID: SujFf5dcLW9N9RcUggiEkS25tyGjKNHw, Auth Status: false
+[2025-04-17T11:51:01.625Z] GET /favicon.ico
+[ERROR] Status 404 for GET /apple-touch-icon.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: 0YHE-Z0O3kXRBvsf1Fwi8as4D9jTToAh, Auth Status: false
+[2025-04-17T11:51:01.626Z] GET /images/backgrounds/bg1.png
+[ERROR] Status 404 for GET /favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: FDhHIlBmMO9TCZ57wi1kx33cVzR9fSkg, Auth Status: false
+[2025-04-17T11:51:01.628Z] GET /images/favicon.ico
+[ERROR] Status 404 for GET /images/favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:03.332Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:03.354Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:03.355Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:03.357Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:03.363Z] GET /images/backgrounds/bg3.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:26.456Z] GET /auth/login
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:26.462Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:26.482Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:26.484Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:26.485Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:26.486Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:26.487Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:26.487Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:26.490Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:47.240Z] POST /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:47.250Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:47.256Z] GET /places/trip/4
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/4
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T11:51:47.260Z] GET /images/main_photo.png
+[Session Debug] SessionID: efG__JBIvLMt_MFTA0RvbS5D3cp--tOL, Auth Status: false
+[2025-04-17T11:58:10.137Z] POST /api/trips
+isAuthenticated check: {
+  sessionID: 'efG__JBIvLMt_MFTA0RvbS5D3cp--tOL',
+  isAuthenticated: undefined,
+  hasUser: false,
+  userID: undefined
+}
+User is NOT authenticated, redirecting to login
+[Session Debug] SessionID: TJ0qaQgMUsBBVa_2Ee1u_px6jL5tBxlv, Auth Status: false
+[2025-04-17T11:58:23.696Z] POST /api/auth/login
+[ERROR] Status 404 for POST /api/auth/login
+Response body: {"error":"API endpoint not found"}...
+[Session Debug] SessionID: aT1sEAk5DRypIOcMeEsjs9PoN41HyNkJ, Auth Status: false
+[2025-04-17T11:58:40.981Z] POST /auth/login
+[Session Debug] SessionID: aT1sEAk5DRypIOcMeEsjs9PoN41HyNkJ, Auth Status: false
+[2025-04-17T11:58:56.831Z] GET /api/auth/check-auth
+[ERROR] Status 404 for GET /api/auth/check-auth
+Response body: {"error":"API endpoint not found"}...
+[Session Debug] SessionID: aT1sEAk5DRypIOcMeEsjs9PoN41HyNkJ, Auth Status: false
+[2025-04-17T11:59:04.303Z] GET /auth/login
+[Session Debug] SessionID: Xq2tmWAqSpgtM2bILdoKTUU4A-e8ICRa, Auth Status: false
+[2025-04-17T11:59:15.480Z] POST /auth/login
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:02:15.125Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:02:15.149Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:02:15.150Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:02:15.152Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:02:15.152Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:02:15.153Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:02:15.154Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:02:15.158Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:02:15.164Z] GET /places/trip/4
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/4
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:02:15.167Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:03:37.201Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:03:37.204Z] GET /images/backgrounds/bg3.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:03:37.220Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:03:37.221Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:03:37.222Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: NndDYZS7ZhcJTGxsgTw5nON8xn0qNQlY, Auth Status: false
+[2025-04-17T12:03:37.232Z] GET /apple-touch-icon-precomposed.png
+[Session Debug] SessionID: Xaha2XBVnuYi77VRYdvQCjWGG3mK6TtY, Auth Status: false
+[2025-04-17T12:03:37.233Z] GET /apple-touch-icon.png
+[ERROR] Status 404 for GET /apple-touch-icon-precomposed.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: _27VsgNkHpoh4zz95G0oVHP2tMrsb2-Y, Auth Status: false
+[2025-04-17T12:03:37.234Z] GET /favicon.ico
+[ERROR] Status 404 for GET /apple-touch-icon.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: owzxO9llKr60h_41H8UAPGgjzffZ5uAq, Auth Status: false
+[2025-04-17T12:03:37.236Z] GET /images/backgrounds/bg1.png
+[ERROR] Status 404 for GET /favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: p0Toc1ISML_ViyRFGnP_33rTCofFsAHu, Auth Status: false
+[2025-04-17T12:03:37.237Z] GET /images/favicon.ico
+[ERROR] Status 404 for GET /images/favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.025Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.046Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.047Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.048Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: fk2EFOSk2TdMnj20ubpwzNNr2wkVxFAF, Auth Status: false
+[2025-04-17T12:18:55.065Z] GET /apple-touch-icon-precomposed.png
+[ERROR] Status 404 for GET /apple-touch-icon-precomposed.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: 8v3_LTvEgef6uS6qjtPADy4G8hhE-N3v, Auth Status: false
+[2025-04-17T12:18:55.066Z] GET /apple-touch-icon.png
+[Session Debug] SessionID: R_aDOvv3uI2c_sNdG-zTm7yd8Xg6s-0Q, Auth Status: false
+[2025-04-17T12:18:55.067Z] GET /favicon.ico
+[Session Debug] SessionID: Vfzp35Z1wt7uhd7h7GGOnn3F5PkSq5Xv, Auth Status: false
+[2025-04-17T12:18:55.067Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Cmq8VxqmupgmaEdr-Oduv7cyi9jojmjk, Auth Status: false
+[2025-04-17T12:18:55.067Z] GET /images/favicon.ico
+[ERROR] Status 404 for GET /apple-touch-icon.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[ERROR] Status 404 for GET /favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[ERROR] Status 404 for GET /images/favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.886Z] GET /auth/login
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.894Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.913Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.914Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.914Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.916Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.916Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.916Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.922Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.929Z] GET /places/trip/4
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/4
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:18:55.930Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:08.419Z] GET /profile
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:08.443Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:08.445Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:08.446Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:08.447Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:08.447Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:08.449Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:49.648Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:49.664Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:49.664Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:49.665Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:50.231Z] GET /api-keys
+[ERROR] Status 404 for GET /api-keys
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:50.246Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:50.248Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:50.248Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:50.251Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:50.252Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:19:50.252Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:26.707Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:26.709Z] GET /images/backgrounds/bg3.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:26.726Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:26.727Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:26.729Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:26.741Z] GET /images/backgrounds/bg2.png
+[Session Debug] SessionID: SC34bU0fSibY_OM79lT2iIkMj9SstFxi, Auth Status: false
+[2025-04-17T12:20:26.750Z] GET /apple-touch-icon-precomposed.png
+[Session Debug] SessionID: veefAwvNVGXCV-pqJwNj3ajDgjRKtn1x, Auth Status: false
+[2025-04-17T12:20:26.751Z] GET /apple-touch-icon.png
+[ERROR] Status 404 for GET /apple-touch-icon-precomposed.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: KdeipsNbGl1l1-Y7vBC8k-U-CjdTeebb, Auth Status: false
+[2025-04-17T12:20:26.752Z] GET /favicon.ico
+[ERROR] Status 404 for GET /apple-touch-icon.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[ERROR] Status 404 for GET /favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: CvO-cEf5y35WW30bOI5G0xYkfLbOEyoK, Auth Status: false
+[2025-04-17T12:20:26.773Z] GET /images/backgrounds/bg2.png
+[Session Debug] SessionID: oyIU-U2NXvxZpVpOSQM3vRlf0nTta9GC, Auth Status: false
+[2025-04-17T12:20:26.774Z] GET /images/favicon.ico
+[ERROR] Status 404 for GET /images/favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:53.219Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:53.239Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:53.240Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:53.240Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:53.247Z] GET /images/backgrounds/bg3.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:57.040Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:57.061Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:57.061Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:57.063Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:57.069Z] GET /images/backgrounds/bg3.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:57.995Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:58.010Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:58.010Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:58.011Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:58.015Z] GET /images/backgrounds/bg3.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:58.603Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:58.620Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:58.620Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:20:58.623Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:21:06.496Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:21:06.516Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:21:06.518Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:21:06.519Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:21:06.526Z] GET /images/backgrounds/bg2.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:21:07.479Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:21:07.498Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:21:07.500Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:21:07.500Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:21:07.508Z] GET /images/backgrounds/bg3.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:21:08.595Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:21:08.615Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:21:08.617Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:21:08.618Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:23.889Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:23.910Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:23.911Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:23.912Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: gyGOZSRL8BwY_HK8v3QSCG1Od3ujjZsB, Auth Status: false
+[2025-04-17T12:24:23.928Z] GET /apple-touch-icon-precomposed.png
+[ERROR] Status 404 for GET /apple-touch-icon-precomposed.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: kGH27hFItxLW8VVpIOEGeuOCKpgAZlUl, Auth Status: false
+[2025-04-17T12:24:23.931Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: b38y50Jwqf1JQaE0RpB3RXLXVho5L3vL, Auth Status: false
+[2025-04-17T12:24:23.931Z] GET /images/favicon.ico
+[Session Debug] SessionID: dd6moshFjH9vvl7BxsmOs80Gd_T1qvxE, Auth Status: false
+[2025-04-17T12:24:23.932Z] GET /apple-touch-icon.png
+[ERROR] Status 404 for GET /images/favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: idKod2lQzRqmnlqk45hMRlo4IjTCfMn1, Auth Status: false
+[2025-04-17T12:24:23.933Z] GET /favicon.ico
+[ERROR] Status 404 for GET /apple-touch-icon.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[ERROR] Status 404 for GET /favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:25.155Z] GET /auth/login
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:25.161Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:25.180Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:25.182Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:25.182Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:25.184Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:25.184Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:25.185Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:25.189Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:25.196Z] GET /places/trip/4
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/4
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:25.198Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:36.938Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:40.601Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:40.621Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:40.624Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:40.625Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:40.626Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:40.626Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:40.627Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:40.634Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:40.639Z] GET /places/trip/4
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/4
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:40.641Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:48.850Z] GET /profile
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:48.868Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:48.871Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:48.872Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:48.873Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:48.874Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:24:48.874Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:28.987Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:28.997Z] GET /images/backgrounds/bg2.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:29.006Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:29.007Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:29.009Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: wLVl-k4pSlzdUXkVqqlx4LFJdzL_1xfq, Auth Status: false
+[2025-04-17T12:25:29.021Z] GET /apple-touch-icon-precomposed.png
+[Session Debug] SessionID: rCYbWlowNPVRAZZBs6RwABEdcPPKoTEQ, Auth Status: false
+[2025-04-17T12:25:29.022Z] GET /apple-touch-icon.png
+[ERROR] Status 404 for GET /apple-touch-icon-precomposed.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: obeCwWS-9GH42lcOrCWo6YpzKhtePpHY, Auth Status: false
+[2025-04-17T12:25:29.024Z] GET /favicon.ico
+[ERROR] Status 404 for GET /apple-touch-icon.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: QN6C-Ja0vowOiHFMjp9r5FZzmtdgn6gT, Auth Status: false
+[2025-04-17T12:25:29.026Z] GET /images/backgrounds/bg2.png
+[ERROR] Status 404 for GET /favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: TNN6SSLUN4oOMbqK2NCEMAHF6vph99ui, Auth Status: false
+[2025-04-17T12:25:29.027Z] GET /images/favicon.ico
+[ERROR] Status 404 for GET /images/favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:36.145Z] GET /auth/login
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:36.150Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:36.155Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:36.165Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:36.165Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:36.167Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:36.168Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:36.169Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:36.169Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:36.173Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:36.179Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:36.179Z] GET /places/trip/4
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/4
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:42.672Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:42.686Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:42.687Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:42.689Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:42.689Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:42.690Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:42.691Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:42.694Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:42.700Z] GET /places/trip/4
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/4
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:42.702Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:44.019Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:44.023Z] GET /images/backgrounds/bg2.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:44.061Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:44.062Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:44.062Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:44.066Z] GET /images/backgrounds/bg2.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:44.371Z] GET /api
+[ERROR] Status 404 for GET /api
+Response body: {"error":"API endpoint not found"}...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:47.182Z] GET /api-key
+[ERROR] Status 404 for GET /api-key
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:47.196Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:47.197Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:47.197Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:47.197Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:47.199Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:47.199Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:55.903Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:55.906Z] GET /images/backgrounds/bg2.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:55.920Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:55.922Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:55.922Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:25:55.929Z] GET /images/backgrounds/bg3.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:36.480Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:36.505Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:36.507Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:36.508Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: NYCzj6N4Qq3um_z-SdnGGV9FvX3ihwHR, Auth Status: false
+[2025-04-17T12:27:36.521Z] GET /apple-touch-icon-precomposed.png
+[Session Debug] SessionID: w0nDhMy8pRXL45WiyhDgVD0Q6_M2kOPv, Auth Status: false
+[2025-04-17T12:27:36.522Z] GET /apple-touch-icon.png
+[ERROR] Status 404 for GET /apple-touch-icon-precomposed.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: MQQs9pHgTuopiz_n6ZjfVUyuVlV1DXOP, Auth Status: false
+[2025-04-17T12:27:36.524Z] GET /favicon.ico
+[ERROR] Status 404 for GET /apple-touch-icon.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: vhMXNYfGNKM4pzGzyD7UZ3cxQcGmTFRp, Auth Status: false
+[2025-04-17T12:27:36.525Z] GET /images/backgrounds/bg1.png
+[ERROR] Status 404 for GET /favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: 7sTWcGNY6Rh1uNnfUb0oSUFrmhGSMvZd, Auth Status: false
+[2025-04-17T12:27:36.527Z] GET /images/favicon.ico
+[ERROR] Status 404 for GET /images/favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:44.420Z] GET /auth/login
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:44.426Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:44.429Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:44.442Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:44.444Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:44.445Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:44.445Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:44.446Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:44.446Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:44.450Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:44.457Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:44.457Z] GET /places/trip/4
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/4
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:53.884Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:53.906Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:53.908Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:53.908Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:53.909Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:53.909Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:53.910Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:53.914Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:53.921Z] GET /places/trip/4
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/4
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:53.923Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:55.230Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:55.248Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:55.249Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:55.249Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:55.251Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:55.251Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:55.251Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:55.256Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:55.266Z] GET /places/trip/4
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/4
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:27:55.268Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:02.837Z] GET /profile
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:02.856Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:02.859Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:02.859Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:02.859Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:02.860Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:02.861Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:12.238Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:12.255Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:12.257Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:12.258Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:12.270Z] GET /images/backgrounds/bg3.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:26.752Z] GET /auth/login
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:26.761Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:26.763Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:26.778Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:26.779Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:26.781Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:26.781Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:26.782Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:26.782Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:26.786Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:26.793Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:26.793Z] GET /places/trip/4
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/4
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:48.717Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:48.737Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:48.740Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:48.740Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:48.741Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:48.741Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:48.742Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:48.750Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:48.756Z] GET /places/trip/4
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/4
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:28:48.758Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:17.629Z] GET /
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:17.649Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:17.649Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:17.651Z] GET /images/backgrounds/bg1.png
+[Session Debug] SessionID: z4d-NYpcPZXed-3csmrui-mZI4_PXphT, Auth Status: false
+[2025-04-17T12:30:17.667Z] GET /apple-touch-icon-precomposed.png
+[Session Debug] SessionID: WglcRn7cwuXFVXo6UCvsb-JWMQ_QKpUy, Auth Status: false
+[2025-04-17T12:30:17.668Z] GET /apple-touch-icon.png
+[ERROR] Status 404 for GET /apple-touch-icon-precomposed.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: bbaI5o55eO-L8BKtSVClEdeOK7glfhOq, Auth Status: false
+[2025-04-17T12:30:17.669Z] GET /favicon.ico
+[ERROR] Status 404 for GET /apple-touch-icon.png
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: AJBQwtgE-R8NhnQ7x8LjIBQDwt3lYghU, Auth Status: false
+[2025-04-17T12:30:17.670Z] GET /images/backgrounds/bg1.png
+[ERROR] Status 404 for GET /favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: spIbuizRmO6qPds_Ifk0FZsSGkIk_LCQ, Auth Status: false
+[2025-04-17T12:30:17.671Z] GET /images/favicon.ico
+[ERROR] Status 404 for GET /images/favicon.ico
+Response body: <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Skydea</title>
+  
+  <!-- Favicon -->...
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:30.625Z] GET /auth/login
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:30.632Z] GET /dashboard
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:30.635Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:30.652Z] GET /css/trip-cards.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:30.653Z] GET /css/styles.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:30.656Z] GET /css/pdf-export.css
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:30.656Z] GET /js/app.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:30.656Z] GET /js/home-fix.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:30.657Z] GET /js/path-util.js
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:30.661Z] GET /trips
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:30.669Z] GET /images/main_photo.png
+[Session Debug] SessionID: Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq, Auth Status: true
+[2025-04-17T12:30:30.669Z] GET /places/trip/4
+isAuthenticated check: {
+  sessionID: 'Nj9siFxF-4mOsaoYobwjRJd0r9PZu8yq',
+  isAuthenticated: true,
+  hasUser: true,
+  userID: 1
+}
+User is authenticated, proceeding to next middleware
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:16:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/4
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...

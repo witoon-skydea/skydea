@@ -13,7 +13,25 @@ const db = new sqlite3.Database(path.resolve(dbPath), (err) => {
     console.log('Connected to SQLite database');
     
     // Initialize tables
-    db.serialize(() => {
+db.serialize(() => {
+      // Create api_keys table if it doesn't exist
+      db.run(`CREATE TABLE IF NOT EXISTS api_keys (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        api_key TEXT UNIQUE NOT NULL,
+        description TEXT,
+        is_active INTEGER DEFAULT 1,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      )`, (err) => {
+        if (err) {
+          console.error('Error creating api_keys table', err);
+        } else {
+          console.log('API keys table ready');
+        }
+      });
+      
       // Create users table if it doesn't exist
       db.run(`CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
