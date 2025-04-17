@@ -1,0 +1,160 @@
+API route base: /api/
+Server is running on port 3000
+Base path: /
+Connected to SQLite database
+Users table ready
+Trips table ready
+Places table ready
+Itinerary items table ready
+[2025-04-17T05:50:25.377Z] GET /trips/1/planner?emergency=true&debug=true
+Checking trip ownership for trip ID: 1
+User session: Not present
+Trip with ID 1 found: { is_public: 1, user_id: 1, title: 'Tokyo 2025' }
+Trip 1 is public, allowing access
+Rendering trip planner page for trip ID 1
+Rendering with params: {
+  tripId: 1,
+  tripTitle: 'Tokyo 2025',
+  isOwner: false,
+  isAuthenticated: true,
+  basePath: '/'
+}
+[2025-04-17T05:50:25.431Z] GET /css/pdf-export.css
+[2025-04-17T05:50:25.433Z] GET /css/trip-cards.css
+[2025-04-17T05:50:25.434Z] GET /js/app.js
+[2025-04-17T05:50:25.434Z] GET /css/styles.css
+[2025-04-17T05:50:25.435Z] GET /css/trip-planner.css
+[2025-04-17T05:50:25.435Z] GET /js/home-fix.js
+[2025-04-17T05:50:25.436Z] GET /js/trip-planner.js
+[2025-04-17T05:50:25.438Z] GET /js/path-util.js
+[2025-04-17T05:50:25.489Z] GET /api/trips/1?share=IGsYRX4yNd
+Checking trip ownership for trip ID: 1
+User session: Not present
+[2025-04-17T05:50:25.492Z] GET /js/api-proxy.js
+Trip with ID 1 found: { is_public: 1, user_id: 1, title: 'Tokyo 2025' }
+Trip 1 is public, allowing access
+Fetching trip details for ID 1
+Fetching places for trip ID 1
+Found 4 places for trip ID 1
+Fetching itinerary items for trip ID 1
+Found 3 itinerary items for trip ID 1
+Successfully prepared trip data for ID 1
+[2025-04-17T05:50:25.497Z] GET /js/trip-display-fix.js
+[2025-04-17T05:50:25.500Z] GET /js/fix-trips.js
+[2025-04-17T05:50:25.502Z] GET /js/debug-helper.js
+[2025-04-17T05:50:25.516Z] GET /js/diagnostic.js
+[2025-04-17T05:50:25.529Z] GET /js/trip-planner-fixed.js
+[2025-04-17T05:50:37.701Z] GET /
+[2025-04-17T05:50:37.722Z] GET /images/backgrounds/bg1.png
+[2025-04-17T05:50:37.724Z] GET /css/styles.css
+[2025-04-17T05:50:37.725Z] GET /css/trip-cards.css
+[2025-04-17T05:50:37.753Z] GET /images/backgrounds/bg3.png
+[2025-04-17T05:50:39.160Z] GET /auth/login
+[2025-04-17T05:50:39.178Z] GET /js/path-util.js
+[2025-04-17T05:50:39.179Z] GET /css/styles.css
+[2025-04-17T05:50:39.179Z] GET /css/trip-cards.css
+[2025-04-17T05:50:39.181Z] GET /css/pdf-export.css
+[2025-04-17T05:50:39.182Z] GET /js/app.js
+[2025-04-17T05:50:39.183Z] GET /js/home-fix.js
+[2025-04-17T05:50:46.778Z] POST /auth/login
+[2025-04-17T05:50:46.867Z] GET /dashboard
+[2025-04-17T05:50:46.880Z] GET /css/styles.css
+[2025-04-17T05:50:46.880Z] GET /css/trip-cards.css
+[2025-04-17T05:50:46.880Z] GET /css/pdf-export.css
+[2025-04-17T05:50:46.881Z] GET /js/path-util.js
+[2025-04-17T05:50:46.882Z] GET /js/app.js
+[2025-04-17T05:50:46.882Z] GET /js/home-fix.js
+[2025-04-17T05:50:46.885Z] GET /trips
+[2025-04-17T05:50:46.905Z] GET /places/trip/1
+[2025-04-17T05:50:46.906Z] GET /places/trip/2
+[2025-04-17T05:50:46.906Z] GET /images/main_photo.png
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:8:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:8:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/1
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...
+Error checking trip ownership: TypeError: Cannot read properties of undefined (reading 'trip_id')
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:14:38)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:8:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15
+API Error: AppError: Internal server error
+    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at exports.isAuthenticated (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/middlewares/auth.js:8:12)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/lib/layer.js:152:17)
+    at /Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/node_modules/router/index.js:295:15 {
+  statusCode: 500
+}
+[ERROR] Status 500 for GET /places/trip/2
+Response body: {"error":"Internal server error","status":500,"stack":"AppError: Internal server error\n    at checkTripOwnership (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea/src/routes/places.js:31:10)\...
+[2025-04-17T05:50:50.050Z] GET /trips/1/planner
+Checking trip ownership for trip ID: 1
+User session: Present
+Trip with ID 1 found: { is_public: 1, user_id: 1, title: 'Tokyo 2025' }
+User 1 is the owner of trip 1
+Rendering trip planner page for trip ID 1
+Rendering with params: {
+  tripId: 1,
+  tripTitle: 'Tokyo 2025',
+  isOwner: true,
+  isAuthenticated: true,
+  basePath: '/'
+}
+[2025-04-17T05:50:50.067Z] GET /css/styles.css
+[2025-04-17T05:50:50.070Z] GET /css/trip-cards.css
+[2025-04-17T05:50:50.070Z] GET /css/pdf-export.css
+[2025-04-17T05:50:50.070Z] GET /js/path-util.js
+[2025-04-17T05:50:50.070Z] GET /js/app.js
+[2025-04-17T05:50:50.071Z] GET /js/home-fix.js
+[2025-04-17T05:50:50.074Z] GET /css/trip-planner.css
+[2025-04-17T05:50:50.075Z] GET /js/trip-planner.js
+[2025-04-17T05:50:50.084Z] GET /api/trips/1?share=IGsYRX4yNd
+Checking trip ownership for trip ID: 1
+User session: Present
+Trip with ID 1 found: { is_public: 1, user_id: 1, title: 'Tokyo 2025' }
+User 1 is the owner of trip 1
+Fetching trip details for ID 1
+Fetching places for trip ID 1
+Found 4 places for trip ID 1
+Fetching itinerary items for trip ID 1
+[2025-04-17T05:50:50.087Z] GET /js/api-proxy.js
+Found 3 itinerary items for trip ID 1
+Successfully prepared trip data for ID 1
+[2025-04-17T05:50:50.090Z] GET /js/trip-display-fix.js
+[2025-04-17T05:50:50.096Z] GET /js/fix-trips.js
+[2025-04-17T05:50:50.098Z] GET /js/debug-helper.js
+[2025-04-17T05:50:50.101Z] GET /js/diagnostic.js
+[2025-04-17T05:50:50.104Z] GET /js/trip-planner-fixed.js

@@ -45,6 +45,24 @@ app.use(session({
   }
 }));
 
+// Add request logging middleware for debugging
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  
+  // Track response
+  const originalSend = res.send;
+  res.send = function(body) {
+    // Log error responses for debugging
+    if (res.statusCode >= 400) {
+      console.error(`[ERROR] Status ${res.statusCode} for ${req.method} ${req.url}`);
+      console.error('Response body:', typeof body === 'string' ? body.substring(0, 200) + '...' : body);
+    }
+    return originalSend.call(this, body);
+  };
+  
+  next();
+});
+
 // Set up base path for static files
 app.use(express.static(path.join(__dirname, '../public')));
 // Also support the configured base path
@@ -70,10 +88,17 @@ app.use(`${appConfig.appBasePath}trips`, tripRoutes);
 app.use(`${appConfig.appBasePath}places`, placeRoutes);
 app.use(`${appConfig.appBasePath}itinerary`, itineraryRoutes);
 
-// Set up API routes
-app.use(`${appConfig.appBasePath}api/trips`, tripRoutes);
-app.use(`${appConfig.appBasePath}api/places`, placeRoutes);
-app.use(`${appConfig.appBasePath}api/itinerary`, itineraryRoutes);
+// Set up API routes - Use separate router instances for API routes
+const apiTripRoutes = require('./routes/trips');
+const apiPlaceRoutes = require('./routes/places');
+const apiItineraryRoutes = require('./routes/itinerary');
+
+app.use(`${appConfig.appBasePath}api/trips`, apiTripRoutes);
+app.use(`${appConfig.appBasePath}api/places`, apiPlaceRoutes);
+app.use(`${appConfig.appBasePath}api/itinerary`, apiItineraryRoutes);
+
+// Log API routes for debugging
+console.log(`API route base: ${appConfig.appBasePath}api/`);
 
 // 404 handler
 app.use((req, res, next) => {

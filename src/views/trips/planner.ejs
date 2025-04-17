@@ -1,12 +1,124 @@
 <div id="trip-planner-app" data-trip-id="<%= trip.id %>" data-base-path="<%= basePath %>">
+
+<!-- Debug information -->
+<div id="debug-info" class="d-none alert alert-info mb-3">
+  <h5>Debug Information</h5>
+  <p><strong>Base Path:</strong> <%= basePath %></p>
+  <p><strong>Trip ID:</strong> <%= trip.id %></p>
+  <p><strong>Is Owner:</strong> <%= isOwner %></p>
+  <p><strong>Is Public:</strong> <%= isPublic %></p>
+  <p><strong>Share Code:</strong> <%= shareCode %></p>
+</div>
+
+<!-- Add necessary scripts for trip planner -->
 <script>
+  // Set required global variables
   window.isAuthenticated = <%= isAuthenticated %>;
+  window.appBasePath = '<%= basePath %>';
   window.tripData = {
     tripId: <%= trip.id %>,
     isOwner: <%= isOwner %>,
     isPublic: <%= isPublic %>,
     shareCode: "<%= shareCode %>"
   };
+  
+  // Log configuration for debugging
+  console.log('Trip planner configuration:', {
+    basePath: window.appBasePath,
+    tripId: window.tripData.tripId,
+    isAuthenticated: window.isAuthenticated
+  });
+  
+  // Show debug information when needed
+  function showDebugInfo() {
+    const debugInfo = document.getElementById('debug-info');
+    if (debugInfo) {
+      debugInfo.classList.remove('d-none');
+    }
+  }
+  
+  // Add key handler to show debug info with Ctrl+D
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.key === 'd') {
+      e.preventDefault();
+      showDebugInfo();
+    }
+  });
+  
+  // Helper function to handle script loading errors
+  function handleScriptError(scriptSrc) {
+    console.error(`Failed to load script: ${scriptSrc}`);
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'alert alert-danger';
+    errorDiv.innerHTML = `
+      <strong>Error loading application resources</strong><br>
+      Could not load: ${scriptSrc}<br>
+      Please try refreshing the page or contact support if the problem persists.
+    `;
+    document.getElementById('trip-planner-app').prepend(errorDiv);
+  }
+  
+  // Load scripts sequentially
+  function loadScriptsSequentially(scripts, index) {
+    if (index >= scripts.length) return;
+    
+    const script = document.createElement('script');
+    script.src = window.appBasePath + scripts[index];
+    
+    script.onload = function() {
+      console.log(`Loaded script: ${scripts[index]}`);
+      loadScriptsSequentially(scripts, index + 1);
+    };
+    
+    script.onerror = function() {
+      handleScriptError(scripts[index]);
+    };
+    
+    document.head.appendChild(script);
+  }
+  
+  // Start loading scripts when DOM is ready
+  document.addEventListener('DOMContentLoaded', function() {
+    const scripts = [
+      'js/path-util.js',        // Load path utilities first
+      'js/api-proxy.js',        // Load API proxy for consistent API calls
+      'js/trip-display-fix.js', // Add emergency display fix
+      'js/fix-trips.js',        // Add the fix script to solve loading issues
+      'js/debug-helper.js',
+      'js/diagnostic.js',
+      'js/trip-planner-fixed.js'  // Use the fixed version of trip planner
+    ];
+    
+    loadScriptsSequentially(scripts, 0);
+    
+    // Add a fallback mechanism in case scripts fail to load
+    setTimeout(function() {
+      const tripPlannerContent = document.querySelector('.tab-content');
+      if (tripPlannerContent && tripPlannerContent.innerText.includes('Error initializing application')) {
+        console.log('Detected error state, showing diagnostic information');
+        showDebugInfo();
+        
+        // Show detailed error explanation
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'alert alert-warning mt-3';
+        errorDiv.innerHTML = `
+          <h4>Troubleshooting Tips</h4>
+          <p>We detected an issue loading the Trip Planner. Try these fixes:</p>
+          <ol>
+            <li>Check your internet connection</li>
+            <li>Clear your browser cache and reload the page</li>
+            <li>Try a different browser</li>
+            <li>Press Alt+D to open diagnostic tools</li>
+          </ol>
+        `;
+        
+        const container = document.querySelector('.container');
+        if (container) {
+          container.prepend(errorDiv);
+        }
+      }
+    }, 5000);
+  });
 </script>
   <!-- Header -->
   <section class="py-4 bg-light border-bottom">

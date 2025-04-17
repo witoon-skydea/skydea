@@ -140,7 +140,30 @@
   <script>
     // Make base path available to JavaScript
     window.appBasePath = '<%= basePath %>';
+    console.log('Main layout initialized with base path:', window.appBasePath);
+    
+    // Script error handler
+    window.addEventListener('error', function(event) {
+      console.error('Script error detected:', event);
+      if (event.target && event.target.tagName === 'SCRIPT') {
+        console.error('Error loading script:', event.target.src);
+      }
+    }, true);
+    
+    // Normalize path
+    function normalizePath(path) {
+      if (!path) return '/';
+      return path.endsWith('/') ? path : path + '/';
+    }
+    
+    // Build URL with base path
+    function buildUrl(relativePath) {
+      const basePath = normalizePath(window.appBasePath || '/');
+      const cleanPath = relativePath.startsWith('/') ? relativePath.substring(1) : relativePath;
+      return `${basePath}${cleanPath}`;
+    }
   </script>
+  <script src="<%= basePath %>js/path-util.js"></script>
   <script src="<%= basePath %>js/app.js"></script>
   <script src="<%= basePath %>js/home-fix.js"></script>
 </body>

@@ -160,24 +160,36 @@ document.addEventListener('DOMContentLoaded', function() {
   // Append share code to URLs if available
   const shareParam = shareCode ? `?share=${shareCode}` : '';
   
-  // Ensure basePath has trailing slash for proper URL construction
-  const normalizePath = (path) => {
-    return path.endsWith('/') ? path : path + '/';
-  };
+  // Use PathUtil for consistent URL construction if available, fallback to manual normalization
+  let buildApiEndpoint;
   
-  const normalizedBasePath = normalizePath(basePath);
+  if (window.PathUtil && typeof window.PathUtil.buildApiUrl === 'function') {
+    console.log('Using PathUtil to build API URLs');
+    buildApiEndpoint = (endpoint) => window.PathUtil.buildApiUrl(endpoint);
+  } else {
+    console.log('PathUtil not available, using manual path construction');
+    // Ensure basePath has trailing slash for proper URL construction
+    const normalizePath = (path) => {
+      return path.endsWith('/') ? path : path + '/';
+    };
+    const normalizedBasePath = normalizePath(basePath);
+    buildApiEndpoint = (endpoint) => `${normalizedBasePath}api/${endpoint}`;
+  }
   
   const apiUrls = {
-    trip: `${normalizedBasePath}api/trips/${tripId}${shareParam}`,
-    places: `${normalizedBasePath}api/places/trip/${tripId}${shareParam}`,
-    createPlace: `${normalizedBasePath}api/places`,
-    itinerary: `${normalizedBasePath}api/itinerary/trip/${tripId}${shareParam}`,
-    createItinerary: `${normalizedBasePath}api/itinerary`,
-    reorderItinerary: `${normalizedBasePath}api/itinerary/reorder/batch`,
-    privacy: `${normalizedBasePath}api/trips/${tripId}/privacy`,
-    shareCode: `${normalizedBasePath}api/trips/${tripId}/share-code`,
-    shareLink: `${normalizedBasePath}api/trips/${tripId}/share`
+    trip: buildApiEndpoint(`trips/${tripId}${shareParam}`),
+    places: buildApiEndpoint(`places/trip/${tripId}${shareParam}`),
+    createPlace: buildApiEndpoint('places'),
+    itinerary: buildApiEndpoint(`itinerary/trip/${tripId}${shareParam}`),
+    createItinerary: buildApiEndpoint('itinerary'),
+    reorderItinerary: buildApiEndpoint('itinerary/reorder/batch'),
+    privacy: buildApiEndpoint(`trips/${tripId}/privacy`),
+    shareCode: buildApiEndpoint(`trips/${tripId}/share-code`),
+    shareLink: buildApiEndpoint(`trips/${tripId}/share`)
   };
+
+  // Log all API URLs for debugging
+  console.log('API URLs initialized:', apiUrls);
   
   // State variables
   let tripData = null;
@@ -294,7 +306,12 @@ document.addEventListener('DOMContentLoaded', function() {
       // Add debug info about API URL
       console.group('API Call Details');
       console.log('BasePath:', basePath);
-      console.log('Normalized BasePath:', normalizedBasePath);
+      // Safe way to get normalized base path
+      const normalizePath = (path) => {
+        return path.endsWith('/') ? path : path + '/';
+      };
+      const debugNormalizedBasePath = normalizePath(basePath);
+      console.log('Normalized BasePath:', debugNormalizedBasePath);
       console.log('Trip ID:', tripId);
       console.log('Share Code:', shareCode);
       console.log('Full API URL:', apiUrls.trip);
