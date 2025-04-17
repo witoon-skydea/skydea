@@ -65,7 +65,7 @@
           </div>
           <div class="col-md-6 d-none d-md-block">
             <div class="image-container" style="max-height: 400px; overflow: hidden; border-radius: 8px;">
-              <img src="images/main_photo.png" alt="Trip Planning" class="img-fluid rounded-4 shadow-lg">
+              <img id="random-feature-image" src="images/backgrounds/bg1.png" alt="Trip Planning" class="img-fluid rounded-4 shadow-lg">
             </div>
           </div>
         </div>
@@ -170,6 +170,27 @@
   <script>
     // Make base path available to JavaScript
     window.appBasePath = '/';
+    
+    // Random feature image for hero section
+    document.addEventListener('DOMContentLoaded', function() {
+      const featureImageElement = document.getElementById('random-feature-image');
+      
+      if (featureImageElement) {
+        // Array of background images
+        const backgrounds = [
+          'images/backgrounds/bg1.png',
+          'images/backgrounds/bg2.png',
+          'images/backgrounds/bg3.png'
+        ];
+        
+        // Select a random background
+        const randomIndex = Math.floor(Math.random() * backgrounds.length);
+        const selectedBackground = backgrounds[randomIndex];
+        
+        // Apply the image
+        featureImageElement.src = selectedBackground;
+      }
+    });
   </script>
 </body>
 </html>
