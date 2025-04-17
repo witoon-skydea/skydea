@@ -63,11 +63,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // API URLs
+  // Append share code to URLs if available
+  const shareParam = shareCode ? `?share=${shareCode}` : '';
+  
   const apiUrls = {
-    trip: `${basePath}api/trips/${tripId}`,
-    places: `${basePath}api/places/trip/${tripId}`,
+    trip: `${basePath}api/trips/${tripId}${shareParam}`,
+    places: `${basePath}api/places/trip/${tripId}${shareParam}`,
     createPlace: `${basePath}api/places`,
-    itinerary: `${basePath}api/itinerary/trip/${tripId}`,
+    itinerary: `${basePath}api/itinerary/trip/${tripId}${shareParam}`,
     createItinerary: `${basePath}api/itinerary`,
     reorderItinerary: `${basePath}api/itinerary/reorder/batch`,
     privacy: `${basePath}api/trips/${tripId}/privacy`,
