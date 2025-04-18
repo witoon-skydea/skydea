@@ -1,0 +1,154 @@
+{
+  "places": [
+    {
+      "name": "Victoria Peak",
+      "description": "The highest point on Hong Kong Island, offering spectacular views of the city skyline, Victoria Harbour, and surrounding islands. The Peak Tram, one of the world's oldest and most famous funicular railways, carries visitors to the top.",
+      "latitude": 22.2759,
+      "longitude": 114.1455,
+      "address": "No. 1 Lugard Road, Hong Kong",
+      "place_id": "ChIJMQJQizP_AzQRrW7OYJ7iUDk",
+      "image_url": "https://res.klook.com/image/upload/fl_lossy.progressive,q_65/c_fill,w_1295,h_720/cities/jrfyzvgzvhs1iylduuhj.jpg",
+      "category": "attraction"
+    },
+    {
+      "name": "Victoria Harbour",
+      "description": "One of the world's most beautiful natural harbors, famous for its stunning panoramic views of Hong Kong's skyline, especially during the Symphony of Lights show which takes place every night at 8:00 PM.",
+      "latitude": 22.2938,
+      "longitude": 114.1687,
+      "address": "Victoria Harbour, Hong Kong",
+      "place_id": "ChIJMSViBi3_AzQRFXOQAEOvvn0",
+      "image_url": "https://cdn.britannica.com/39/94839-050-6B7683A5/ships-Victoria-Harbor-Hong-Kong.jpg",
+      "category": "attraction"
+    },
+    {
+      "name": "Tsim Sha Tsui Promenade",
+      "description": "A scenic waterfront promenade offering stunning views of Victoria Harbour and Hong Kong Island's skyline. It's home to the Avenue of Stars, Hong Kong Cultural Centre, and the Clock Tower.",
+      "latitude": 22.2939,
+      "longitude": 114.1722,
+      "address": "Salisbury Road, Tsim Sha Tsui, Kowloon, Hong Kong",
+      "place_id": "ChIJMUVyPSAABDQRhZ7R1oY1U3E",
+      "image_url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/33/fd/2a/tsim-sha-tsui-promenade.jpg?w=1200&h=1200&s=1",
+      "category": "attraction"
+    },
+    {
+      "name": "Wong Tai Sin Temple",
+      "description": "A famous shrine and major tourist attraction in Hong Kong, home to three religions: Taoism, Buddhism, and Confucianism. Known for making wishes that come true and its beautiful architecture.",
+      "latitude": 22.3421,
+      "longitude": 114.1931,
+      "address": "2 Chuk Yuen Village, Wong Tai Sin, Kowloon, Hong Kong",
+      "place_id": "ChIJbcJdxh8ABDQRcL2eQCU4AQQ",
+      "image_url": "https://www.discoverhongkong.com/content/dam/dhk/intl/explore/attractions/Wong-Tai-Sin-temple/wong-tai-sin-temple-1920x1080.jpg",
+      "category": "attraction"
+    },
+    {
+      "name": "Hong Kong Disneyland",
+      "description": "The first Disney theme park in China, featuring seven themed areas: Main Street USA, Fantasyland, Adventureland, Tomorrowland, Grizzly Gulch, Mystic Point, and Toy Story Land.",
+      "latitude": 22.3130,
+      "longitude": 114.0413,
+      "address": "Penny's Bay, Lantau Island, Hong Kong",
+      "place_id": "ChIJS1Z3BhD8AzQRGf7_XvZHdrY",
+      "image_url": "https://www.hongkongdisneyland.com/sites/hongkongdisneyland_intl/files/2023-10/HKDL%20Castle%20of%20Magical%20Dreams_preview.jpg",
+      "category": "attraction"
+    },
+    {
+      "name": "Ocean Park",
+      "description": "A marine-life theme park featuring animal exhibits, thrill rides, and shows. The park has two main areas: The Waterfront and The Summit, connected by a cable car with spectacular views.",
+      "latitude": 22.2476,
+      "longitude": 114.1755,
+      "address": "Ocean Park Road, Aberdeen, Hong Kong",
+      "place_id": "ChIJAQCc6L7_AzQR0j7CPx9HfM4",
+      "image_url": "https://a.cdn-hotels.com/gdcs/production141/d778/c6595520-91da-11e8-a798-0242ac110006.jpg",
+      "category": "attraction"
+    },
+    {
+      "name": "Ladies Market",
+      "description": "A popular street market with over 100 stalls selling clothing, accessories, and souvenirs at bargain prices. Known for its vibrant atmosphere and the opportunity to practice haggling skills.",
+      "latitude": 22.3183,
+      "longitude": 114.1694,
+      "address": "Tung Choi Street, Mong Kok, Kowloon, Hong Kong",
+      "place_id": "ChIJvSlP-ccABDQRnhYYjYdIUU0",
+      "image_url": "https://cdn.asiatatler.com/asiatatler/i/hk/2020/06/05113305-ladies-market1_cover_1000x667.jpg",
+      "category": "shopping"
+    },
+    {
+      "name": "Temple Street Night Market",
+      "description": "A bustling night market known for its lively atmosphere, street food, fortune tellers, and a wide variety of merchandise. One of the best places to experience Hong Kong's vibrant street culture.",
+      "latitude": 22.3073,
+      "longitude": 114.1704,
+      "address": "Temple Street, Yau Ma Tei, Kowloon, Hong Kong",
+      "place_id": "ChIJ7ZCjxdwABDQRuKWxBmrGxYk",
+      "image_url": "https://live.staticflickr.com/7428/16306502568_fd8e520d78_b.jpg",
+      "category": "shopping"
+    },
+    {
+      "name": "Lan Kwai Fong",
+      "description": "One of Hong Kong's most popular nightlife hot spots, with over 90 restaurants and bars. The small square of streets is often packed with revelers and hosts international carnivals and celebrations.",
+      "latitude": 22.2808,
+      "longitude": 114.1553,
+      "address": "Lan Kwai Fong, Central, Hong Kong",
+      "place_id": "ChIJr4FiIwD_AzQRvQG-MTz1fRo",
+      "image_url": "https://media.tacdn.com/media/attractions-splice-spp-674x446/06/74/2c/71.jpg",
+      "category": "entertainment"
+    },
+    {
+      "name": "Star Ferry",
+      "description": "A historic ferry service that has been connecting Hong Kong Island and Kowloon since 1888. The ten-minute ride across Victoria Harbour offers spectacular views of the city's skyline.",
+      "latitude": 22.2933,
+      "longitude": 114.1694,
+      "address": "Star Ferry Pier, Tsim Sha Tsui, Kowloon, Hong Kong",
+      "place_id": "ChIJBd7aQy8ABDQR-kpnkxFfYT8",
+      "image_url": "https://media.cnn.com/api/v1/images/stellar/prod/220719131352-star-ferry-hong-kong-restricted.jpg?c=16x9&q=h_720,w_1280,c_fill",
+      "category": "transportation"
+    },
+    {
+      "name": "Tian Tan Buddha (Big Buddha)",
+      "description": "A large bronze statue of Buddha Shakyamuni, located at Ngong Ping, Lantau Island. The statue is 34 meters tall and weighs over 250 tons, making it one of the largest seated Buddha statues in the world.",
+      "latitude": 22.2540,
+      "longitude": 113.9056,
+      "address": "Ngong Ping Road, Lantau Island, Hong Kong",
+      "place_id": "ChIJsYGo6L74AzQRZVPQSF0tN6k",
+      "image_url": "https://a.cdn-hotels.com/gdcs/production109/d62/0f84cc42-c7a4-4434-a7ed-07b14c532dc3.jpg",
+      "category": "attraction"
+    },
+    {
+      "name": "Hong Kong Museum of History",
+      "description": "A comprehensive museum that presents the archaeological, cultural, and natural history of Hong Kong. The permanent exhibition 'The Hong Kong Story' spans from prehistoric times to the present day.",
+      "latitude": 22.3018,
+      "longitude": 114.1774,
+      "address": "100 Chatham Road South, Tsim Sha Tsui, Kowloon, Hong Kong",
+      "place_id": "ChIJLSKTMi4ABDQR95LFtZtLFqA",
+      "image_url": "https://www.discoverhongkong.com/content/dam/dhk/intl/explore/attractions/Hong-Kong-Museum-of-History/hong-kong-museum-of-history-1920x1080.jpg",
+      "category": "attraction"
+    },
+    {
+      "name": "Tim Ho Wan",
+      "description": "One of the cheapest Michelin-starred restaurants in the world, famous for its dim sum. The barbecue pork buns are the signature dish that keeps customers coming back.",
+      "latitude": 22.3235,
+      "longitude": 114.1685,
+      "address": "9-11 Fuk Wing Street, Sham Shui Po, Kowloon, Hong Kong",
+      "place_id": "ChIJa8BnNcAABDQRlmAYgcRnf74",
+      "image_url": "https://media-cdn.tripadvisor.com/media/photo-s/1a/76/19/a5/dim-sum-set.jpg",
+      "category": "restaurant"
+    },
+    {
+      "name": "Mak's Noodle",
+      "description": "A famous wonton noodle restaurant with a history dating back to the 1960s. Known for its small bowls of soup noodles with shrimp wontons, a traditional Hong Kong dish.",
+      "latitude": 22.2811,
+      "longitude": 114.1552,
+      "address": "77 Wellington Street, Central, Hong Kong",
+      "place_id": "ChIJa8FY7QD_AzQRF6iXx6_33nQ",
+      "image_url": "https://media-cdn.tripadvisor.com/media/photo-s/10/82/97/08/wonton-noodle.jpg",
+      "category": "restaurant"
+    },
+    {
+      "name": "Yung Kee",
+      "description": "A renowned restaurant established in 1942, famous for its roast goose. It has received numerous accolades and is a popular dining destination for both locals and tourists.",
+      "latitude": 22.2821,
+      "longitude": 114.1550,
+      "address": "32-40 Wellington Street, Central, Hong Kong",
+      "place_id": "ChIJ782T2gD_AzQRHffWRVPGQhE",
+      "image_url": "https://media-cdn.tripadvisor.com/media/photo-s/13/44/27/1c/caption.jpg",
+      "category": "restaurant"
+    }
+  ]
+}

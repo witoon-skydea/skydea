@@ -1,0 +1,373 @@
+API routes mounted at: /api
+Server is running on port 3000
+Base path: /
+Connected to SQLite database
+Users table ready
+Trips table ready
+Places table ready
+Itinerary items table ready
+Checking if username "testuser" or email "testuser@example.com" already exists
+Found existi[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/server.js`[39m
+2025-04-18 01:17:21',
+  updated_at: '2025-04-18 01:17:21'
+}
+Username already exists
+Error registering user: Error: Username already exists
+    at Statement.<anonymous> (/Users/witoonpongsilathong/MCP_folder/mm_dev_mode/skydea_fork/skydea/src/models/User.js:33:29)
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '23',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: { username: 'testuser' }
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '23',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: { username: 'testuser' }
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '164',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: {
+  title: 'Test Trip',
+  description: 'A trip created by the API test script',
+  start_date: '2025-06-01',
+  end_date: '2025-06-07',
+  is_public: true,
+  username: 'testuser'
+}
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '23',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: { username: 'testuser' }
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '180',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: {
+  title: 'Updated Test Trip',
+  description: 'This trip was updated by the API test script',
+  start_date: '2025-06-02',
+  end_date: '2025-06-08',
+  is_public: false,
+  username: 'testuser'
+}
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '228',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: {
+  trip_id: 6,
+  name: 'Test Place',
+  description: 'A place created by the API test script',
+  latitude: 35.6586,
+  longitude: 139.7454,
+  address: '4 Chome-2-8 Shibakoen, Minato City, Tokyo',
+  category: 'attraction',
+  username: 'testuser'
+}
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '23',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: { username: 'testuser' }
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '23',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: { username: 'testuser' }
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '135',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: {
+  name: 'Updated Test Place',
+  description: 'This place was updated by the API test script',
+  category: 'landmark',
+  username: 'testuser'
+}
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '265',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: {
+  trip_id: 6,
+  place_id: 14,
+  title: 'Test Itinerary Item',
+  description: 'An itinerary item created by the API test script',
+  start_time: '2025-06-02T10:00:00',
+  end_time: '2025-06-02T12:00:00',
+  day_number: 1,
+  order_index: 0,
+  tags: [ 'test', 'api' ],
+  username: 'testuser'
+}
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '23',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: { username: 'testuser' }
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '23',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: { username: 'testuser' }
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '23',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: { username: 'testuser' }
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '263',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: {
+  title: 'Updated Test Itinerary Item',
+  description: 'This itinerary item was updated by the API test script',
+  start_time: '2025-06-02T11:00:00',
+  end_time: '2025-06-02T13:00:00',
+  day_number: 1,
+  order_index: 0,
+  tags: [ 'updated', 'test', 'api' ],
+  username: 'testuser'
+}
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '213',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: {
+  trip_id: 6,
+  title: 'Second Test Item',
+  description: 'A second itinerary item for testing',
+  start_time: '2025-06-02T14:00:00',
+  end_time: '2025-06-02T16:00:00',
+  day_number: 1,
+  order_index: 1,
+  username: 'testuser'
+}
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '85',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: {
+  username: 'testuser',
+  items: [ { id: 11, order_index: 1 }, { id: 12, order_index: 0 } ]
+}
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '39',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: { order_index: 0, username: 'testuser' }
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '23',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: { username: 'testuser' }
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '23',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: { username: 'testuser' }
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '23',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: { username: 'testuser' }
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes
+Authentication request headers: {
+  accept: 'application/json, text/plain, */*',
+  'content-type': 'application/json',
+  'x-username': 'testuser',
+  'user-agent': 'axios/1.8.4',
+  'content-length': '23',
+  'accept-encoding': 'gzip, compress, deflate, br',
+  host: 'localhost:3000',
+  connection: 'keep-alive'
+}
+Authentication request body: { username: 'testuser' }
+Authentication request query: [Object: null prototype] {}
+Authenticating user with username: testuser
+User found: Yes

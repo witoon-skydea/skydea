@@ -15,6 +15,9 @@ const tripRoutes = require('./routes/trips');
 const placeRoutes = require('./routes/places');
 const itineraryRoutes = require('./routes/itinerary');
 
+// Load API routes
+const apiRoutes = require('./api');
+
 // Load middleware
 const { setLocals } = require('./middlewares/auth');
 const { errorHandler, AppError } = require('./middlewares/errorHandler');
@@ -70,10 +73,10 @@ app.use(`${appConfig.appBasePath}trips`, tripRoutes);
 app.use(`${appConfig.appBasePath}places`, placeRoutes);
 app.use(`${appConfig.appBasePath}itinerary`, itineraryRoutes);
 
-// Set up API routes
-app.use(`${appConfig.appBasePath}api/trips`, tripRoutes);
-app.use(`${appConfig.appBasePath}api/places`, placeRoutes);
-app.use(`${appConfig.appBasePath}api/itinerary`, itineraryRoutes);
+// Set up API routes - Make sure to handle trailing slash properly
+const apiBasePath = `${appConfig.appBasePath}api`;
+app.use(apiBasePath, apiRoutes);
+console.log(`API routes mounted at: ${apiBasePath}`);
 
 // 404 handler
 app.use((req, res, next) => {
