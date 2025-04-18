@@ -50,7 +50,7 @@ $SSH_CMD "mkdir -p $REMOTE_DIR"
 
 # Clone or pull the repository
 echo -e "${YELLOW}Deploying code to server...${NC}"
-$SSH_CMD "cd $REMOTE_DIR && if [ -d .git ]; then git pull; else git clone https://github.com/witoon-skydea/skydea .; fi"
+$SSH_CMD "cd $REMOTE_DIR && if [ -d .git ]; then git fetch && git checkout feature/api-updates && git pull origin feature/api-updates; else git clone -b feature/api-updates https://github.com/witoon-skydea/skydea .; fi"
 
 # Install dependencies
 echo -e "${YELLOW}Installing dependencies...${NC}"
