@@ -66,7 +66,10 @@ function generatePdfContent(doc, trip, places, itemsByDay) {
   // Trip overview
   generateTripOverview(doc, trip);
   
-  // Places section
+  // Trip map overview - add a map showing all places
+  generateTripMapOverview(doc, places);
+  
+  // Places section with images
   generatePlacesSection(doc, places);
   
   // Daily itinerary
@@ -74,6 +77,49 @@ function generatePdfContent(doc, trip, places, itemsByDay) {
   
   // Footer with page numbers
   generateFooter(doc);
+}
+
+/**
+ * Generate a map overview section
+ */
+function generateTripMapOverview(doc, places) {
+  const placesWithCoords = places.filter(place => place.latitude && place.longitude);
+  
+  if (placesWithCoords.length === 0) {
+    return;
+  }
+  
+  // Add a section title
+  doc.fontSize(18)
+     .font('Helvetica-Bold')
+     .fillColor('#2c3e50')
+     .text('Trip Overview Map', { underline: true })
+     .moveDown(0.5);
+  
+  // We can't actually generate a map image directly in the PDF,
+  // but we can include a placeholder and instructions
+  doc.fontSize(12)
+     .font('Helvetica')
+     .fillColor('#2c3e50')
+     .text('Your trip includes the following key locations:', { continued: false })
+     .moveDown(0.5);
+  
+  // Create a list of the places with coordinates
+  placesWithCoords.forEach((place, index) => {
+    doc.fontSize(11)
+       .font('Helvetica-Bold')
+       .text(`${index + 1}. ${place.name}`, { continued: true })
+       .font('Helvetica')
+       .text(` (${place.latitude.toFixed(6)}, ${place.longitude.toFixed(6)})`)
+       .moveDown(0.2);
+  });
+  
+  doc.moveDown(1);
+  
+  // Add page break if needed
+  if (doc.y > doc.page.height - 250) {
+    doc.addPage();
+  }
 }
 
 /**
@@ -147,7 +193,7 @@ function generateTripOverview(doc, trip) {
 }
 
 /**
- * Generate the places section
+ * Generate the places section with images
  */
 function generatePlacesSection(doc, places) {
   if (places.length === 0) {
@@ -156,6 +202,7 @@ function generatePlacesSection(doc, places) {
   
   doc.fontSize(18)
      .font('Helvetica-Bold')
+     .fillColor('#2c3e50')
      .text('Places to Visit', { underline: true })
      .moveDown(0.5);
   
@@ -173,29 +220,74 @@ function generatePlacesSection(doc, places) {
   Object.keys(placesByCategory).sort().forEach(category => {
     doc.fontSize(14)
        .font('Helvetica-Bold')
+       .fillColor('#3498db')
        .text(capitalizeFirstLetter(category), { continued: true })
        .text(` (${placesByCategory[category].length})`)
        .moveDown(0.3);
     
     placesByCategory[category].forEach(place => {
+      const startY = doc.y;
+      let contentHeight = 0;
+      
+      // Calculate if there's room for this place on current page
+      const estimatedHeight = place.image_url ? 120 : 40;
+      if (doc.y + estimatedHeight > doc.page.height - 100) {
+        doc.addPage();
+      }
+      
+      // If place has an image, try to include it
+      let imageWidth = 80;
+      if (place.image_url) {
+        try {
+          // Note: This is just a placeholder approach since we can't actually
+          // fetch external images directly in this environment
+          doc.save();
+          doc.rect(doc.x, doc.y, imageWidth, 80).fill('#e0e0e0');
+          doc.fontSize(8)
+             .fillColor('#666666')
+             .text('Image Placeholder', doc.x + 10, doc.y - 40, { width: 60, align: 'center' });
+          doc.restore();
+          
+          doc.moveUp(4);
+        } catch (err) {
+          console.error('Error adding image:', err);
+          imageWidth = 0;
+        }
+      } else {
+        imageWidth = 0;
+      }
+      
+      // Place details with appropriate offset if image exists
+      const textX = imageWidth > 0 ? doc.x + imageWidth + 10 : doc.x;
+      const textWidth = imageWidth > 0 ? doc.page.width - doc.x - imageWidth - 70 : doc.page.width - doc.x - 60;
+      
       doc.fontSize(12)
          .font('Helvetica-Bold')
-         .text(`• ${place.name}`, { continued: true });
+         .fillColor('#2c3e50')
+         .text(`• ${place.name}`, textX, doc.y, { continued: true, width: textWidth });
       
       if (place.address) {
         doc.font('Helvetica')
-           .text(`: ${place.address}`);
+           .text(`: ${place.address}`, { width: textWidth });
       } else {
-        doc.text('');
+        doc.text('', { width: textWidth });
       }
       
       if (place.description) {
         doc.fontSize(10)
            .font('Helvetica-Italic')
-           .text(`  ${place.description}`, { indent: 10 });
+           .text(`${place.description}`, textX, doc.y, { indent: 10, width: textWidth });
       }
       
-      doc.moveDown(0.3);
+      // Calculate the content height and ensure we move down by at least that amount
+      contentHeight = doc.y - startY;
+      if (contentHeight < 80 && imageWidth > 0) {
+        // If we have an image and the content is shorter than the image height,
+        // make sure we move down enough to clear the image
+        doc.moveDown((80 - contentHeight) / doc.currentLineHeight());
+      }
+      
+      doc.moveDown(0.7);
     });
     
     doc.moveDown(0.5);
@@ -219,6 +311,7 @@ function generateDailyItinerary(doc, itemsByDay, places) {
   
   doc.fontSize(18)
      .font('Helvetica-Bold')
+     .fillColor('#2c3e50')
      .text('Daily Itinerary', { underline: true })
      .moveDown(0.5);
   
@@ -229,10 +322,8 @@ function generateDailyItinerary(doc, itemsByDay, places) {
   
   // Process each day
   Object.keys(itemsByDay).sort((a, b) => parseInt(a) - parseInt(b)).forEach(day => {
-    // Add page break if needed
-    if (doc.y > doc.page.height - 150) {
-      doc.addPage();
-    }
+    // Add page break for each day to ensure route map appears at the top
+    doc.addPage();
     
     doc.fontSize(16)
        .font('Helvetica-Bold')
@@ -240,7 +331,68 @@ function generateDailyItinerary(doc, itemsByDay, places) {
        .text(`Day ${day}`, { underline: true })
        .moveDown(0.5);
     
+    // Generate day's route map (placeholder)
+    doc.fontSize(12)
+       .font('Helvetica-Bold')
+       .fillColor('#2c3e50')
+       .text('Day Route Overview:')
+       .moveDown(0.3);
+    
+    // Get places with coordinates for this day
+    const dayPlacesWithCoords = itemsByDay[day]
+      .filter(item => item.place_id)
+      .map(item => {
+        const place = getPlaceById(item.place_id);
+        return place && place.latitude && place.longitude ? place : null;
+      })
+      .filter(place => place !== null);
+    
+    // If we have places with coordinates, show route summary
+    if (dayPlacesWithCoords.length > 0) {
+      // Route map placeholder
+      doc.save();
+      doc.rect(doc.x, doc.y, 400, 150).fill('#f0f0f0');
+      doc.fillColor('#666666')
+         .fontSize(10)
+         .text('Day Route Map', doc.x + 150, doc.y - 75, { width: 100, align: 'center' });
+      doc.restore();
+      
+      doc.moveDown(0.7);
+      
+      // List route stops in order
+      doc.fontSize(11)
+         .font('Helvetica-Bold')
+         .fillColor('#2c3e50')
+         .text('Route Stops:')
+         .moveDown(0.2);
+      
+      dayPlacesWithCoords.forEach((place, idx) => {
+        doc.fontSize(10)
+           .font('Helvetica')
+           .fillColor('#000000')  // Darker color for better readability
+           .text(`${idx + 1}. ${place.name}`, { continued: true })
+           .fillColor('#555555')  // Darker gray for address
+           .font('Helvetica-Italic')
+           .text(place.address ? ` - ${place.address}` : '')
+           .moveDown(0.2);
+      });
+      
+      doc.moveDown(1);
+    } else {
+      doc.fontSize(10)
+         .font('Helvetica-Italic')
+         .fillColor('#555555')
+         .text('No places with location data available for routing.')
+         .moveDown(1);
+    }
+    
     // Timeline for each activity
+    doc.fontSize(14)
+       .font('Helvetica-Bold')
+       .fillColor('#2c3e50')
+       .text('Detailed Itinerary:')
+       .moveDown(0.5);
+    
     itemsByDay[day].forEach((item, index) => {
       const startTime = formatTime(item.start_time);
       const endTime = formatTime(item.end_time);
@@ -249,19 +401,32 @@ function generateDailyItinerary(doc, itemsByDay, places) {
       // Activity timeframe
       doc.fontSize(12)
          .font('Helvetica-Bold')
-         .fillColor('#3498db')
+         .fillColor('#000000')  // Much darker blue for better readability
          .text(`${startTime} - ${endTime}`, { continued: true })
-         .fillColor('#2c3e50')
+         .fillColor('#000000')  // Black for the title text
          .text(`: ${item.title}`);
       
       // Location if available
       if (place) {
         doc.fontSize(10)
            .font('Helvetica')
+           .fillColor('#333333')  // Darker color for better readability
            .text(`Location: ${place.name}`, { indent: 15 });
         
         if (place.address) {
-          doc.text(`Address: ${place.address}`, { indent: 15 });
+          doc.fillColor('#444444')
+             .text(`Address: ${place.address}`, { indent: 15 });
+        }
+        
+        // Add placeholder for place image if available
+        if (place.image_url) {
+          doc.save();
+          doc.rect(doc.x + 15, doc.y + 5, 60, 40).fill('#e0e0e0');
+          doc.fillColor('#666666')
+             .fontSize(7)
+             .text('Place Image', doc.x + 25, doc.y - 15, { width: 40, align: 'center' });
+          doc.restore();
+          doc.moveDown(2.5);
         }
       }
       
@@ -269,6 +434,7 @@ function generateDailyItinerary(doc, itemsByDay, places) {
       if (item.description) {
         doc.fontSize(10)
            .font('Helvetica-Italic')
+           .fillColor('#333333')  // Darker color for description
            .text(item.description, { indent: 15 });
       }
       
@@ -278,7 +444,7 @@ function generateDailyItinerary(doc, itemsByDay, places) {
         if (Array.isArray(tags) && tags.length > 0) {
           doc.fontSize(9)
              .font('Helvetica')
-             .fillColor('#7f8c8d')
+             .fillColor('#444444')  // Darker color for tags
              .text(`Tags: ${tags.join(', ')}`, { indent: 15 });
         }
       }
@@ -290,7 +456,7 @@ function generateDailyItinerary(doc, itemsByDay, places) {
       if (index < itemsByDay[day].length - 1) {
         doc.moveTo(100, doc.y)
            .lineTo(100, doc.y + 10)
-           .stroke('#cccccc');
+           .stroke('#999999');  // Darker line color
         doc.moveDown(0.5);
       }
     });
@@ -313,12 +479,13 @@ function generateFooter(doc) {
     // Footer line
     doc.moveTo(72, doc.page.height - 50)
        .lineTo(doc.page.width - 72, doc.page.height - 50)
-       .stroke('#cccccc')
+       .stroke('#999999')  // Darker line for better visibility
        .moveDown(0.5);
     
     // Page numbers
     doc.fontSize(10)
-       .font('Helvetica')
+       .font('Helvetica-Bold')  // Bold font for better readability
+       .fillColor('#333333')    // Darker text color
        .text(
          `Page ${currentPage} of ${totalPages}`,
          72,
@@ -329,6 +496,7 @@ function generateFooter(doc) {
     // Copyright notice
     doc.fontSize(8)
        .font('Helvetica')
+       .fillColor('#555555')    // Darker text color
        .text(
          `Generated by Skydea Trip Planner - ${new Date().toISOString().split('T')[0]}`,
          72,

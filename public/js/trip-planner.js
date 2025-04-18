@@ -1066,19 +1066,23 @@ document.addEventListener('DOMContentLoaded', function() {
   // Show all markers on the map
   function showAllMarkersOnMap() {
     if (!map) return;
-    
+
     // Clear any existing directions
     directionsRenderer.setDirections({ routes: [] });
-    
+
     // Hide day selector
     const mapDaySelector = document.getElementById('map-day-selector');
     mapDaySelector.classList.add('d-none');
-    
+
+    // Hide condensed itinerary
+    const condensedItinerary = document.getElementById('condensed-itinerary');
+    condensedItinerary.classList.add('d-none');
+
     // Show all markers
     markers.forEach(({ marker }) => {
       marker.setMap(map);
     });
-    
+
     // Fit map to markers
     fitMapToMarkers();
   }
@@ -1086,71 +1090,82 @@ document.addEventListener('DOMContentLoaded', function() {
   // Show itinerary on the map
   function showItineraryOnMap() {
     if (!map || !directionsService || !directionsRenderer) return;
-    
+
     // Hide all markers initially
     markers.forEach(({ marker }) => {
       marker.setMap(null);
     });
-    
+
     // Show day selector
     const mapDaySelector = document.getElementById('map-day-selector');
     mapDaySelector.classList.remove('d-none');
-    
+
     // Populate the day selector if it's empty
     if (mapDaySelector.options.length === 0) {
       populateMapDaySelector();
     }
-    
+
     // Get the selected day from the selector
     const dayNumber = parseInt(mapDaySelector.value);
-    
+
     // Filter itinerary items for the selected day
-    const dayItems = itineraryData.filter(item => item.day_number === dayNumber && item.place_id)
+    const dayItems = itineraryData.filter(item => item.day_number === dayNumber)
       .sort((a, b) => a.order_index - b.order_index);
     
-    if (dayItems.length < 2) {
+    // Filter items with places for route calculation
+    const dayItemsWithPlaces = dayItems.filter(item => item.place_id);
+
+    // Show condensed itinerary for this day
+    renderCondensedItinerary(dayItems, dayNumber);
+    
+    if (dayItemsWithPlaces.length < 2) {
       // Not enough points for directions
-      showToast('Need at least two places with locations to show directions', 'warning');
-      
+      if (dayItemsWithPlaces.length === 0) {
+        showToast('No places with locations for this day', 'warning');
+      } else {
+        showToast('Need at least two places with locations to show directions', 'warning');
+      }
+
       // Show markers for this day only
-      const dayPlaceIds = dayItems.map(item => item.place_id);
+      const dayPlaceIds = dayItemsWithPlaces.map(item => item.place_id);
       markers.forEach(({ marker, place }) => {
         if (dayPlaceIds.includes(place.id)) {
           marker.setMap(map);
         }
       });
-      
+
       fitMapToMarkers();
       return;
     }
-    
+
     // Build waypoints for directions
     const waypoints = [];
     let origin = null;
     let destination = null;
-    
+
     // Find related place objects for each itinerary item
-    const routePoints = dayItems.map(item => {
+    const routePoints = dayItemsWithPlaces.map(item => {
       const place = placesData.find(p => p.id === item.place_id);
       if (place && place.latitude && place.longitude) {
         return {
           location: { lat: place.latitude, lng: place.longitude },
           name: place.name,
-          placeId: place.id
+          placeId: place.id,
+          item: item
         };
       }
       return null;
     }).filter(point => point !== null);
-    
+
     if (routePoints.length < 2) {
       showToast('Not enough places with valid coordinates', 'warning');
       return;
     }
-    
+
     // Set origin, waypoints, and destination
     origin = routePoints[0].location;
     destination = routePoints[routePoints.length - 1].location;
-    
+
     if (routePoints.length > 2) {
       for (let i = 1; i < routePoints.length - 1; i++) {
         waypoints.push({
@@ -1159,7 +1174,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       }
     }
-    
+
     // Request directions
     directionsService.route({
       origin: origin,
@@ -1170,7 +1185,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, (result, status) => {
       if (status === google.maps.DirectionsStatus.OK) {
         directionsRenderer.setDirections(result);
-        
+
         // Show markers for each location in the route
         routePoints.forEach(point => {
           const markerObj = markers.find(m => m.place.id === point.placeId);
@@ -1183,6 +1198,98 @@ document.addEventListener('DOMContentLoaded', function() {
         showAllMarkersOnMap();
       }
     });
+  }
+  
+  // Render condensed itinerary display for the map view
+  function renderCondensedItinerary(dayItems, dayNumber) {
+    const condensedItinerary = document.getElementById('condensed-itinerary');
+    const condensedItineraryDay = document.getElementById('condensed-itinerary-day');
+    const condensedItineraryContent = document.getElementById('condensed-itinerary-content');
+    
+    if (!condensedItinerary || !condensedItineraryDay || !condensedItineraryContent) return;
+    
+    // Set day title
+    condensedItineraryDay.textContent = `Day ${dayNumber}`;
+    
+    // Clear previous content
+    condensedItineraryContent.innerHTML = '';
+    
+    if (dayItems.length === 0) {
+      condensedItineraryContent.innerHTML = `
+        <div class="text-muted text-center py-3">
+          <i class="fas fa-calendar-day me-2"></i> No activities planned for this day.
+        </div>
+      `;
+      condensedItinerary.classList.remove('d-none');
+      return;
+    }
+    
+    // Function to format time (HH:MM:SS to AM/PM)
+    const formatTime = (timeStr) => {
+      if (!timeStr) return 'N/A';
+      
+      let hours, minutes;
+      
+      if (timeStr.includes(':')) {
+        const parts = timeStr.split(':');
+        hours = parseInt(parts[0], 10);
+        minutes = parseInt(parts[1], 10);
+      } else {
+        try {
+          const date = new Date(timeStr);
+          hours = date.getHours();
+          minutes = date.getMinutes();
+        } catch (e) {
+          return timeStr;
+        }
+      }
+      
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+      
+      return `${hours}:${formattedMinutes} ${ampm}`;
+    };
+    
+    // Build items
+    let html = '';
+    
+    dayItems.forEach((item, index) => {
+      const startTime = formatTime(item.start_time);
+      const endTime = formatTime(item.end_time);
+      const place = item.place_id ? placesData.find(p => p.id === item.place_id) : null;
+      
+      html += `
+        <div class="condensed-itinerary-item">
+          <div class="condensed-itinerary-time">${startTime}</div>
+          <div class="condensed-itinerary-content">
+            <div class="condensed-itinerary-title">${item.title}</div>
+            ${place ? `<div class="condensed-itinerary-place"><i class="fas fa-map-marker-alt me-1"></i> ${place.name}</div>` : ''}
+          </div>
+        </div>
+      `;
+      
+      // Add a travel time indicator between items, if not the last item
+      if (index < dayItems.length - 1) {
+        // Calculate time difference between end of current and start of next
+        const currentEndTime = new Date(`2023-01-01T${item.end_time}`);
+        const nextStartTime = new Date(`2023-01-01T${dayItems[index + 1].start_time}`);
+        const travelTime = (nextStartTime - currentEndTime) / 60000; // in minutes
+        
+        if (travelTime > 0) {
+          html += `
+            <div class="condensed-itinerary-time-travel">
+              <span class="travel-icon"><i class="fas fa-arrow-down"></i></span>
+              Travel time: ${Math.round(travelTime)} minute${travelTime !== 1 ? 's' : ''}
+            </div>
+          `;
+        }
+      }
+    });
+    
+    condensedItineraryContent.innerHTML = html;
+    condensedItinerary.classList.remove('d-none');
   }
   
   // Open the Add Place modal

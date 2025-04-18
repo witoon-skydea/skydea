@@ -41,3 +41,24 @@
    - Enhanced Bootstrap component initialization
    - Fixed navigation issues
 
+### Map View Enhancements (April 2025)
+1. **Condensed Itinerary Display**
+   - Added condensed itinerary display below map when "By Day" view is selected
+   - Shows city names and travel times for the selected day
+   - Travel time between locations is calculated and displayed
+   - Visually organized with proper spacing and colors
+   - Hides when switching back to "All Places" view
+
+### PDF Export Improvements (April 2025)
+1. **Enhanced PDF Layout**
+   - Added overview map section at the beginning of the PDF
+   - Enhanced places section to include images where available
+   - Improved daily itinerary presentation:
+     - Each day starts on a new page
+     - Shows route map at the top of each day
+     - Lists all stops on the route in order
+     - Improved activity display with better formatting
+   - Enhanced text readability with darker colors
+   - Better visual hierarchy with clearer section titles
+   - Improved styling for headers, content, and footers
+
